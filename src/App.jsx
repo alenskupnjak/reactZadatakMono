@@ -7,11 +7,7 @@ import {
 } from '@material-ui/core';
 
 
-import Vehicle from './Pages/vehicle'
-
-
-
-
+import Vehicle from './Pages/Vehicle'
 
 
 
