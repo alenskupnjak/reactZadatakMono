@@ -61,17 +61,17 @@ function VehicleForm() {
 
           <InputCommon
             className={classes.root}
-            variant='outlined'
-            label='Model auto'
-            name='modelAuto'
+            variant="outlined"
+            label="Model auto"
+            name="modelAuto"
             value={values.modelAuto}
             onChange={handleInputChange}>
           </InputCommon>
           <TextField
             className={classes.root}
-            variant='outlined'
-            label='Email'
-            name='email'
+            variant="outlined"
+            label="Email"
+            name="email"
             value={values.email}
             onChange={handleInputChange}
           ></TextField>
@@ -81,9 +81,9 @@ function VehicleForm() {
             <FormLabel>Motor</FormLabel>
             {/* row usmjerava horizontalno */}
             <RadioGroup row value={values.motor} name='motor' onChange={handleInputChange}>
-              <FormControlLabel value='diesel' control={<Radio />} label='Diesel'></FormControlLabel>
-              <FormControlLabel value='benzin' control={<Radio />} label='Benzin'></FormControlLabel>
-              <FormControlLabel value='electic' control={<Radio />} label='Electic'></FormControlLabel>
+              <FormControlLabel value="diesel" control={<Radio />} label="Diesel"></FormControlLabel>
+              <FormControlLabel value="benzin" control={<Radio />} label="Benzin"></FormControlLabel>
+              <FormControlLabel value="electic" control={<Radio />} label="Electic"></FormControlLabel>
             </RadioGroup>
           </FormControl>
         </Grid>
