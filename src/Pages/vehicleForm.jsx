@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react';
+// import { observer } from 'mobx-react';
 import {
   Grid,
   TextField,
@@ -13,6 +13,8 @@ import {
 
 import { useForm, Form } from '../Components/UseForm';
 import InputCommon from '../Common/InputCommon';
+import InputSelect from '../Common/InputSelect';
+import { getDataOptions } from '../Common/VehicleService';
 
 // Inicijalna crijednost forme
 const initValue = {
@@ -22,8 +24,8 @@ const initValue = {
   mobile: '12345679998',
   city: 'Sesvete',
   motor: 'benzin',
-  // make: "BMV",
-  makeId: '1',
+  //  producer: "BMV",
+  producerId: '1',
   sellDate: '2021-02-26T10:51:22.509Z',
   isLoan: false,
 };
@@ -75,6 +77,22 @@ function VehicleForm() {
             value={values.email}
             onChange={handleInputChange}
           ></TextField>
+          <TextField
+            className={classes.root}
+            variant="outlined"
+            label="Email"
+            name="email"
+            value={values.email}
+            onChange={handleInputChange}
+          ></TextField>
+          <TextField
+            className={classes.root}
+            variant="outlined"
+            label="Email"
+            name="email"
+            value={values.email}
+            onChange={handleInputChange}
+          ></TextField>
         </Grid>
         <Grid item xs={6}>
           <FormControl>
@@ -85,6 +103,16 @@ function VehicleForm() {
               <FormControlLabel value="benzin" control={<Radio />} label="Benzin"></FormControlLabel>
               <FormControlLabel value="electic" control={<Radio />} label="Electic"></FormControlLabel>
             </RadioGroup>
+            <InputSelect
+                label="Producer"
+                name="producerId"
+                value={values.producerId}
+                onChange={handleInputChange}
+                dataOptions ={getDataOptions()}
+            >
+            </InputSelect>
+
+
           </FormControl>
         </Grid>
       </Grid>
