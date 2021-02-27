@@ -7,10 +7,20 @@ import {
 } from '@material-ui/core';
 
 
+import Vehicle from './Pages/vehicle'
+
+
+
+
+
+
+
+
+
 const useStyles = makeStyles({
   bazaCSS: {
-    paddingLeft: '320px',
     width: '100%',
+    // margin:'auto',
     height: '100vh',
     backgroundColor: '#faebd7',
   },
@@ -29,8 +39,9 @@ const theme = createMuiTheme({
     },
   },
   shape: {
-    borderRadius: '12px'
+    borderRadius: '8px'
   },
+  backgroundColor: '#faebd7',
 });
 
 function App() {
@@ -39,7 +50,7 @@ function App() {
     <React.Fragment>
       <ThemeProvider theme = {theme}>
       <div className={classes.bazaCSS}>
-        MONO xxccc
+        <Vehicle></Vehicle>
       </div>
       </ThemeProvider>
     </React.Fragment>
