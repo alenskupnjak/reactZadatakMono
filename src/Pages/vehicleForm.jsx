@@ -16,6 +16,7 @@ import { useForm, Form } from '../Components/UseForm';
 import InputCommon from '../Common/InputCommon';
 import InputSelect from '../Common/InputSelect';
 import InputCheckBox from '../Common/InputCheckBox';
+import DatePicker from '../Common/DatePicker';
 import { getDataOptions } from '../Common/VehicleService';
 import  store from  '../Stores/StoreVechile'
 
@@ -52,7 +53,6 @@ function VehicleForm() {
     <Form>
       <Grid container>
         <Grid item xs={6}>
-
           <InputCommon
             className={classes.root}
             variant="outlined"
@@ -61,6 +61,7 @@ function VehicleForm() {
             value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}>
           </InputCommon>
+
           <TextField
             className={classes.root}
             variant="outlined"
@@ -69,20 +70,22 @@ function VehicleForm() {
             value={store.vechileFormValue.email}
             onChange={handleInputChange}
           ></TextField>
+
           <TextField
             className={classes.root}
             variant="outlined"
-            label="Email"
-            name="email"
-            value={store.vechileFormValue.email}
+            label="Mobile"
+            name="mobile"
+            value={store.vechileFormValue.mobile}
             onChange={handleInputChange}
           ></TextField>
+
           <TextField
             className={classes.root}
             variant="outlined"
-            label="Email"
-            name="email"
-            value={store.vechileFormValue.email}
+            label="City"
+            name="city"
+            value={store.vechileFormValue.city}
             onChange={handleInputChange}
           ></TextField>
         </Grid>
@@ -90,22 +93,26 @@ function VehicleForm() {
           <FormControl>
             <FormLabel>Tip motora</FormLabel>
             {/* row usmjerava horizontalno */}
-            <RadioGroup row value={store.vechileFormValue.motor} name='motor' onChange={handleInputChange}>
+            <RadioGroup 
+              row 
+              value={store.vechileFormValue.motor}  
+              name="motor" 
+              onChange={handleInputChange}
+            >
               <FormControlLabel value="diesel" control={<Radio />} label="Diesel"></FormControlLabel>
               <FormControlLabel value="benzin" control={<Radio />} label="Benzin"></FormControlLabel>
               <FormControlLabel value="electic" control={<Radio />} label="Electic"></FormControlLabel>
             </RadioGroup>
           </FormControl>
 
-            <InputSelect
-                label="Producer"
-                name="producerId"
-                value={store.vechileFormValue.producerId}
-                onChange={handleInputChange}
-                dataOptions ={getDataOptions()}
-            >
-            </InputSelect>
-
+          <InputSelect
+            label="Producer"
+            name="producerId"
+            value={store.vechileFormValue.producerId}
+            onChange={handleInputChange}
+            dataOptions ={getDataOptions()}
+          >
+          </InputSelect>
 
             <InputCheckBox
               label="Loan"
@@ -114,6 +121,14 @@ function VehicleForm() {
               value={store.vechileFormValue.isLoan}
             >
             </InputCheckBox>
+
+            <DatePicker
+              label="Sell"
+              name="sellDate"
+              onChange={handleInputChange}
+              value={store.vechileFormValue.sellDate}
+            >
+            </DatePicker>
 
         </Grid>
       </Grid>

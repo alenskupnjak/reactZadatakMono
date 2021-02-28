@@ -58,7 +58,19 @@ class Store {
         ...this.vechileFormValue,
         [name]:valueForm
       }
-      console.log(this.vechileFormValue );
+      const stateValueForm = {
+        id: this.vechileFormValue.id,
+        modelAuto: this.vechileFormValue.modelAuto,
+        email: this.vechileFormValue.email,
+        mobile: this.vechileFormValue.mobile,
+        city: this.vechileFormValue.city,
+        motor: this.vechileFormValue.motor,
+        producer: this.vechileFormValue.producer,
+        producerId: this.vechileFormValue.producerId,
+        sellDate: this.vechileFormValue.sellDate,
+        isLoan: this.vechileFormValue.isLoan,
+      }
+      console.table(stateValueForm);
   }
 
 

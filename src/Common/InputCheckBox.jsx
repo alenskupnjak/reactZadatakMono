@@ -9,7 +9,6 @@ import {
 function InputCheckBox(props) {
   const { name, label, value, onChange} = props
   
-
   // Konverzija u format {value, name}
   const konvertirajPrikladnePodatke = (e) =>{
     const konverzija = {
