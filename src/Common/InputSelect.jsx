@@ -3,35 +3,38 @@ import {
   FormControl,
   MenuItem,
   InputLabel,
-  Select
+  Select,
+  FormHelperText
 } from '@material-ui/core';
 
 function InputSelect(props) {
 
-
-  const {name, label, value, onChange, dataOptions } = props
+  const {name, label, value, onChange, dataOptions, error=null } = props
 
   // console.log(dataOptions);
   
 
   return (
-   <FormControl
-    outline="variant"
-   >
-     <InputLabel>{label}</InputLabel>
-     <Select
-      label={label}
-      name={name}
-      value={value}
-      onChange={onChange}
-     >
-       {
-         dataOptions.map(data => (
-           <MenuItem key={data.id} value={data.id}>{data.title}</MenuItem>
-         ))
-       }
-     </Select>
-   </FormControl>
+    <div>
+        <FormControl outline="variant">
+          <InputLabel>{label}</InputLabel>
+          <Select
+            label={label}
+            name={name}
+            value={value}
+            onChange={onChange}
+            error={error ? true : false}
+          >
+                <MenuItem value=''>None</MenuItem>
+            {
+              dataOptions.map(data => (
+                <MenuItem key={data.id} value={data.id}>{data.title}</MenuItem>
+              ))
+            }
+          </Select>
+          {error && <FormHelperText>{error}</FormHelperText>}
+        </FormControl>
+    </div>
   )
 }
 

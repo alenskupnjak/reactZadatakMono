@@ -1,19 +1,18 @@
-import { makeObservable, observable, computed } from 'mobx';
+import { makeObservable, observable, action, computed } from 'mobx';
 
 
 
 
 // Inicijalna vrijednost forme
-const initVechileValue = {
+export const initVechileValue = {
   id: 0,
-  modelAuto: ' modelAuto',
-  email: 'email',
-  mobile: '12345679998',
-  city: 'Sesvete',
+  modelAuto: '',
+  email: '',
+  mobile: '',
+  city: '',
   motor: 'benzin',
-  //  producer: "BMV",
-  producerId: '1',
-  sellDate: '2021-02-26T10:51:22.509Z',
+  producerId: '',
+  sellDate: new Date(),
   isLoan: true,
 };
 
@@ -41,8 +40,7 @@ class Store {
   constructor() {
     makeObservable(this, {
       vechileFormValue: observable,
-      setVechileValue: observable,
-
+      setVechileValue: action,
     });
   }
 
@@ -54,11 +52,13 @@ class Store {
   // promjena vrijednosti u formi
   setVechileValue(name, valueForm) {
     console.log(name, valueForm);
-      this.vechileFormValue ={
+
+      const vrijednost ={
         ...this.vechileFormValue,
         [name]:valueForm
       }
-      const stateValueForm = {
+      this.vechileFormValue = vrijednost
+      const stateValueFormEdit = {
         id: this.vechileFormValue.id,
         modelAuto: this.vechileFormValue.modelAuto,
         email: this.vechileFormValue.email,
@@ -70,7 +70,8 @@ class Store {
         sellDate: this.vechileFormValue.sellDate,
         isLoan: this.vechileFormValue.isLoan,
       }
-      console.table(stateValueForm);
+      console.table(stateValueFormEdit);
+      // return this.setVechileValue
   }
 
 
@@ -78,8 +79,5 @@ class Store {
 
 
 
-
-
-
-// const store = new Store();
-export default new Store();
+export const store = new Store();
+// export default store;

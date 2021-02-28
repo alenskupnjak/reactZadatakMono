@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 
 function InputCommon(props) {
-  const {name, label, value, onChange} = props
+  const {name, label, value, onChange, error=null, helperText} = props
 
   return (
     <TextField
@@ -13,6 +13,8 @@ function InputCommon(props) {
     name={name}
     value={value}
     onChange={onChange}
+    error={error ? true: false}
+    helperText={error ? helperText : ""}
   ></TextField>
   )
 }

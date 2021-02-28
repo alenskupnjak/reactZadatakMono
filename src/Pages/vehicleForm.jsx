@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState}from 'react';
 import { observer } from 'mobx-react';
 import {
   Grid,
@@ -18,9 +18,11 @@ import InputCheckBox from '../Common/InputCheckBox';
 import DatePicker from '../Common/DatePicker';
 import CustomButton from '../Common/CustomButton';
 import { getDataOptions } from '../Common/VehicleService';
-import  store from  '../Stores/StoreVechile'
+// import store from  '../Stores/StoreVechile'
+import {store, initVechileValue} from  '../Stores/StoreVechile'
 
 
+console.log(initVechileValue);
 
 
 // ************************
@@ -45,9 +47,45 @@ const useStyles = makeStyles((theme) => ({
 // Glavna funkcija
 function VehicleForm() {
   const classes = useStyles();
+  const [errors, setErrors] = useState({});
+
+
+  // Validacija forme
+  const validationForm = () => {
+    // Setiram grešku na nulu
+    const tempError = {}
+    tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? "" : "Invalid Vehicle"
+    tempError.email = (/@/).test(store.vechileFormValue.email)  ? "" : "Invalid emali"
+    tempError.mobile = store.vechileFormValue.mobile.length >= 6 ? "" : "Must have more than 6 character"
+    tempError.producerId = store.vechileFormValue.producerId !== '' ? "" : "Select producer"
+    setErrors({
+      ...tempError
+    })
+    console.log(errors, tempError);
+    console.log(Object.values(tempError).every((x) => x === ''));
+    return Object.values(tempError).every((x) => x === '');
+  }
 
   //
-  const { handleInputChange } = useForm();
+  const { handleInputChange } = useForm(validationForm);
+
+
+  // RESET forme
+  function resetForm() {
+    store.vechileFormValue = initVechileValue
+  }
+
+  // SUBMIT FORME
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validationForm()
+
+    if(validationForm()) {
+      alert('to je to');
+    }
+    console.log(errors);
+  }
+
 
   return (
     <Form>
@@ -60,6 +98,8 @@ function VehicleForm() {
             name="modelAuto"
             value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}
+            error={errors.modelAuto}
+            helperText="Model error"
           >
           </InputCommon>
 
@@ -70,6 +110,8 @@ function VehicleForm() {
             name="email"
             value={store.vechileFormValue.email}
             onChange={handleInputChange}
+            error={errors.email ? true :false }
+            helperText={errors.email  ? "Invalid Email" :"" }
           >
           </TextField>
 
@@ -80,6 +122,8 @@ function VehicleForm() {
             name="mobile"
             value={store.vechileFormValue.mobile}
             onChange={handleInputChange}
+            error={errors.mobile ? true : false}
+            helperText={errors.mobile  ? "Min. 6 number" :"" }
           >
           </TextField>
 
@@ -115,6 +159,8 @@ function VehicleForm() {
             value={store.vechileFormValue.producerId}
             onChange={handleInputChange}
             dataOptions ={getDataOptions()}
+            error={errors.producerId}
+            // helperText="Producer error"
           >
           </InputSelect>
 
@@ -135,21 +181,19 @@ function VehicleForm() {
             </DatePicker>
             <div>
               <CustomButton
+                onClick={handleSubmit}
                 text="SUBMIT"
-                type="submit"
-                // style={{margin:'10px 10px 20px 20px'}}
               >
               </CustomButton>
               <CustomButton
-                text="CANCEL"
-                color="default" 
-                // style={{margin:'10px 10px 20px 10px'}}
+                text="RESET"
+                color="default"
+                onClick={resetForm}
               >
               </CustomButton>
             </div>
         </Grid>
       </Grid>
-
     </Form>
   );
 }
