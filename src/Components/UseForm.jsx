@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
+import { Observer } from 'mobx-react';
+
+import  store from  '../Stores/StoreVechile'
 
 // 
-export function useForm(initValue) {
-  // setiramo pocetnu vrijednost forme
-  const [values, setValues] = useState(initValue);
+export function useForm() {
 
+
+  
   // Prati promjenu vrijednossti u INPUT poljima
   const handleInputChange = (e) => {
-    
     const { name, value } = e.target;
     console.log(name, value);
-    setValues({
-      // kopija trenutne vrijednosti
-      ...values,
-      // trenutna vrijednost koju mijenjamo
-      [name]: value,
-    });
+    store.setVechileValue(name,value)
   };
 
-  return { values, setValues, handleInputChange };
+  return { handleInputChange };
 }
 
 
@@ -41,10 +38,16 @@ export function Form(props) {
   const classes = useStyles();
 
   return (
-    // OPCIJA: autoComplete="off"
-    <form className={classes.root}  >
-      {props.children}
-    </form>
+    <Observer>
+      {
+        ()=>(
+            // OPCIJA: autoComplete="off"
+          <form className={classes.root}  >
+            {props.children}
+          </form>
+        )
+      }
+    </Observer>
   )
 }
 

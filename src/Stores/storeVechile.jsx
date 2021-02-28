@@ -1,10 +1,28 @@
 import { makeObservable, observable, computed } from 'mobx';
 
 
-const dataVehicle = [
+
+
+// Inicijalna vrijednost forme
+const initVechileValue = {
+  id: 0,
+  modelAuto: ' modelAuto',
+  email: 'email',
+  mobile: '12345679998',
+  city: 'Sesvete',
+  motor: 'benzin',
+  //  producer: "BMV",
+  producerId: '1',
+  sellDate: '2021-02-26T10:51:22.509Z',
+  isLoan: false,
+};
+
+
+// pocetne vrijednosti u listi autompbila
+const listVehicle = [
   {
     id: 0,
-    model: 'X5',
+    modelAuto: 'X5',
     email: 'email',
     mobile: 12345679998,
     city: 'Sesvete',
@@ -17,81 +35,38 @@ const dataVehicle = [
 ];
 
 
-
-
+// 
+// Glavna store funkcija
 class Store {
   constructor() {
     makeObservable(this, {
-      vehicle: observable,
-      color: observable,
-      errors: observable,
-      // pokemon: observable,
-      filter: observable,
-      selectedPokemon: observable,
-      filteredPokemon: computed,
-      zaposleniciData: computed,
+      vechileFormValue: observable,
+      setVechileValue: observable,
+
     });
   }
 
-  // const [values, setValues] = useState(initialFValues);
-  // const [errors, setErrors] = useState({});
+  
+  
+  // Pocetna vrijednost FORME
+  vechileFormValue = initVechileValue;
 
-  //  boja u Headeru
-  color = 'default';
-  errors = {}; // greška u template
-  vehicle = dataVehicle;
-
-  pokemon = [];
-  filter = '';
-  selectedPokemon = null;
-
-  get filteredPokemon() {
-    return this.pokemon
-      .filter(({ name: { english } }) =>
-        english.toLocaleLowerCase().includes(this.filter.toLocaleLowerCase())
-      )
-      .slice(0, 20);
+  // promjena vrijednosti u formi
+  setVechileValue(name, valueForm) {
+      this.vechileFormValue ={
+        ...this.vechileFormValue,
+        [name]:valueForm
+      }
+      console.log(this.vechileFormValue );
   }
 
-  setZaposlenici(data) {
-    this.zaposlenici.push(data);
-    console.log('zaposlenici', this.zaposlenici);
-  }
 
-  // povlacenje svih zaposlenika
-  get zaposleniciData() {
-    return this.zaposlenici
-  }
-
-  setColor(color) {
-    console.log('color=', color);
-
-    this.color = color;
-  }
-
-  // Setiranje grešaka
-  setErrors(data) {
-    console.log(data);
-    this.errors = { ...data };
-  }
-
-  // setPokemon(pokemon) {
-  //   this.pokemon = pokemon;
-  // }
-  setFilter(filter) {
-    this.filter = filter;
-  }
-  setSelectedPokemon(selectedPokemon) {
-    this.selectedPokemon = selectedPokemon;
-  }
 }
 
-const store = new Store();
-
-// fetch('/starting-react/pokemon.json')
-//   .then((resp) => resp.json())
-//   .then((pokemon) => store.setPokemon(pokemon));
 
 
 
-export default store;
+
+//  EXPORT STORE  *** EXPORT STORE  ***  EXPORT STORE
+// const store = new Store();
+export default new Store();

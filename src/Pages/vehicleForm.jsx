@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import {
   Grid,
   TextField,
@@ -15,20 +15,10 @@ import { useForm, Form } from '../Components/UseForm';
 import InputCommon from '../Common/InputCommon';
 import InputSelect from '../Common/InputSelect';
 import { getDataOptions } from '../Common/VehicleService';
+import  store from  '../Stores/StoreVechile'
 
-// Inicijalna crijednost forme
-const initValue = {
-  id: 0,
-  modelAuto: '',
-  email: '',
-  mobile: '12345679998',
-  city: 'Sesvete',
-  motor: 'benzin',
-  //  producer: "BMV",
-  producerId: '1',
-  sellDate: '2021-02-26T10:51:22.509Z',
-  isLoan: false,
-};
+
+
 
 // ************************
 // Style CSS
@@ -54,7 +44,7 @@ function VehicleForm() {
   const classes = useStyles();
 
   //
-  const { values, setValues, handleInputChange } = useForm(initValue);
+  const { handleInputChange } = useForm();
 
   return (
     <Form>
@@ -66,7 +56,7 @@ function VehicleForm() {
             variant="outlined"
             label="Model auto"
             name="modelAuto"
-            value={values.modelAuto}
+            value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}>
           </InputCommon>
           <TextField
@@ -74,7 +64,7 @@ function VehicleForm() {
             variant="outlined"
             label="Email"
             name="email"
-            value={values.email}
+            value={store.vechileFormValue.email}
             onChange={handleInputChange}
           ></TextField>
           <TextField
@@ -82,7 +72,7 @@ function VehicleForm() {
             variant="outlined"
             label="Email"
             name="email"
-            value={values.email}
+            value={store.vechileFormValue.email}
             onChange={handleInputChange}
           ></TextField>
           <TextField
@@ -90,7 +80,7 @@ function VehicleForm() {
             variant="outlined"
             label="Email"
             name="email"
-            value={values.email}
+            value={store.vechileFormValue.email}
             onChange={handleInputChange}
           ></TextField>
         </Grid>
@@ -98,7 +88,7 @@ function VehicleForm() {
           <FormControl>
             <FormLabel>Motor</FormLabel>
             {/* row usmjerava horizontalno */}
-            <RadioGroup row value={values.motor} name='motor' onChange={handleInputChange}>
+            <RadioGroup row value={store.vechileFormValue.motor} name='motor' onChange={handleInputChange}>
               <FormControlLabel value="diesel" control={<Radio />} label="Diesel"></FormControlLabel>
               <FormControlLabel value="benzin" control={<Radio />} label="Benzin"></FormControlLabel>
               <FormControlLabel value="electic" control={<Radio />} label="Electic"></FormControlLabel>
@@ -106,12 +96,11 @@ function VehicleForm() {
             <InputSelect
                 label="Producer"
                 name="producerId"
-                value={values.producerId}
+                value={store.vechileFormValue.producerId}
                 onChange={handleInputChange}
                 dataOptions ={getDataOptions()}
             >
             </InputSelect>
-
 
           </FormControl>
         </Grid>
@@ -120,5 +109,4 @@ function VehicleForm() {
   );
 }
 
-export default VehicleForm;
-// export default observer(VehicleForm)
+export default observer(VehicleForm)
