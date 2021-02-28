@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed } from 'mobx';
+import { makeObservable, observable, action } from 'mobx';
 
 
 
@@ -17,19 +17,31 @@ export const initVechileValue = {
 };
 
 
-// pocetne vrijednosti u listi autompbila
-const listVehicle = [
+// pocetne vrijednosti u listi automobila
+const listVehicleInit = [
   {
     id: 0,
     modelAuto: 'X5',
     email: 'email',
-    mobile: 12345679998,
+    mobile: 11111111,
     city: 'Sesvete',
     motor: 'diesel',
     producer: "BMV",
     producerId: '1',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: true,
+  },
+  {
+    id: 0,
+    modelAuto: 'Ford',
+    email: 'email@yahoo.com',
+    mobile: 222222222,
+    city: 'Zagreb',
+    motor: 'benzin',
+    producer: "FORD",
+    producerId: '1',
+    sellDate: '2021-02-26T10:51:22.509Z',
+    isLoan: false,
   },
 ];
 
@@ -41,23 +53,28 @@ class Store {
     makeObservable(this, {
       vechileFormValue: observable,
       setVechileValue: action,
+      listVehicle: observable,
+      listVehiclePut: action,
     });
   }
 
   
   
-  // Pocetna vrijednost FORME
+  // Pocetna vrijednost FORME i podataka u listi
   vechileFormValue = initVechileValue;
+  listVehicle = listVehicleInit;
 
   // promjena vrijednosti u formi
   setVechileValue(name, valueForm) {
     console.log(name, valueForm);
 
-      const vrijednost ={
-        ...this.vechileFormValue,
+    // setiramo vrijednost forme
+        this.vechileFormValue ={
+          ...this.vechileFormValue,
         [name]:valueForm
       }
-      this.vechileFormValue = vrijednost
+
+      // SLUZI za ispis u conosle.table()
       const stateValueFormEdit = {
         id: this.vechileFormValue.id,
         modelAuto: this.vechileFormValue.modelAuto,
@@ -71,8 +88,14 @@ class Store {
         isLoan: this.vechileFormValue.isLoan,
       }
       console.table(stateValueFormEdit);
-      // return this.setVechileValue
   }
+
+  //  dodavanje zapisa na listu
+  listVehiclePut(data) {
+    this.listVehicle.push(data)
+  }
+
+
 
 
 }

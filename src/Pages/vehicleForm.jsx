@@ -58,11 +58,11 @@ function VehicleForm() {
     tempError.email = (/@/).test(store.vechileFormValue.email)  ? "" : "Invalid emali"
     tempError.mobile = store.vechileFormValue.mobile.length >= 6 ? "" : "Must have more than 6 character"
     tempError.producerId = store.vechileFormValue.producerId !== '' ? "" : "Select producer"
+    // postavljam grešku
     setErrors({
       ...tempError
     })
-    console.log(errors, tempError);
-    console.log(Object.values(tempError).every((x) => x === ''));
+    // provjerava tempError, ako su svi ="", znavi nema greške, vraca TRUE
     return Object.values(tempError).every((x) => x === '');
   }
 
@@ -78,10 +78,13 @@ function VehicleForm() {
   // SUBMIT FORME
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Provjeravamo upisana polja
     validationForm()
 
+    //  Ako je FORMA ispravno popunjena spremamo u store
     if(validationForm()) {
-      alert('to je to');
+      store.listVehiclePut(store.vechileFormValue)
+      console.log(store.listVehicle);
     }
     console.log(errors);
   }
