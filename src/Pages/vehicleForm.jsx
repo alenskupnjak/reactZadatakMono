@@ -53,12 +53,13 @@ function VehicleForm() {
 
   // Validacija forme
   const validationForm = () => {
+    const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
     // Setiram grešku na nulu
     const tempError = {}
-    tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? "" : "Invalid vehicle"
-    tempError.email = (/@/).test(store.vechileFormValue.email)  ? "" : "Invalid emali"
-    tempError.mobile = store.vechileFormValue.mobile.length >= 6 ? "" : "Must have more than 6 character"
-    tempError.producerId = store.vechileFormValue.producerId !== '' ? "" : "Select producer"
+    tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? '' : 'Invalid vehicle'
+    tempError.email = (/@/).test(store.vechileFormValue.email)  ? '' : 'Invalid emali'
+    tempError.mobile = regexPhone.test(store.vechileFormValue.mobile) ? '' : 'Invalid character'
+    tempError.producerId = store.vechileFormValue.producerId !== '' ? '' : 'Select producer'
 
     // postavljam grešku
     setErrors({
