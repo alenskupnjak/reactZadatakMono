@@ -14,7 +14,7 @@ const initVechileValue = {
   //  producer: "BMV",
   producerId: '1',
   sellDate: '2021-02-26T10:51:22.509Z',
-  isLoan: false,
+  isLoan: true,
 };
 
 
@@ -53,6 +53,7 @@ class Store {
 
   // promjena vrijednosti u formi
   setVechileValue(name, valueForm) {
+    console.log(name, valueForm);
       this.vechileFormValue ={
         ...this.vechileFormValue,
         [name]:valueForm
@@ -67,6 +68,6 @@ class Store {
 
 
 
-//  EXPORT STORE  *** EXPORT STORE  ***  EXPORT STORE
+
 // const store = new Store();
 export default new Store();

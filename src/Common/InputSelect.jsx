@@ -11,7 +11,7 @@ function InputSelect(props) {
 
   const {name, label, value, onChange, dataOptions } = props
 
-  console.log(dataOptions);
+  // console.log(dataOptions);
   
 
   return (

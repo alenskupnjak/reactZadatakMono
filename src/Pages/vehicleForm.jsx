@@ -8,12 +8,14 @@ import {
   FormLabel,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  Checkbox
 } from '@material-ui/core';
 
 import { useForm, Form } from '../Components/UseForm';
 import InputCommon from '../Common/InputCommon';
 import InputSelect from '../Common/InputSelect';
+import InputCheckBox from '../Common/InputCheckBox';
 import { getDataOptions } from '../Common/VehicleService';
 import  store from  '../Stores/StoreVechile'
 
@@ -86,13 +88,15 @@ function VehicleForm() {
         </Grid>
         <Grid item xs={6}>
           <FormControl>
-            <FormLabel>Motor</FormLabel>
+            <FormLabel>Tip motora</FormLabel>
             {/* row usmjerava horizontalno */}
             <RadioGroup row value={store.vechileFormValue.motor} name='motor' onChange={handleInputChange}>
               <FormControlLabel value="diesel" control={<Radio />} label="Diesel"></FormControlLabel>
               <FormControlLabel value="benzin" control={<Radio />} label="Benzin"></FormControlLabel>
               <FormControlLabel value="electic" control={<Radio />} label="Electic"></FormControlLabel>
             </RadioGroup>
+          </FormControl>
+
             <InputSelect
                 label="Producer"
                 name="producerId"
@@ -102,7 +106,15 @@ function VehicleForm() {
             >
             </InputSelect>
 
-          </FormControl>
+
+            <InputCheckBox
+              label="Loan"
+              name="isLoan"
+              onChange={handleInputChange}
+              value={store.vechileFormValue.isLoan}
+            >
+            </InputCheckBox>
+
         </Grid>
       </Grid>
     </Form>
