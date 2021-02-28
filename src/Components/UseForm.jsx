@@ -1,16 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Observer } from 'mobx-react';
-import  {store} from  '../Stores/StoreVechile'
+import  { store } from  '../Stores/StoreVechile'
 
 // 
 export function useForm(validationForm) {
   // Prati promjenu vrijednossti u INPUT poljima
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
-    console.log(validationForm());
-
     // Validacija forme
       store.setVechileValue(name,value)
   

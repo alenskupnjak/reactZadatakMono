@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from 'mobx';
+import { makeObservable, observable, action, computed } from 'mobx';
 
 
 
@@ -55,6 +55,9 @@ class Store {
       setVechileValue: action,
       listVehicle: observable,
       listVehiclePut: action,
+      listVehicleGet: computed,
+      listVehicleDelete: action,
+      listVehicleUpdate: action,
     });
   }
 
@@ -66,8 +69,6 @@ class Store {
 
   // promjena vrijednosti u formi
   setVechileValue(name, valueForm) {
-    console.log(name, valueForm);
-
     // setiramo vrijednost forme
         this.vechileFormValue ={
           ...this.vechileFormValue,
@@ -90,9 +91,24 @@ class Store {
       console.table(stateValueFormEdit);
   }
 
-  //  dodavanje zapisa na listu
+  // PUT dodavanje zapisa na listu
   listVehiclePut(data) {
     this.listVehicle.push(data)
+  }
+
+  // GET dodavanje zapisa na listu
+  get listVehicleGet() {
+    return this.listVehicle
+  }
+
+  // DELETE brisanje zapisa sa liste
+  listVehicleDelete(data) {
+    // some code
+  }
+
+  // UPDATE promjena pojedinog zapisa zapisa na listu
+  listVehicleUpdate(data) {
+  //  some code
   }
 
 

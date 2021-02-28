@@ -8,13 +8,13 @@ function InputCommon(props) {
 
   return (
     <TextField
-    variant='outlined'
+    variant="outlined"
     label={label}
     name={name}
     value={value}
     onChange={onChange}
     error={error ? true: false}
-    helperText={error ? helperText : ""}
+    helperText={error ? helperText : ''}
   ></TextField>
   )
 }

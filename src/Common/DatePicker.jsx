@@ -26,7 +26,7 @@ function DatePicker(props) {
   
 
   return (
-    <MuiPickersUtilsProvider utils={ DateFnsUtils }>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
           margin="normal"
           variant="dialog"
@@ -35,7 +35,7 @@ function DatePicker(props) {
           format="MM/dd/yyyy"
           value={value}
           name={name}
-          onChange={konvertirajPrikladnePodatke }
+          onChange={konvertirajPrikladnePodatke}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}

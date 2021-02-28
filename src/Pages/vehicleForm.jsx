@@ -48,20 +48,30 @@ const useStyles = makeStyles((theme) => ({
 function VehicleForm() {
   const classes = useStyles();
   const [errors, setErrors] = useState({});
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
 
   // Validacija forme
   const validationForm = () => {
     // Setiram grešku na nulu
     const tempError = {}
-    tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? "" : "Invalid Vehicle"
+    tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? "" : "Invalid vehicle"
     tempError.email = (/@/).test(store.vechileFormValue.email)  ? "" : "Invalid emali"
     tempError.mobile = store.vechileFormValue.mobile.length >= 6 ? "" : "Must have more than 6 character"
     tempError.producerId = store.vechileFormValue.producerId !== '' ? "" : "Select producer"
+
     // postavljam grešku
     setErrors({
       ...tempError
     })
+
+    // ako je validacija svih polja TRUE, enable button SUBMIT
+    if(Object.values(tempError).every((x) => x === '')) {
+      setDisableSubmitButton(false)
+    } else {
+      setDisableSubmitButton(true)
+    }
+
     // provjerava tempError, ako su svi ="", znavi nema greške, vraca TRUE
     return Object.values(tempError).every((x) => x === '');
   }
@@ -73,6 +83,7 @@ function VehicleForm() {
   // RESET forme
   function resetForm() {
     store.vechileFormValue = initVechileValue
+    setDisableSubmitButton(true)
   }
 
   // SUBMIT FORME
@@ -114,7 +125,7 @@ function VehicleForm() {
             value={store.vechileFormValue.email}
             onChange={handleInputChange}
             error={errors.email ? true :false }
-            helperText={errors.email  ? "Invalid Email" :"" }
+            helperText={errors.email  ? 'Invalid Email' :''}
           >
           </TextField>
 
@@ -126,7 +137,7 @@ function VehicleForm() {
             value={store.vechileFormValue.mobile}
             onChange={handleInputChange}
             error={errors.mobile ? true : false}
-            helperText={errors.mobile  ? "Min. 6 number" :"" }
+            helperText={errors.mobile  ? 'Min. 6 number' :''}
           >
           </TextField>
 
@@ -163,12 +174,11 @@ function VehicleForm() {
             onChange={handleInputChange}
             dataOptions ={getDataOptions()}
             error={errors.producerId}
-            // helperText="Producer error"
           >
           </InputSelect>
 
             <InputCheckBox
-              label="Loan"
+              label="Loan for vechile"
               name="isLoan"
               onChange={handleInputChange}
               value={store.vechileFormValue.isLoan}
@@ -186,6 +196,7 @@ function VehicleForm() {
               <CustomButton
                 onClick={handleSubmit}
                 text="SUBMIT"
+                disabled= {disableSubmitButton}
               >
               </CustomButton>
               <CustomButton
