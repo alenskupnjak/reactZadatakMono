@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import {
   Grid,
@@ -9,7 +9,6 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Checkbox
 } from '@material-ui/core';
 
 import { useForm, Form } from '../Components/UseForm';
@@ -17,6 +16,7 @@ import InputCommon from '../Common/InputCommon';
 import InputSelect from '../Common/InputSelect';
 import InputCheckBox from '../Common/InputCheckBox';
 import DatePicker from '../Common/DatePicker';
+import CustomButton from '../Common/CustomButton';
 import { getDataOptions } from '../Common/VehicleService';
 import  store from  '../Stores/StoreVechile'
 
@@ -59,7 +59,8 @@ function VehicleForm() {
             label="Model auto"
             name="modelAuto"
             value={store.vechileFormValue.modelAuto}
-            onChange={handleInputChange}>
+            onChange={handleInputChange}
+          >
           </InputCommon>
 
           <TextField
@@ -69,7 +70,8 @@ function VehicleForm() {
             name="email"
             value={store.vechileFormValue.email}
             onChange={handleInputChange}
-          ></TextField>
+          >
+          </TextField>
 
           <TextField
             className={classes.root}
@@ -78,7 +80,8 @@ function VehicleForm() {
             name="mobile"
             value={store.vechileFormValue.mobile}
             onChange={handleInputChange}
-          ></TextField>
+          >
+          </TextField>
 
           <TextField
             className={classes.root}
@@ -87,7 +90,8 @@ function VehicleForm() {
             name="city"
             value={store.vechileFormValue.city}
             onChange={handleInputChange}
-          ></TextField>
+          >
+          </TextField>
         </Grid>
         <Grid item xs={6}>
           <FormControl>
@@ -129,9 +133,23 @@ function VehicleForm() {
               value={store.vechileFormValue.sellDate}
             >
             </DatePicker>
-
+            <div>
+              <CustomButton
+                text="SUBMIT"
+                type="submit"
+                // style={{margin:'10px 10px 20px 20px'}}
+              >
+              </CustomButton>
+              <CustomButton
+                text="CANCEL"
+                color="default" 
+                // style={{margin:'10px 10px 20px 10px'}}
+              >
+              </CustomButton>
+            </div>
         </Grid>
       </Grid>
+
     </Form>
   );
 }
