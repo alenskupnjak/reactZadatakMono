@@ -164,7 +164,7 @@ function VehicleForm() {
             >
               <FormControlLabel value="diesel" control={<Radio />} label="Diesel"></FormControlLabel>
               <FormControlLabel value="benzin" control={<Radio />} label="Benzin"></FormControlLabel>
-              <FormControlLabel value="electic" control={<Radio />} label="Electic"></FormControlLabel>
+              <FormControlLabel value="electric" control={<Radio />} label="Electric"></FormControlLabel>
             </RadioGroup>
           </FormControl>
 
