@@ -1,10 +1,16 @@
 import React from 'react'
-import  VehicleForm from './VehicleForm'
+import { observer } from 'mobx-react';
 import {
   makeStyles,
-  Paper
+  Paper,
+  TableBody,
+  TableRow,
+  TableCell
 } from '@material-ui/core';
 
+import  VehicleForm from './VehicleForm'
+import  UseTable from '../Components/UseTable'
+import {store} from  '../Stores/StoreVechile'
 
 const useStyles = makeStyles((theme)=>({
    pageContent : {
@@ -15,6 +21,11 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 
+const {TableContainer} =  UseTable()
+
+
+console.log(store.listVehicleGet);
+
 
 function Vehicle() {
   const classes = useStyles();
@@ -23,9 +34,23 @@ function Vehicle() {
     <Paper className={classes.pageContent}>
       <VehicleForm  >
       </VehicleForm>
+      <TableContainer>
+        <TableBody>
+        {
+          store.listVehicleGet.map(data=> (
+              <TableRow key={data.id}>
+                <TableCell>
+                  {data.city}
+                </TableCell> 
+              </TableRow>
+          ))
+        }
+        </TableBody>
+      </TableContainer>
+
     </Paper>
   )
 }
 
-export default Vehicle
+export default observer(Vehicle)
 

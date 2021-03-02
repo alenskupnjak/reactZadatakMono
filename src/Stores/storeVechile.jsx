@@ -5,7 +5,6 @@ import { makeObservable, observable, action, computed } from 'mobx';
 
 // Inicijalna vrijednost forme
 export const initVechileValue = {
-  id: 0,
   modelAuto: '',
   email: '',
   mobile: '',
@@ -32,7 +31,7 @@ const listVehicleInit = [
     isLoan: true,
   },
   {
-    id: 0,
+    id: 1,
     modelAuto: 'Ford',
     email: 'email@yahoo.com',
     mobile: 222222222,
@@ -54,7 +53,7 @@ class Store {
       vechileFormValue: observable,
       setVechileValue: action,
       listVehicle: observable,
-      listVehiclePut: action,
+      listVehiclePut: observable,
       listVehicleGet: computed,
       listVehicleDelete: action,
       listVehicleUpdate: action,
@@ -93,12 +92,39 @@ class Store {
 
   // PUT dodavanje zapisa na listu
   listVehiclePut(data) {
+    console.log(data);
+    
     this.listVehicle.push(data)
+    console.log(this.listVehicle);
+    this.listVehicle.forEach(data=> {
+      console.table(data.id);
+    })
+
+    // Nakon unosa vrijednosti resetiramo formu
+    this.vechileFormValue = initVechileValue
   }
 
-  // GET dodavanje zapisa na listu
+  // 
+  // GET povlacenje svih zapisa sa liste
   get listVehicleGet() {
-    return this.listVehicle
+    const listaAutomobila = this.listVehicle.map(data=>{
+      	const podaci = {
+            id: data.id,
+            modelAuto: data.modelAuto,
+            email: data.email,
+            mobile: data.mobile,
+            city: data.city,
+            motor: data.motor,
+            producer: data.producer,
+            producerId: data.producerId,
+            sellDate: data.sellDate,
+            isLoan: data.isLoan,
+     }
+      return podaci
+    })
+
+    console.log(listaAutomobila);    
+    return listaAutomobila 
   }
 
   // DELETE brisanje zapisa sa liste

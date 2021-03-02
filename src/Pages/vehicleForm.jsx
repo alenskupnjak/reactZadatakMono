@@ -93,12 +93,21 @@ function VehicleForm() {
     // Provjeravamo upisana polja
     validationForm()
 
-    //  Ako je FORMA ispravno popunjena spremamo u store
+    //  Ako je FORMA ispravno popunjena spremamo u mobX store
     if(validationForm()) {
+      // Generiramo imitaciju ID,
+      store.vechileFormValue.id = generateId()
       store.listVehiclePut(store.vechileFormValue)
       console.log(store.listVehicle);
     }
     console.log(errors);
+    console.log(store.vechileFormValue);
+  }
+
+
+  // Imitacija generiranja ID kljuca za listu automobila
+  const generateId = ()  => {
+    return Date.now()
   }
 
 
