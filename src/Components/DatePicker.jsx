@@ -1,8 +1,7 @@
 import React from 'react'
-
 import { MuiPickersUtilsProvider , KeyboardDatePicker}   from '@material-ui/pickers'
 
-// pick a date util library
+
 // import MomentUtils from '@date-io/moment';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -10,18 +9,17 @@ import DateFnsUtils from '@date-io/date-fns';
 function DatePicker(props) {
   const { name, label, value, onChange} = props
 
-  // Konverzija u format {value, name}
-  const konvertirajPrikladnePodatke = (e) =>{
-    const konverzija = {
+  // convert to format (target:{value, name})
+  const convertData = (e) =>{
+    const conversion = {
       target:{
         value:'',
         name:''
       }
     }
-    konverzija.target.value = e
-    konverzija.target.name = name
-    // console.log(konverzija);
-    onChange(konverzija)
+    conversion.target.value = e
+    conversion.target.name = name
+    onChange(conversion)
   }
   
 
@@ -30,16 +28,15 @@ function DatePicker(props) {
       <KeyboardDatePicker
           margin="normal"
           variant="dialog"
-          // id="date-picker-dialog"
           label={label}
           format="MM/dd/yyyy"
           value={value}
           name={name}
-          onChange={konvertirajPrikladnePodatke}
+          onChange={convertData}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
-        />
+      />
     </MuiPickersUtilsProvider>
   )
 }

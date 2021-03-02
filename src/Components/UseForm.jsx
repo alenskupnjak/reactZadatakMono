@@ -1,24 +1,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Observer } from 'mobx-react';
-import  { store } from  '../Stores/StoreVechile'
+import  { store } from  '../Common/StoreVechile'
 
 // 
 export function useForm(validationForm) {
-  // Prati promjenu vrijednossti u INPUT poljima
+  // detect change in all inputs fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Validacija forme
+    // save record to store validation
       store.setVechileValue(name,value)
   
-    // validiram formu
+    // validate form
     validationForm()
   };
   return { handleInputChange };
 }
 
 
-// Style CSS
+// Style Form CSS
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiFormControl-root': {
@@ -27,19 +27,17 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#eee',
     },
   },
-
 }));
 
 
 // 
 export function Form(props) {
   const classes = useStyles();
-
   return (
     <Observer>
       {
         ()=>(
-            // OPCIJA: autoComplete="off"
+            // option: autoComplete="off"
           <form className={classes.root}  >
             {props.children}
           </form>

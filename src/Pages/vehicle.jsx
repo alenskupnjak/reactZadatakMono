@@ -10,11 +10,11 @@ import {
 
 import  VehicleForm from './VehicleForm'
 import  UseTable from '../Components/UseTable'
-import {store} from  '../Stores/StoreVechile'
+import {store} from  '../Common/StoreVechile'
 
 
 const headCell = [
-  {id:'modelAuto', naziv:'Title'},
+  {id:'modelAuto', naziv:'Model'},
   {id:'email', naziv:'Email'},
   {id:'mobile', naziv:'Mobile'},
   {id:'city', naziv:'City'},
@@ -27,26 +27,25 @@ const useStyles = makeStyles((theme)=>({
    pageContent : {
      width:'80%',
      margin:'50px auto',
-    //  padding:theme.spacing(5)
+  //  padding:theme.spacing(5)
    }
 }))
 
 
-const {TableContainer, TableHeader} =  UseTable(headCell)
 
 
-console.log(store.listVehicleGet);
-
-
+// 
 function Vehicle() {
   const classes = useStyles();
+  const {TblContainer, TblHeader, TblPagination} = UseTable( store.listVehicleGet, headCell)
+
+
 
   return (
     <Paper className={classes.pageContent}>
-      <VehicleForm  >
-      </VehicleForm>
-      <TableContainer>
-        <TableHeader></TableHeader>
+      <VehicleForm></VehicleForm>
+      <TblContainer>
+        <TblHeader></TblHeader>
         <TableBody>
         {
           store.listVehicleGet.map(data=> (
@@ -62,8 +61,8 @@ function Vehicle() {
           ))
         }
         </TableBody>
-      </TableContainer>
-
+      </TblContainer>
+      < TblPagination></TblPagination>
     </Paper>
   )
 }

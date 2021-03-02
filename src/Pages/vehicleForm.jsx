@@ -12,17 +12,17 @@ import {
 } from '@material-ui/core';
 
 import { useForm, Form } from '../Components/UseForm';
-import InputCommon from '../Common/InputCommon';
-import InputSelect from '../Common/InputSelect';
-import InputCheckBox from '../Common/InputCheckBox';
-import DatePicker from '../Common/DatePicker';
-import CustomButton from '../Common/CustomButton';
+import InputCommon from '../Components/InputCommon';
+import InputSelect from '../Components/InputSelect';
+import InputCheckBox from '../Components/InputCheckBox';
+import DatePicker from '../Components/DatePicker';
+import CustomButton from '../Components/CustomButton';
 import { getDataOptions } from '../Common/VehicleService';
-import {store, initVechileValue} from  '../Stores/StoreVechile'
+import {store, initVechileValue} from  '../Common/StoreVechile'
 
 
 
-// ************************
+// 
 // Style CSS
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,37 +40,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//  ******************************************
-// Glavna funkcija
+// 
+// Main funkcija
 function VehicleForm() {
   const classes = useStyles();
   const [errors, setErrors] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
 
-  // Validacija forme
+  // form validation
   const validationForm = () => {
     const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
-    // Setiram grešku na nulu
+    // SET error
     const tempError = {}
     tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? '' : 'Invalid vehicle'
     tempError.email = (/@/).test(store.vechileFormValue.email)  ? '' : 'Invalid emali'
     tempError.mobile = regexPhone.test(store.vechileFormValue.mobile) ? '' : 'Invalid character'
     tempError.producerId = store.vechileFormValue.producerId !== '' ? '' : 'Select producer'
 
-    // postavljam grešku
+    // define error
     setErrors({
       ...tempError
     })
 
-    // ako je validacija svih polja TRUE, enable button SUBMIT
+    // if validation all fields is TRUE, make enable button SUBMIT
     if(Object.values(tempError).every((x) => x === '')) {
       setDisableSubmitButton(false)
     } else {
       setDisableSubmitButton(true)
     }
 
-    // provjerava tempError, ako su svi ="", znaci nema greške, vraca vrijednost TRUE
+    // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
     return Object.values(tempError).every((x) => x === '');
   }
 
@@ -78,38 +78,39 @@ function VehicleForm() {
   const { handleInputChange } = useForm(validationForm);
 
 
-  // RESET forme
+  // RESET form
   function resetForm() {
     store.vechileFormValue = initVechileValue
     setDisableSubmitButton(true)
   }
 
-  // SUBMIT FORME
+
+  // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Provjeravamo upisana polja
+    // check input fields
     validationForm()
 
-    //  Ako je FORMA ispravno popunjena spremamo u mobX store
+    //  IF FORM is valid  => save data in mobX
     if(validationForm()) {
 
-      // Generiramo imitaciju ID,
+      // Generate fake ID
       store.vechileFormValue.id = generateId()
 
-      // Unutar autoListe spremam podatak priozvidaca zbog ispisa
+      //  find producerId => save producer
       getDataOptions().forEach(data =>{
         if(data.id === store.vechileFormValue.producerId ) {
           return store.vechileFormValue.producer = data.title
         }
       })
       
-      // Spremam pripremljene podatke u listu
+      // save record to listVehicle
       store.listVehiclePut(store.vechileFormValue)
     }
   }
 
 
-  // Imitacija generiranja ID kljuca za listu automobila
+   // Generate fake ID
   const generateId = ()  => {
     return Date.now()
   }
@@ -122,7 +123,7 @@ function VehicleForm() {
           <InputCommon
             className={classes.root}
             variant="outlined"
-            label="Model auto"
+            label="Model"
             name="modelAuto"
             value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}
@@ -167,7 +168,7 @@ function VehicleForm() {
         </Grid>
         <Grid item xs={6}>
           <FormControl>
-            <FormLabel>Tip motora</FormLabel>
+            <FormLabel>Motor</FormLabel>
             {/* row usmjerava horizontalno */}
             <RadioGroup 
               row 

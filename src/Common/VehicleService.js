@@ -1,5 +1,4 @@
 
-
 export const getDataOptions = () =>[
   { id: '1', title: 'BMW' },
   { id: '2', title: 'FORD' },

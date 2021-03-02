@@ -1,9 +1,7 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 
 
-
-
-// Inicijalna vrijednost forme
+// Init form values
 export const initVechileValue = {
   modelAuto: '',
   email: '',
@@ -16,7 +14,7 @@ export const initVechileValue = {
 };
 
 
-// pocetne vrijednosti u listi automobila
+// init value u listVehicle
 const listVehicleInit = [
   {
     id: 0,
@@ -46,7 +44,7 @@ const listVehicleInit = [
 
 
 // 
-// Glavna store funkcija
+// MAIN MAIN MAIN
 class Store {
   constructor() {
     makeObservable(this, {
@@ -62,19 +60,19 @@ class Store {
 
   
   
-  // Pocetna vrijednost FORME i podataka u listi
+  // Init value 
   vechileFormValue = initVechileValue;
   listVehicle = listVehicleInit;
 
-  // promjena vrijednosti u formi
+  // Change value in form
   setVechileValue(name, valueForm) {
-    // setiramo vrijednost forme
+    //set value form
         this.vechileFormValue ={
           ...this.vechileFormValue,
         [name]:valueForm
       }
 
-      // SLUZI za ispis u conosle.table()
+      // for conosle.table() !
       const stateValueFormEdit = {
         id: this.vechileFormValue.id,
         modelAuto: this.vechileFormValue.modelAuto,
@@ -90,7 +88,8 @@ class Store {
       console.table(stateValueFormEdit);
   }
 
-  // PUT dodavanje zapisa na listu
+  // 
+  // PUT - add value to Vehicle list
   listVehiclePut(data) {
     console.log(data);
     
@@ -102,10 +101,10 @@ class Store {
   }
 
   // 
-  // GET povlacenje svih zapisa sa liste
+  // GET - pull data from Vehicle list
   get listVehicleGet() {
-    const listaAutomobila = this.listVehicle.map(data=>{
-      	const podaci = {
+    const listVehicle = this.listVehicle.map(data=>{
+      	const dataVehicle = {
           id: data.id,
           modelAuto: data.modelAuto,
           email: data.email,
@@ -117,19 +116,20 @@ class Store {
           sellDate: data.sellDate,
           isLoan: data.isLoan,
         }
-      return podaci
+      return dataVehicle
     })
-
-    // console.log(listaAutomobila);    
-    return listaAutomobila 
+ 
+    return listVehicle
   }
 
-  // DELETE brisanje zapisa sa liste
+  // 
+  // DELETE - delete one record from Vehicle list
   listVehicleDelete(data) {
     // some code
   }
 
-  // UPDATE promjena pojedinog zapisa zapisa na listu
+  // 
+  // UPDATE - change one record in Vehicle list
   listVehicleUpdate(data) {
   //  some code
   }
@@ -140,4 +140,3 @@ class Store {
 
 
 export const store = new Store();
-// export default store;

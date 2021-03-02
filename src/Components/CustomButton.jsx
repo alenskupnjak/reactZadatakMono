@@ -5,7 +5,7 @@ import {
 
 
 
-// definicaija CSS
+// definition CSS
 const useStyles = makeStyles(theme => ({
     root:{
       margin: theme.spacing(1)
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 function CustomButton(props) {
   const classes = useStyles();
-  const {text, size, color, variant, onclick, disabled, ...ostalo} = props
+  const {text, size, color, variant, onclick, disabled, ...other} = props
 
 
   return (
@@ -27,7 +27,7 @@ function CustomButton(props) {
     onClick={onclick}
     disabled={disabled ? true : false}
     className={classes.root}
-      {...ostalo}
+      {...other}
     >
       {text}
     </Button>

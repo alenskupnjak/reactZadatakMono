@@ -9,17 +9,17 @@ import {
 function InputCheckBox(props) {
   const { name, label, value, onChange} = props
   
-  // Konverzija u format {value, name}
-  const konvertirajPrikladnePodatke = (e) =>{
-    const konverzija = {
+  // convert to format (target:{value, name})
+  const convertData = (e) =>{
+    const convert = {
       target:{
         value:'',
         name:''
       }
     }
-    konverzija.target.value = e.target.checked
-    konverzija.target.name = e.target.name
-    onChange(konverzija)
+    convert.target.value = e.target.checked
+    convert.target.name = e.target.name
+    onChange(convert)
   }
 
 
@@ -29,13 +29,13 @@ function InputCheckBox(props) {
         labelPlacement="start"
         label={label}
         control={
-            <Checkbox
-              color="primary"
-              name={name}
-              checked={value}
-              onChange={konvertirajPrikladnePodatke}
-            >
-            </Checkbox>
+          <Checkbox
+            color="primary"
+            name={name}
+            checked={value}
+            onChange={convertData}
+          >
+          </Checkbox>
         }
       >
       </FormControlLabel>

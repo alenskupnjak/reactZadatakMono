@@ -1,9 +1,9 @@
-import React from 'react'
-import { makeStyles,Table, TableHead, TableRow, TableCell } from '@material-ui/core';
+import React, {useState} from 'react'
+import { makeStyles,Table, TableHead, TableRow, TableCell, TablePagination, } from '@material-ui/core';
 
 
 
-// ************************
+//
 // Style CSS
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -23,32 +23,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function UseTable (headerCell) {
+// 
+function UseTable(zapis, headerCell) {
+  const classes = useStyles();
 
- 
+  const pages = [3,6,10];
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(pages[0])
 
-  // Glavna tablica
-  const TableContainer = (props) => {
-    const classes = useStyles();
-    return (
-      <Table className={classes.table} >
-          {props.children}
-      </Table>
-    )
-    
-  }
+  
 
-
-  // HEADER tablica
-  const TableHeader = (props) => {
-
+  // HEADER table
+  const TblHeader = (props) => {
     return (
       <TableHead >
         <TableRow >
           {
-            headerCell.map(data => {
-              return <TableCell key={data.id} >{data.naziv}</TableCell>
-            })
+            headerCell.map(data => (
+              <TableCell key={data.id} >
+                {data.naziv}
+              </TableCell>
+            ))
           }
         </TableRow>
       </TableHead>
@@ -56,10 +51,40 @@ export default function UseTable (headerCell) {
     
   }
 
+  // MAIN table
+  const TblContainer = (props) => (
+      <Table className={classes.table} >
+          {props.children}
+      </Table>
+  )
+    
+
+  // change first page
+  const handleChangePage = (event, newPage) => {
+    console.log('handleChangePage');
+    setPage(newPage);
+  };
+
+  // Pagination
+  const TblPagination = (props) => (
+      <TablePagination 
+        rowsPerPageOptions={pages}
+        component="div"
+        count={zapis.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+      // onChangeRowsPerPage={handleChangeRowsPerPage}
+      >
+      </TablePagination>
+    )
+  
+
   return {
-    TableContainer,
-    TableHeader
+    TblContainer,
+    TblHeader,
+    TblPagination
   }
 }
 
-// export default UseTable
+export default UseTable
