@@ -1,12 +1,37 @@
 import React from 'react'
-import { Table, TableHead, TableRow, TableCell } from '@material-ui/core';
+import { makeStyles,Table, TableHead, TableRow, TableCell } from '@material-ui/core';
 
-function UseTable (headerCell) {
+
+
+// ************************
+// Style CSS
+const useStyles = makeStyles((theme) => ({
+  table: {
+    '& thead th': {
+      color: '#fff',
+      backgroundColor: theme.palette.primary.main,
+    },
+    '& tbody tr:hover': {
+      backgroundColor: '#0000001a',
+      cursor: 'pointer',
+    },
+    '& .MuiButton-root ': {
+      minWidth: '25px',
+      backgroundColor: '#faebd7'
+    },
+  },
+}));
+
+
+export default function UseTable (headerCell) {
+
+ 
 
   // Glavna tablica
   const TableContainer = (props) => {
+    const classes = useStyles();
     return (
-      <Table>
+      <Table className={classes.table} >
           {props.children}
       </Table>
     )
@@ -16,9 +41,10 @@ function UseTable (headerCell) {
 
   // HEADER tablica
   const TableHeader = (props) => {
+
     return (
-      <TableHead>
-        <TableRow>
+      <TableHead >
+        <TableRow >
           {
             headerCell.map(data => {
               return <TableCell key={data.id} >{data.naziv}</TableCell>
@@ -36,4 +62,4 @@ function UseTable (headerCell) {
   }
 }
 
-export default UseTable
+// export default UseTable
