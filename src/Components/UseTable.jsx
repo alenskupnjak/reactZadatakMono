@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 // 
-function UseTable(zapis, headerCell) {
+function UseTable(record, headerCell) {  
   const classes = useStyles();
 
-  const pages = [3,6,10];
+  const pages = [ 3, 6 , 10];
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(pages[0])
 
@@ -61,20 +61,39 @@ function UseTable(zapis, headerCell) {
 
   // change first page
   const handleChangePage = (event, newPage) => {
+    console.log(newPage);
     console.log('handleChangePage');
     setPage(newPage);
   };
+
+  // set page per pages
+  const handleChangeRowsPerPage = (event) => {
+    console.log('handleChangeRowsPerPage');
+    console.log(event);
+    console.log(event.target);
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+
+  // set page per pages
+  const afterSortingAndFiltering = (event) => {
+    const pageView =  record.slice().splice(page * rowsPerPage,rowsPerPage)
+    console.log(pageView);
+    return pageView
+  };
+
 
   // Pagination
   const TblPagination = (props) => (
       <TablePagination 
         rowsPerPageOptions={pages}
         component="div"
-        count={zapis.length}
+        count={record.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
-      // onChangeRowsPerPage={handleChangeRowsPerPage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
       >
       </TablePagination>
     )
@@ -83,7 +102,8 @@ function UseTable(zapis, headerCell) {
   return {
     TblContainer,
     TblHeader,
-    TblPagination
+    TblPagination,
+    afterSortingAndFiltering
   }
 }
 

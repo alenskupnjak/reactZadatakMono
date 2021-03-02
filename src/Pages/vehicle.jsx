@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme)=>({
 // 
 function Vehicle() {
   const classes = useStyles();
-  const {TblContainer, TblHeader, TblPagination} = UseTable( store.listVehicleGet, headCell)
+  const {TblContainer, TblHeader, TblPagination,  afterSortingAndFiltering} = UseTable( store.listVehicleGet, headCell)
 
 
 // 
@@ -72,7 +72,7 @@ const findModelVehicle = (dataVeh) => {
         <TblHeader></TblHeader>
         <TableBody>
         {
-          store.listVehicleGet.map(data=> (
+          afterSortingAndFiltering().map(data=> (
               <TableRow key={data.id}>
                 <TableCell> 
                   {
