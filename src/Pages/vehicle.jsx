@@ -39,9 +39,13 @@ function Vehicle() {
         {
           store.listVehicleGet.map(data=> (
               <TableRow key={data.id}>
-                <TableCell>
-                  {data.city}
-                </TableCell> 
+                <TableCell> {data.modelAuto}</TableCell> 
+                <TableCell> {data.email}</TableCell> 
+                <TableCell> {data.mobile}</TableCell> 
+                <TableCell> {data.city}</TableCell> 
+                <TableCell> {data.motor}</TableCell> 
+                <TableCell> {data.producer}</TableCell> 
+                {/* <TableCell> {data.sellDate}</TableCell>  */}
               </TableRow>
           ))
         }

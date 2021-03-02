@@ -38,7 +38,7 @@ const listVehicleInit = [
     city: 'Zagreb',
     motor: 'benzin',
     producer: "FORD",
-    producerId: '1',
+    producerId: '2',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: false,
   },
@@ -95,13 +95,10 @@ class Store {
     console.log(data);
     
     this.listVehicle.push(data)
-    console.log(this.listVehicle);
-    this.listVehicle.forEach(data=> {
-      console.table(data.id);
-    })
-
     // Nakon unosa vrijednosti resetiramo formu
     this.vechileFormValue = initVechileValue
+
+    console.log(this.listVehicle);
   }
 
   // 
@@ -109,21 +106,21 @@ class Store {
   get listVehicleGet() {
     const listaAutomobila = this.listVehicle.map(data=>{
       	const podaci = {
-            id: data.id,
-            modelAuto: data.modelAuto,
-            email: data.email,
-            mobile: data.mobile,
-            city: data.city,
-            motor: data.motor,
-            producer: data.producer,
-            producerId: data.producerId,
-            sellDate: data.sellDate,
-            isLoan: data.isLoan,
-     }
+          id: data.id,
+          modelAuto: data.modelAuto,
+          email: data.email,
+          mobile: data.mobile,
+          city: data.city,
+          motor: data.motor,
+          producer: data.producer,
+          producerId: data.producerId,
+          sellDate: data.sellDate,
+          isLoan: data.isLoan,
+        }
       return podaci
     })
 
-    console.log(listaAutomobila);    
+    // console.log(listaAutomobila);    
     return listaAutomobila 
   }
 
@@ -136,8 +133,6 @@ class Store {
   listVehicleUpdate(data) {
   //  some code
   }
-
-
 
 
 }

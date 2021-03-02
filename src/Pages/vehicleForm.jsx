@@ -22,8 +22,6 @@ import { getDataOptions } from '../Common/VehicleService';
 import {store, initVechileValue} from  '../Stores/StoreVechile'
 
 
-console.log(initVechileValue);
-
 
 // ************************
 // Style CSS
@@ -95,13 +93,20 @@ function VehicleForm() {
 
     //  Ako je FORMA ispravno popunjena spremamo u mobX store
     if(validationForm()) {
+
       // Generiramo imitaciju ID,
       store.vechileFormValue.id = generateId()
+
+      // Unutar autoListe spremam podatak priozvidaca zbog ispisa
+      getDataOptions().forEach(data =>{
+        if(data.id === store.vechileFormValue.producerId ) {
+          return store.vechileFormValue.producer = data.title
+        }
+      })
+      
+      // Spremam pripremljene podatke u listu
       store.listVehiclePut(store.vechileFormValue)
-      console.log(store.listVehicle);
     }
-    console.log(errors);
-    console.log(store.vechileFormValue);
   }
 
 
