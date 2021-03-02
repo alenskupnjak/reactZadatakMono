@@ -18,7 +18,6 @@ import InputCheckBox from '../Common/InputCheckBox';
 import DatePicker from '../Common/DatePicker';
 import CustomButton from '../Common/CustomButton';
 import { getDataOptions } from '../Common/VehicleService';
-// import store from  '../Stores/StoreVechile'
 import {store, initVechileValue} from  '../Stores/StoreVechile'
 
 
@@ -71,7 +70,7 @@ function VehicleForm() {
       setDisableSubmitButton(true)
     }
 
-    // provjerava tempError, ako su svi ="", znavi nema greške, vraca TRUE
+    // provjerava tempError, ako su svi ="", znaci nema greške, vraca vrijednost TRUE
     return Object.values(tempError).every((x) => x === '');
   }
 

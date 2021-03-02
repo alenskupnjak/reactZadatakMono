@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table } from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell } from '@material-ui/core';
 
-function UseTable (header) {
+function UseTable (headerCell) {
 
   // Glavna tablica
   const TableContainer = (props) => {
@@ -13,8 +13,26 @@ function UseTable (header) {
     
   }
 
+
+  // HEADER tablica
+  const TableHeader = (props) => {
+    return (
+      <TableHead>
+        <TableRow>
+          {
+            headerCell.map(data => {
+              return <TableCell key={data.id} >{data.naziv}</TableCell>
+            })
+          }
+        </TableRow>
+      </TableHead>
+    )
+    
+  }
+
   return {
-    TableContainer
+    TableContainer,
+    TableHeader
   }
 }
 
