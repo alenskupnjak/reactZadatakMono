@@ -17,7 +17,7 @@ import InputSelect from '../Components/InputSelect';
 import InputCheckBox from '../Components/InputCheckBox';
 import DatePicker from '../Components/DatePicker';
 import CustomButton from '../Components/CustomButton';
-import { getDataOptions } from '../Common/VehicleService';
+import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
 import {store, initVechileValue} from  '../Common/StoreVechile'
 
 
@@ -53,10 +53,10 @@ function VehicleForm() {
     const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
     // SET error
     const tempError = {}
-    tempError.modelAuto = store.vechileFormValue.modelAuto.length>0 ? '' : 'Invalid vehicle'
+    tempError.modelAuto = store.vechileFormValue.modelAuto !== '' ? '' : 'Invalid model '
     tempError.email = (/@/).test(store.vechileFormValue.email)  ? '' : 'Invalid emali'
     tempError.mobile = regexPhone.test(store.vechileFormValue.mobile) ? '' : 'Invalid character'
-    tempError.producerId = store.vechileFormValue.producerId !== '' ? '' : 'Select producer'
+    // tempError.producerId = store.vechileFormValue.producerId !== '' ? '' : 'Select producer'
 
     // define error
     setErrors({
@@ -97,12 +97,12 @@ function VehicleForm() {
       // Generate fake ID
       store.vechileFormValue.id = generateId()
 
-      //  find producerId => save producer
-      getDataOptions().forEach(data =>{
-        if(data.id === store.vechileFormValue.producerId ) {
-          return store.vechileFormValue.producer = data.title
-        }
-      })
+      // //  find producerId => save producer
+      // getProducerOptions().forEach(data =>{
+      //   if(data.id === store.vechileFormValue.producerId ) {
+      //     return store.vechileFormValue.producer = data.title
+      //   }
+      // })
       
       // save record to listVehicle
       store.listVehiclePut(store.vechileFormValue)
@@ -110,7 +110,7 @@ function VehicleForm() {
   }
 
 
-   // Generate fake ID
+  // Generate fake ID
   const generateId = ()  => {
     return Date.now()
   }
@@ -120,17 +120,15 @@ function VehicleForm() {
     <Form>
       <Grid container>
         <Grid item xs={6}>
-          <InputCommon
-            className={classes.root}
-            variant="outlined"
+          <InputSelect
             label="Model"
             name="modelAuto"
             value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}
+            dataOptions ={getModelOptions()}
             error={errors.modelAuto}
-            helperText="Model error"
           >
-          </InputCommon>
+          </InputSelect>
 
           <TextField
             className={classes.root}
@@ -182,15 +180,16 @@ function VehicleForm() {
             </RadioGroup>
           </FormControl>
 
-          <InputSelect
+
+          <TextField
+            className={classes.root}
+            variant="outlined"
             label="Producer"
-            name="producerId"
-            value={store.vechileFormValue.producerId}
-            onChange={handleInputChange}
-            dataOptions ={getDataOptions()}
-            error={errors.producerId}
+            name="producer"
+            value={store.vechileFormValue.producer}
+            disabled
           >
-          </InputSelect>
+          </TextField>
 
             <InputCheckBox
               label="Loan for vechile"

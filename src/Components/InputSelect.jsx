@@ -7,6 +7,7 @@ import {
   FormHelperText
 } from '@material-ui/core';
 
+// 
 function InputSelect(props) {
   const {name, label, value, onChange, dataOptions, error=null } = props
   
@@ -25,7 +26,12 @@ function InputSelect(props) {
                 <MenuItem value=''>None</MenuItem>
             {
               dataOptions.map(data => (
-                <MenuItem key={data.id} value={data.id}>{data.title}</MenuItem>
+                <MenuItem 
+                  key={data.id} 
+                  value={data.id} 
+                  producer={data.producerId}>
+                    {data.model}
+                </MenuItem>
               ))
             }
           </Select>

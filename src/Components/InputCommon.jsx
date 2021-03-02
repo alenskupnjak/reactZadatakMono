@@ -3,6 +3,7 @@ import {
   TextField,
 } from '@material-ui/core';
 
+// 
 function InputCommon(props) {
   const {name, label, value, onChange, error=null, helperText} = props
 

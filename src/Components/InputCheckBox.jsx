@@ -5,7 +5,7 @@ import {
   FormControlLabel,
 } from '@material-ui/core';
 
-
+// 
 function InputCheckBox(props) {
   const { name, label, value, onChange} = props
   

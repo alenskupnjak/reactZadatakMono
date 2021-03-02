@@ -11,6 +11,7 @@ import {
 import  VehicleForm from './VehicleForm'
 import  UseTable from '../Components/UseTable'
 import {store} from  '../Common/StoreVechile'
+import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
 
 
 const headCell = [
@@ -33,13 +34,36 @@ const useStyles = makeStyles((theme)=>({
 
 
 
-
 // 
 function Vehicle() {
   const classes = useStyles();
   const {TblContainer, TblHeader, TblPagination} = UseTable( store.listVehicleGet, headCell)
 
 
+// 
+const  findProducerVehicle = (dataModelAuto) => {
+  const model = getModelOptions().find(data=>{
+    return data.id === dataModelAuto
+  })
+  
+  const prod = getProducerOptions().find(data=>{
+      return data.id === model.producerId
+  })
+  
+  return prod.producer
+}
+  
+
+// 
+const findModelVehicle = (dataVeh) => {
+    const modelVeh = getModelOptions().find(data => {
+      return data.id === dataVeh
+    })    
+    return modelVeh.model
+};
+
+  
+  
 
   return (
     <Paper className={classes.pageContent}>
@@ -50,13 +74,20 @@ function Vehicle() {
         {
           store.listVehicleGet.map(data=> (
               <TableRow key={data.id}>
-                <TableCell> {data.modelAuto}</TableCell> 
-                <TableCell> {data.email}</TableCell> 
-                <TableCell> {data.mobile}</TableCell> 
-                <TableCell> {data.city}</TableCell> 
-                <TableCell> {data.motor}</TableCell> 
-                <TableCell> {data.producer}</TableCell> 
-                {/* <TableCell> {data.sellDate}</TableCell>  */}
+                <TableCell> 
+                  {
+                    findModelVehicle(data.modelAuto)
+                  }
+                </TableCell> 
+                <TableCell> {data.email} </TableCell> 
+                <TableCell> {data.mobile} </TableCell> 
+                <TableCell> {data.city} </TableCell> 
+                <TableCell> {data.motor} </TableCell> 
+                <TableCell> 
+                  {
+                    findProducerVehicle(data.modelAuto)  
+                  }
+                </TableCell> 
               </TableRow>
           ))
         }

@@ -8,7 +8,7 @@ export const initVechileValue = {
   mobile: '',
   city: '',
   motor: 'benzin',
-  producerId: '',
+  producer: '',
   sellDate: new Date(),
   isLoan: true,
 };
@@ -17,26 +17,22 @@ export const initVechileValue = {
 // init value u listVehicle
 const listVehicleInit = [
   {
-    id: 0,
-    modelAuto: 'X5',
+    id: 1254789134,
+    modelAuto: 'm7',
     email: 'email',
     mobile: 11111111,
     city: 'Sesvete',
     motor: 'diesel',
-    producer: "BMV",
-    producerId: '1',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: true,
   },
   {
-    id: 1,
-    modelAuto: 'Ford',
+    id: 7589325488,
+    modelAuto: 'm8',
     email: 'email@yahoo.com',
     mobile: 222222222,
     city: 'Zagreb',
     motor: 'benzin',
-    producer: "FORD",
-    producerId: '2',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: false,
   },
@@ -65,11 +61,11 @@ class Store {
   listVehicle = listVehicleInit;
 
   // Change value in form
-  setVechileValue(name, valueForm) {
+  setVechileValue(name, value) {
     //set value form
         this.vechileFormValue ={
           ...this.vechileFormValue,
-        [name]:valueForm
+        [name]:value,
       }
 
       // for conosle.table() !
@@ -80,8 +76,8 @@ class Store {
         mobile: this.vechileFormValue.mobile,
         city: this.vechileFormValue.city,
         motor: this.vechileFormValue.motor,
-        producer: this.vechileFormValue.producer,
-        producerId: this.vechileFormValue.producerId,
+        // producer: this.vechileFormValue.producer,
+        // producerId: this.vechileFormValue.producerId,
         sellDate: this.vechileFormValue.sellDate,
         isLoan: this.vechileFormValue.isLoan,
       }
@@ -111,14 +107,15 @@ class Store {
           mobile: data.mobile,
           city: data.city,
           motor: data.motor,
-          producer: data.producer,
-          producerId: data.producerId,
+          // producer: data.producer,
+          // producerId: data.producerId,
           sellDate: data.sellDate,
           isLoan: data.isLoan,
         }
       return dataVehicle
     })
- 
+       console.log(listVehicle);
+       
     return listVehicle
   }
 
