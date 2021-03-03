@@ -30,12 +30,12 @@ export const getModelOptions = () => [
   { id: 'm4', model: 'FIAT mod1', producerId:'p4'},
   { id: 'm5', model: 'VOLVO mod1' ,producerId:'p5' },
   { id: 'm6', model: 'TOYOTA mod1', producerId:'p6'},
-  { id: 'm7', model: 'BMW mod2' , producerId:'p1'},
-  { id: 'm8', model: 'FORD mod2', producerId:'p2' },
-  { id: 'm9', model: 'AUDI mod2', producerId:'p3' },
-  { id: 'm10', model: 'FIAT mod2', producerId:'p4'},
-  { id: 'm11', model: 'VOLVO mod2' ,producerId:'p5' },
-  { id: 'm12', model: 'TOYOTA mod2', producerId:'p6'},
+  { id: 'm7', model: 'BMW 2mod' , producerId:'p1'},
+  { id: 'm8', model: 'FORD 2mod', producerId:'p2' },
+  { id: 'm9', model: 'AUDI 2mod', producerId:'p3' },
+  { id: 'm10', model: 'FIAT 2mod', producerId:'p4'},
+  { id: 'm11', model: 'VOLVO 2mod' ,producerId:'p5' },
+  { id: 'm12', model: 'TOYOTA 2mod', producerId:'p6'},
 ]
 
 
@@ -111,6 +111,16 @@ export const listVehicleInit = [
     motor: 'benzin',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: true,
+  },
+  {
+    id: 'idx008',
+    modelAuto: 'm9',
+    email: 'email33@yahoo.com',
+    mobile: 333333,
+    city: 'Vukovar',
+    motor: 'diesel',
+    sellDate: '2021-02-26T10:51:22.509Z',
+    isLoan: false,
   },
 ];
 

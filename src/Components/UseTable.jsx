@@ -42,7 +42,6 @@ function UseTable(record, headerCell) {
     const handleSort = (columnId) => {
       setOrderSortBy(columnId)
       setOrderSort(orderSort === 'asc'? 'desc':'asc')
-      console.log(columnId, orderSortBy,orderSort);
     }
 
     
@@ -80,39 +79,36 @@ function UseTable(record, headerCell) {
 
   // change first page
   const handleChangePage = (event, newPage) => {
-    console.log('handleChangePage');
     setPage(newPage);
   };
 
   // set page per pages
   const handleChangeRowsPerPage = (event) => {
-    console.log('handleChangeRowsPerPage');
-    console.log(event);
-    console.log(event.target);
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
 
   // function for sorting
-  function sort() {
-    console.log(orderSort)
+  function sortVehicle() {
+    // init setup sort
     if(!orderSort) {
       return record
     }
     
     const prepareSortRecord = record.map(data=>{
+      // prepare sorting for model
       const modelName = getModelOptions().find(model=>{
         return model.id === data.modelAuto
       })
-      
+
+      //  prepare sorting for producer 
       const producerName = getProducerOptions().find(model=>{
         return model.id === modelName.producerId
       })
-      
+
       return {...data, modelAutoSort: modelName.model, producerSort:producerName.producer}
     })
-    console.log('%c ----------------', 'color:red');
     
     // stabilization
     const stabilizedThis = prepareSortRecord.map((el, index) => [el, index]);
@@ -130,7 +126,6 @@ function UseTable(record, headerCell) {
         return a[1] - b[1]
     });
 
-    // setOrderSortBy()
     return sortRecord.map((el) => el[0]);
   }
 
@@ -148,7 +143,7 @@ function UseTable(record, headerCell) {
 
   // set page per pages
   const afterSortingAndFiltering = (event) => {
-    return  sort().slice().splice(page * rowsPerPage,rowsPerPage)
+    return  sortVehicle().slice().splice(page * rowsPerPage,rowsPerPage)
   };
 
 

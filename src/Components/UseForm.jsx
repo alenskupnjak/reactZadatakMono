@@ -9,8 +9,6 @@ export function useForm(validationForm) {
   // detect change in all inputs fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log({name,value});
-    
     
     if (name ==='modelAuto') {
       const modelData = getModelOptions().find(data=> {
