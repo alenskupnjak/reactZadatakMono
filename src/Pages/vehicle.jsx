@@ -40,27 +40,27 @@ function Vehicle() {
   const {TblContainer, TblHeader, TblPagination,  afterSortingAndFiltering} = UseTable( store.listVehicleGet, headCell)
 
 
-// 
-const  findProducerVehicle = (dataModelAuto) => {
-  const model = getModelOptions().find(data=>{
-    return data.id === dataModelAuto
-  })
-  
-  const prod = getProducerOptions().find(data=>{
-      return data.id === model.producerId
-  })
-  
-  return prod.producer
-}
+  // 
+  const  findProducerVehicle = (dataModelAuto) => {
+    const model = getModelOptions().find(data=>{
+      return data.id === dataModelAuto
+    })
+    
+    const prod = getProducerOptions().find(data=>{
+        return data.id === model.producerId
+    })
+    
+    return prod.producer
+  }
   
 
-// 
-const findModelVehicle = (dataVeh) => {
-    const modelVeh = getModelOptions().find(data => {
-      return data.id === dataVeh
-    })    
-    return modelVeh.model
-};
+  // 
+  const findModelVehicle = (dataVeh) => {
+      const modelVeh = getModelOptions().find(data => {
+        return data.id === dataVeh
+      })    
+      return modelVeh.model
+  };
 
   
   

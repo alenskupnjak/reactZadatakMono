@@ -1,17 +1,6 @@
 import { makeObservable, observable, action, computed } from 'mobx';
-import { listVehicleInit } from './VehicleService';
+import { listVehicleInit, initVechileValue } from './VehicleService';
 
-// Init form values
-export const initVechileValue = {
-  modelAuto: '',
-  email: '',
-  mobile: '',
-  city: '',
-  motor: 'benzin',
-  producer: '',
-  sellDate: new Date(),
-  isLoan: true,
-};
 
 //
 // MAIN MAIN MAIN
@@ -57,8 +46,6 @@ class Store {
   //
   // PUT - add value to Vehicle list
   listVehiclePut(data) {
-    console.log(data);
-
     this.listVehicle.push(data);
     // after save reset form
     this.vechileFormValue = initVechileValue;
@@ -80,7 +67,6 @@ class Store {
       };
       return dataVehicle;
     });
-
     return listVehicle;
   }
 

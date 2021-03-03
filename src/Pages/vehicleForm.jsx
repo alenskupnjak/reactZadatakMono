@@ -17,8 +17,8 @@ import InputSelect from '../Components/InputSelect';
 import InputCheckBox from '../Components/InputCheckBox';
 import DatePicker from '../Components/DatePicker';
 import CustomButton from '../Components/CustomButton';
-import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
-import {store, initVechileValue} from  '../Common/StoreVechile'
+import { getProducerOptions , getModelOptions, initVechileValue} from '../Common/VehicleService';
+import {store } from  '../Common/StoreVechile'
 
 
 
@@ -88,6 +88,7 @@ function VehicleForm() {
   // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     // check input fields
     validationForm()
 
@@ -97,13 +98,6 @@ function VehicleForm() {
       // Generate fake ID
       store.vechileFormValue.id = generateId()
 
-      // //  find producerId => save producer
-      // getProducerOptions().forEach(data =>{
-      //   if(data.id === store.vechileFormValue.producerId ) {
-      //     return store.vechileFormValue.producer = data.title
-      //   }
-      // })
-      
       // save record to listVehicle
       store.listVehiclePut(store.vechileFormValue)
     }
@@ -112,7 +106,7 @@ function VehicleForm() {
 
   // Generate fake ID
   const generateId = ()  => {
-    return Date.now()
+    return 'idx'+ Date.now().toString()
   }
 
 
@@ -191,35 +185,35 @@ function VehicleForm() {
           >
           </TextField>
 
-            <InputCheckBox
-              label="Loan for vechile"
-              name="isLoan"
-              onChange={handleInputChange}
-              value={store.vechileFormValue.isLoan}
-            >
-            </InputCheckBox>
+          <InputCheckBox
+            label="Loan for vechile"
+            name="isLoan"
+            onChange={handleInputChange}
+            value={store.vechileFormValue.isLoan}
+          >
+          </InputCheckBox>
 
-            <DatePicker
-              label="Sell"
-              name="sellDate"
-              onChange={handleInputChange}
-              value={store.vechileFormValue.sellDate}
+          <DatePicker
+            label="Sell"
+            name="sellDate"
+            onChange={handleInputChange}
+            value={store.vechileFormValue.sellDate}
+          >
+          </DatePicker>
+          <div>
+            <CustomButton
+              onClick={handleSubmit}
+              text="SUBMIT"
+              disabled= {disableSubmitButton}
             >
-            </DatePicker>
-            <div>
-              <CustomButton
-                onClick={handleSubmit}
-                text="SUBMIT"
-                disabled= {disableSubmitButton}
-              >
-              </CustomButton>
-              <CustomButton
-                text="RESET"
-                color="default"
-                onClick={resetForm}
-              >
-              </CustomButton>
-            </div>
+            </CustomButton>
+            <CustomButton
+              text="RESET"
+              color="default"
+              onClick={resetForm}
+            >
+            </CustomButton>
+          </div>
         </Grid>
       </Grid>
     </Form>
