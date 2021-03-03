@@ -58,6 +58,7 @@ class Store {
       const dataVehicle = {
         id: data.id,
         modelAuto: data.modelAuto,
+        model: data.model,
         email: data.email,
         mobile: data.mobile,
         city: data.city,

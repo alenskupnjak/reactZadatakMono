@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 
 import { useForm, Form } from '../Components/UseForm';
-import InputCommon from '../Components/InputCommon';
 import InputSelect from '../Components/InputSelect';
 import InputCheckBox from '../Components/InputCheckBox';
 import DatePicker from '../Components/DatePicker';
@@ -56,7 +55,6 @@ function VehicleForm() {
     tempError.modelAuto = store.vechileFormValue.modelAuto !== '' ? '' : 'Invalid model '
     tempError.email = (/@/).test(store.vechileFormValue.email)  ? '' : 'Invalid emali'
     tempError.mobile = regexPhone.test(store.vechileFormValue.mobile) ? '' : 'Invalid character'
-    // tempError.producerId = store.vechileFormValue.producerId !== '' ? '' : 'Select producer'
 
     // define error
     setErrors({
@@ -98,8 +96,21 @@ function VehicleForm() {
       // Generate fake ID
       store.vechileFormValue.id = generateId()
 
+      const modelSave = getModelOptions().find(data=>{
+        return data.id ===  store.vechileFormValue.modelAuto
+      })
+
+      console.log(modelSave);
+      
+
+      console.log(store.vechileFormValue);
+      store.vechileFormValue.model = modelSave.model
+      
+
       // save record to listVehicle
       store.listVehiclePut(store.vechileFormValue)
+      console.log(store.listVehicle);
+      
     }
   }
 
@@ -144,7 +155,7 @@ function VehicleForm() {
             value={store.vechileFormValue.mobile}
             onChange={handleInputChange}
             error={errors.mobile ? true : false}
-            helperText={errors.mobile  ? 'Min. 6 number' :''}
+            helperText={errors.mobile  ? 'Invalid phone number' :''}
           >
           </TextField>
 

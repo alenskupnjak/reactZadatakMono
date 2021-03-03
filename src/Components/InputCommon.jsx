@@ -5,17 +5,18 @@ import {
 
 // 
 function InputCommon(props) {
-  const {name, label, value, onChange, error=null, helperText} = props
+  const {name, label, value, onChange, error=null, helperText, ...other} = props
 
+    
   return (
     <TextField
-      variant="outlined"
-      label={label}
       name={name}
+      label={label}
       value={value}
       onChange={onChange}
-      error={error ? true: false}
-      helperText={error ? helperText : ''}
+      error={error}
+      {...other}
+      helperText= {helperText}
     >
     </TextField>
   )

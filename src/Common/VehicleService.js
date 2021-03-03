@@ -45,6 +45,7 @@ export const listVehicleInit = [
   {
     id: 'idx001',
     modelAuto: 'm7',
+    model:'BMW 2mod',
     email: 'email11@yahoo',
     mobile: 11111111,
     city: 'Sesvete',
@@ -55,6 +56,7 @@ export const listVehicleInit = [
   {
     id:'idx002',
     modelAuto: 'm8',
+    model:'FORD 2mod',
     email: 'email22@yahoo.com',
     mobile: 222222222,
     city: 'Zagreb',
@@ -65,6 +67,7 @@ export const listVehicleInit = [
   {
     id: 'idx003',
     modelAuto: 'm3',
+    model: 'AUDI mod1',
     email: 'email33@yahoo.com',
     mobile: 333333,
     city: 'Osjek',
@@ -75,6 +78,7 @@ export const listVehicleInit = [
   {
     id: 'idx004',
     modelAuto: 'm4',
+    model:'FIAT mod1',
     email: 'email44@yahoo.com',
     mobile: 4444,
     city: 'Split',
@@ -85,6 +89,7 @@ export const listVehicleInit = [
   {
     id:'idx005',
     modelAuto: 'm4',
+    model: 'FIAT mod1',
     email: 'email55@yahoo.com',
     mobile: 5555,
     city: 'Rijeka',
@@ -95,6 +100,7 @@ export const listVehicleInit = [
   {
     id: 'idx006',
     modelAuto: 'm4',
+    model: 'FIAT mod1',
     email: 'email66@yahoo.com',
     mobile: 666,
     city: 'Pula',
@@ -105,6 +111,7 @@ export const listVehicleInit = [
   {
     id: 'idx007',
     modelAuto: 'm6',
+    model: 'TOYOTA mod1',
     email: 'email77@yahoo.com',
     mobile: 777777,
     city: 'Pula',
@@ -115,9 +122,10 @@ export const listVehicleInit = [
   {
     id: 'idx008',
     modelAuto: 'm9',
+    model: 'AUDI 2mod',
     email: 'email33@yahoo.com',
     mobile: 333333,
-    city: 'Vukovar',
+    city: 'Osjek',
     motor: 'diesel',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: false,

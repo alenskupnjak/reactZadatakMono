@@ -1,26 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react';
 import {
   makeStyles,
   Paper,
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  Toolbar,
+  InputAdornment,
 } from '@material-ui/core';
 
+
+import { Search } from '@material-ui/icons';
 import  VehicleForm from './VehicleForm'
 import  UseTable from '../Components/UseTable'
 import {store} from  '../Common/StoreVechile'
+import InputCommon from '../Components/InputCommon';
 import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
 
 
 const headCell = [
-  {id:'modelAuto', naziv:'Model'},
-  {id:'email', naziv:'Email'},
-  {id:'mobile', naziv:'Mobile'},
-  {id:'city', naziv:'City'},
-  {id:'motor', naziv:'Motor'},
-  {id:'producer', naziv:'Producer'}
+  {id:'modelAuto', label:'Model'},
+  {id:'email', label:'Email', disabledSorting:true},
+  {id:'mobile', label:'Mobile'},
+  {id:'city', label:'City'},
+  {id:'motor', label:'Motor'},
+  {id:'producer', label:'Producer'}
 ]
 
 
@@ -33,11 +38,15 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 
-
 // 
 function Vehicle() {
   const classes = useStyles();
-  const {TblContainer, TblHeader, TblPagination,  afterSortingAndFiltering} = UseTable( store.listVehicleGet, headCell)
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
+  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell,filterFn)
 
 
   // 
@@ -62,23 +71,58 @@ function Vehicle() {
       return modelVeh.model
   };
 
-  
-  
+  // filtriranje
+  const handleSearch = (e) => {    
+    if (e.target.value === '') {
+      setFilterFn({
+        fn: (items) => {
+            return items;
+        }
+      });
+    } else {
+      setFilterFn({
+        fn: (items) => {
+          return items.filter((data) =>
+            data.model.toLowerCase().includes(e.target.value.toLowerCase())
+          )
+        }
+      });
+    }
+  };
+
 
   return (
     <Paper className={classes.pageContent}>
       <VehicleForm></VehicleForm>
+        <Toolbar>   
+          <InputCommon
+            style={{width:'60%'}}
+            label='Filter'
+            className={classes.searchInput}
+            onChange={handleSearch}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start' >
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          >
+            
+          </InputCommon>
+        </Toolbar>
       <TblContainer>
         <TblHeader></TblHeader>
         <TableBody>
         {
           afterSortingAndFiltering().map(data=> (
               <TableRow key={data.id}>
-                <TableCell> 
+                {/* <TableCell> 
                   {
                     findModelVehicle(data.modelAuto)
                   }
-                </TableCell> 
+                </TableCell>  */}
+                <TableCell> {data.model}</TableCell> 
                 <TableCell> {data.email} </TableCell> 
                 <TableCell> {data.mobile} </TableCell> 
                 <TableCell> {data.city} </TableCell> 

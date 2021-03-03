@@ -26,14 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 // 
-function UseTable(record, headerCell) {  
+function UseTable(record, headerCell,filterFn) {  
   const classes = useStyles();
-
   const pages = [ 3, 6 , 10];
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(pages[0])
   const [orderSort, setOrderSort] = useState() 
-  const [orderSortBy, setOrderSortBy] = useState('modelAuto')
+  const [orderSortBy, setOrderSortBy] = useState('model')
 
 
   // HEADER table
@@ -51,13 +50,15 @@ function UseTable(record, headerCell) {
           {
             headerCell.map(data => (
               <TableCell key={data.id} >
-                <TableSortLabel
-                    active={data.id === orderSort}
-                    direction={orderSort}
-                    onClick={()=> {handleSort(data.id)}} 
-                >
-                  {data.naziv}
-                </TableSortLabel>
+                {data.disabledSorting ? data.label : 
+                  <TableSortLabel
+                      active={data.id === orderSort}
+                      direction={orderSort}
+                      onClick={()=> {handleSort(data.id)}} 
+                  >
+                    {data.label}
+                  </TableSortLabel>
+                }
               </TableCell>
             ))
           }
@@ -89,8 +90,11 @@ function UseTable(record, headerCell) {
   };
 
 
+  // 
   // function for sorting
-  function sortVehicle() {
+  function sortVehicle(record) {
+    console.log(record);
+    
     // init setup sort
     if(!orderSort) {
       return record
@@ -115,9 +119,9 @@ function UseTable(record, headerCell) {
     const sortDirection = orderSort === 'asc' ? 1: -1
     
     let sortRecord = [...stabilizedThis].sort((a, b) => {
-      if(orderSortBy === 'modelAuto'){
-        setOrderSortBy('modelAutoSort')
-      }
+      // if(orderSortBy === 'modelAuto'){
+      //   setOrderSortBy('modelAutoSort')
+      // }
       if(orderSortBy === 'producer'){
         setOrderSortBy('producerSort')
       }
@@ -142,8 +146,9 @@ function UseTable(record, headerCell) {
 
 
   // set page per pages
-  const afterSortingAndFiltering = (event) => {
-    return  sortVehicle().slice().splice(page * rowsPerPage,rowsPerPage)
+  const afterSortingAndFiltering = (event) => {    
+    return  sortVehicle(filterFn.fn(record)).slice().splice(page * rowsPerPage,rowsPerPage)
+    // return  sortVehicle().slice().splice(page * rowsPerPage,rowsPerPage)
   };
 
 

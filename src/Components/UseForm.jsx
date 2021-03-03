@@ -20,12 +20,11 @@ export function useForm(validationForm) {
         return data.id === modelData.producerId
       })
       console.log('02 dataVechile',dataVechileProducer, ' 03 modelData.id=',modelData.id);
-      console.log(typeof modelData.id);
       store.setVechileValue('producer',dataVechileProducer.producer)
       store.setVechileValue('modelAuto',modelData.id)
     } else {
-          // save record to store validation
-            store.setVechileValue(name,value)
+      // save record to store validation
+      store.setVechileValue(name,value)
     }
   
     // validate form
