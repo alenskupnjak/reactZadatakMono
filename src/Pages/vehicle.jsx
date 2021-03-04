@@ -8,25 +8,18 @@ import {
   TableCell,
   Toolbar,
   InputAdornment,
+  Button
 } from '@material-ui/core';
+import { Search  } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
 
-
-import { Search } from '@material-ui/icons';
+import { getProducerOptions , getModelOptions, headCell} from '../Common/VehicleService';
 import  VehicleForm from './VehicleForm'
 import  UseTable from '../Components/UseTable'
 import {store} from  '../Common/StoreVechile'
 import InputCommon from '../Components/InputCommon';
-import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
+import CustomOpenDialog from '../Components/CustomOpenDialog';
 
-
-const headCell = [
-  {id:'modelAuto', label:'Model'},
-  {id:'email', label:'Email', disabledSorting:true},
-  {id:'mobile', label:'Mobile'},
-  {id:'city', label:'City'},
-  {id:'motor', label:'Motor'},
-  {id:'producer', label:'Producer'}
-]
 
 
 const useStyles = makeStyles((theme)=>({
@@ -34,6 +27,10 @@ const useStyles = makeStyles((theme)=>({
      width:'80%',
      margin:'50px auto',
   //  padding:theme.spacing(5)
+   },
+   newButton : {
+     position:'absolute',
+     right:'10px'
    }
 }))
 
@@ -41,11 +38,11 @@ const useStyles = makeStyles((theme)=>({
 // 
 function Vehicle() {
   const classes = useStyles();
-  const [filterFn, setFilterFn] = useState({
-    fn: (items) => {
-      return items;
-    },
-  });
+  const [filterFn, setFilterFn] = useState({ fn: (items) => { return items;}});
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+
+
+
   const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell,filterFn)
 
 
@@ -92,53 +89,73 @@ function Vehicle() {
 
 
   return (
-    <Paper className={classes.pageContent}>
-      <VehicleForm></VehicleForm>
-        <Toolbar>   
-          <InputCommon
-            style={{width:'60%'}}
-            label='Filter'
-            className={classes.searchInput}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start' >
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          >
-            
-          </InputCommon>
-        </Toolbar>
-      <TblContainer>
-        <TblHeader></TblHeader>
-        <TableBody>
-        {
-          afterSortingAndFiltering().map(data=> (
-              <TableRow key={data.id}>
-                {/* <TableCell> 
-                  {
-                    findModelVehicle(data.modelAuto)
-                  }
-                </TableCell>  */}
-                <TableCell> {data.model}</TableCell> 
-                <TableCell> {data.email} </TableCell> 
-                <TableCell> {data.mobile} </TableCell> 
-                <TableCell> {data.city} </TableCell> 
-                <TableCell> {data.motor} </TableCell> 
-                <TableCell> 
-                  {
-                    findProducerVehicle(data.modelAuto)  
-                  }
-                </TableCell> 
-              </TableRow>
-          ))
-        }
-        </TableBody>
-      </TblContainer>
-      < TblPagination></TblPagination>
-    </Paper>
+    <React.Fragment>
+      <Paper className={classes.pageContent}>
+
+          <Toolbar>   
+            <InputCommon
+              style={{width:'60%'}}
+              label='Filter'
+              className={classes.searchInput}
+              onChange={handleSearch}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start' >
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            >
+              
+            </InputCommon>
+            <Button
+                className={classes.newButton}
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={() => {setOpenCustomDialog(true)}}
+                startIcon={<AddIcon></AddIcon>}
+            >
+              ADD NEW
+            </Button>
+          </Toolbar>
+        <TblContainer>
+          <TblHeader></TblHeader>
+          <TableBody>
+          {
+            afterSortingAndFiltering().map(data=> (
+                <TableRow key={data.id}>
+                  {/* <TableCell> 
+                    {
+                      findModelVehicle(data.modelAuto)
+                    }
+                  </TableCell>  */}
+                  <TableCell> {data.model}</TableCell> 
+                  <TableCell> {data.email} </TableCell> 
+                  <TableCell> {data.mobile} </TableCell> 
+                  <TableCell> {data.city} </TableCell> 
+                  <TableCell> {data.motor} </TableCell> 
+                  <TableCell> 
+                    {
+                      findProducerVehicle(data.modelAuto)  
+                    }
+                  </TableCell> 
+                </TableRow>
+            ))
+          }
+          </TableBody>
+        </TblContainer>
+        < TblPagination></TblPagination>
+      </Paper>
+      <CustomOpenDialog
+        openCustomDialog = {openCustomDialog}
+        setOpenCustomDialog = {setOpenCustomDialog}
+        title="Model vehicle"
+      >
+        <VehicleForm></VehicleForm>
+      </CustomOpenDialog>
+    </React.Fragment>
+
   )
 }
 

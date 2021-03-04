@@ -122,7 +122,7 @@ function VehicleForm() {
 
 
   return (
-    <Form>
+    <Form style={{ backgroundColor: 'orange',}}>
       <Grid container>
         <Grid item xs={6}>
           <InputSelect

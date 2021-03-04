@@ -10,9 +10,6 @@ import {
 import Vehicle from './Pages/Vehicle'
 
 
-
-
-
 const useStyles = makeStyles({
   bazaCSS: {
     width: '100%',
