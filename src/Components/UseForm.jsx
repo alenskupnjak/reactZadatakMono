@@ -14,12 +14,10 @@ export function useForm(validationForm) {
       const modelData = getModelOptions().find(data=> {
         return data.id === value
       })
-      console.log('01 modelData=',modelData);
       
       const dataVechileProducer = getProducerOptions().find(data=>{
         return data.id === modelData.producerId
       })
-      console.log('02 dataVechile',dataVechileProducer, ' 03 modelData.id=',modelData.id);
       store.setVechileValue('producer',dataVechileProducer.producer)
       store.setVechileValue('modelAuto',modelData.id)
     } else {

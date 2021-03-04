@@ -17,6 +17,7 @@ const useStyle = makeStyles((theme)=>({
   },
 }))
 
+// 
 const CustomOpenDialog = (props) => {
   const classes  = useStyle()
   const {title, children,  openCustomDialog, setOpenCustomDialog}  = props
@@ -30,21 +31,21 @@ const CustomOpenDialog = (props) => {
     >
       <DialogTitle  >
         <div style={{display:'flex', justifyContent: 'space-between'}}>
-        <Typography 
-          variant="h6"
-          component="div"
-        >
-          {title}
-        </Typography>
-        <Button
-          variant="contained"
-          style={{color:'blue', backgroundColor:'orange'}}
-          color= "secondary"
-          onClick={() => {setOpenCustomDialog(false)}}
-          className={classes.root}
-          startIcon={<CloseIcon></CloseIcon>}
-        >
-        </Button>
+            <Typography 
+              variant="h6"
+              component="div"
+            >
+              {title}
+            </Typography>
+            <Button
+              variant="contained"
+              style={{color:'blue', backgroundColor:'orange'}}
+              color= "secondary"
+              onClick={() => {setOpenCustomDialog(false)}}
+              className={classes.root}
+              startIcon={<CloseIcon></CloseIcon>}
+            >
+            </Button>
         </div>
       </DialogTitle>
       <DialogContent dividers >

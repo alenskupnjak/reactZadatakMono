@@ -10,12 +10,13 @@ import {
   InputAdornment,
   Button
 } from '@material-ui/core';
-import { EditOutlined, Search  } from '@material-ui/icons';
+import { Search  } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-import { getProducerOptions , getModelOptions, headCell} from '../Common/VehicleService';
+
+import { getProducerOptions , getModelOptions, headCell, initVechileValue} from '../Common/VehicleService';
 import  VehicleForm from './VehicleForm'
 import  UseTable from '../Components/UseTable'
 import {store} from  '../Common/StoreVechile'
@@ -46,13 +47,14 @@ const useStyles = makeStyles((theme)=>({
 // 
 function Vehicle() {
   const classes = useStyles();
+
+  // SET state
   const [filterFn, setFilterFn] = useState({ fn: (items) => { return items;}});
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
 
 
-
-  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell,filterFn)
+  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell, filterFn)
 
 
   // for populating table
@@ -69,8 +71,7 @@ function Vehicle() {
   
 
 
-
-  // filtriranje
+  // set functui filter
   const handleSearch = (e) => {    
     if (e.target.value === '') {
       setFilterFn({
@@ -91,17 +92,15 @@ function Vehicle() {
 
   // for editing and adding
   const updateOrAddFunc = (dataFormValue) => {
-    console.log(dataFormValue);
     setOpenCustomDialog(true)
     setAddOrUpdate('updateFormValue')
 
+    // find producer name
     const producer = findProducerVehicle(dataFormValue.modelAuto)
-    console.log(producer);
     dataFormValue.producer = producer
-    
+
+    // send data to form
     store.vechileFormValue= dataFormValue
-    // console.log(e.target.value);
-    
   }
 
   // DELETE record
@@ -135,7 +134,7 @@ function Vehicle() {
                 variant="contained"
                 size="large"
                 color="primary"
-                onClick={() => {setOpenCustomDialog(true)}}
+                onClick={() => { store.vechileFormValue = initVechileValue; setOpenCustomDialog(true)}}
                 startIcon={<AddIcon></AddIcon>}
             >
               ADD NEW MODEL
@@ -182,8 +181,7 @@ function Vehicle() {
                       startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
                     >
                     </Button>
-                  
-                  
+
                   </TableCell> 
                 </TableRow>
             ))

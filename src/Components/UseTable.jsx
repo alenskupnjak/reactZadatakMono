@@ -3,8 +3,6 @@ import { makeStyles,Table, TableHead, TableRow, TableCell, TablePagination, Tabl
 import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
 
 
-
-
 //
 // Style CSS
 const useStyles = makeStyles((theme) => ({
@@ -52,9 +50,9 @@ function UseTable(record, headerCell,filterFn) {
               <TableCell key={data.id} >
                 {data.disabledSorting ? data.label : 
                   <TableSortLabel
-                      active={data.id === orderSort}
-                      direction={orderSort}
-                      onClick={()=> {handleSort(data.id)}} 
+                    active={data.id === orderSort}
+                    direction={orderSort}
+                    onClick={()=> {handleSort(data.id)}} 
                   >
                     {data.label}
                   </TableSortLabel>
@@ -93,7 +91,6 @@ function UseTable(record, headerCell,filterFn) {
   // 
   // function for sorting
   function sortVehicle(recordData) {
-    console.log(recordData);
     
     // init setup sort
     if(!orderSort) {

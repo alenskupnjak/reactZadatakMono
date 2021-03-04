@@ -23,14 +23,15 @@ function InputSelect(props) {
             onChange={onChange}
             error={error ? true : false}
           >
-                <MenuItem value=''>None</MenuItem>
+              <MenuItem value=''>None</MenuItem>
             {
               dataOptions.map(data => (
                 <MenuItem 
                   key={data.id} 
                   value={data.id} 
-                  producer={data.producerId}>
-                    {data.model}
+                  producer={data.producerId}
+                >
+                  {data.model}
                 </MenuItem>
               ))
             }

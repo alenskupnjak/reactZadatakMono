@@ -1,13 +1,10 @@
 import React from 'react'
-import {
-  TextField,
-} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 // 
 function InputCommon(props) {
   const {name, label, value, onChange, error=null, helperText, ...other} = props
 
-    
   return (
     <TextField
       name={name}

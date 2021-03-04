@@ -80,21 +80,19 @@ class Store {
       return data.id === id
     })
 
-    //  DELETE
+    // delete record from list
     this.listVehicle.splice(index,1)
   }
 
   //
   // UPDATE - change one record in Vehicle list
   listVehicleUpdate(updateData) {
-    console.log('listVehicleUpdate',updateData);
+    const index = this.listVehicle.findIndex(data=>{
+      return data.id === updateData.id
+    })
 
-      const index = this.listVehicle.findIndex(data=>{
-        return data.id === updateData.id
-      })
-
-      //  replace (UPDATE) value
-      this.listVehicle.splice(index,1,updateData)
+    //  replace (UPDATE) value
+    this.listVehicle.splice(index,1,updateData)
       
   }
 }

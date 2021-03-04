@@ -16,7 +16,7 @@ import InputSelect from '../Components/InputSelect';
 import InputCheckBox from '../Components/InputCheckBox';
 import DatePicker from '../Components/DatePicker';
 import CustomButton from '../Components/CustomButton';
-import { getProducerOptions , getModelOptions, initVechileValue} from '../Common/VehicleService';
+import { getModelOptions, initVechileValue} from '../Common/VehicleService';
 import {store } from  '../Common/StoreVechile'
 
 
@@ -46,14 +46,10 @@ function VehicleForm(props) {
   const classes = useStyles();
   const {setOpenCustomDialog, addOrUpdate} = props
 
-
+  // SET state
   const [errors, setErrors] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
-
-
-  console.log(addOrUpdate);
-  // console.log(setOpenCustomDialog);
   
   // form validation
   const validationForm = () => {
@@ -124,8 +120,6 @@ function VehicleForm(props) {
         // save record to listVehicle
         store.listVehiclePut(store.vechileFormValue)
       } else {
-        console.log('U update modu SAM');
-
         // find model producer to store in model record
         const modelVeh = getModelOptions().find(data => {
           return data.id === store.vechileFormValue.modelAuto
@@ -142,8 +136,6 @@ function VehicleForm(props) {
           sellDate: store.vechileFormValue.sellDate,
           isLoan: store.vechileFormValue.isLoan,
         };
-        // console.log(dataVehicle);
-        // console.log(store.vechileFormValue);
         store.listVehicleUpdate(dataVehicle)
       }
     }
@@ -157,8 +149,6 @@ function VehicleForm(props) {
   const generateId = ()  => {
     return 'idx'+ Date.now().toString()
   }
-
-
 
 
   return (
@@ -212,7 +202,6 @@ function VehicleForm(props) {
         <Grid item xs={6}>
           <FormControl>
             <FormLabel>Motor</FormLabel>
-            {/* row usmjerava horizontalno */}
             <RadioGroup 
               row 
               value={store.vechileFormValue.motor}  

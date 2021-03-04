@@ -1,5 +1,4 @@
-
-// Init form values
+// Init values and reset for form
 export const initVechileValue = {
   modelAuto: '',
   email: '',
@@ -11,7 +10,7 @@ export const initVechileValue = {
   isLoan: true,
 };
 
-
+// 
 // list of vehicle producers
 export const getProducerOptions = () => [
   { id: 'p1', producer: 'BMW' },
@@ -22,6 +21,7 @@ export const getProducerOptions = () => [
   { id: 'p6', producer: 'TOYOTA' },
 ]
 
+// 
 // list of vehicle models
 export const getModelOptions = () => [
   { id: 'm1', model: 'BMW mod1' , producerId:'p1'},
@@ -38,6 +38,8 @@ export const getModelOptions = () => [
   { id: 'm12', model: 'TOYOTA 2mod', producerId:'p6'},
 ]
 
+// 
+// value for TABLE header
 export const headCell = [
   {id:'model', label:'Model'},
   {id:'email', label:'Email', disabledSorting:true},
@@ -48,8 +50,7 @@ export const headCell = [
   {id:'action', label:'Action',disabledSorting:true}
 ]
 
-
-
+// 
 // init fake value u listVehicle
 export const listVehicleInit = [
   {
