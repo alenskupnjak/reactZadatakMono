@@ -20,7 +20,7 @@ const useStyle = makeStyles((theme)=>({
 // 
 const CustomOpenDialog = (props) => {
   const classes  = useStyle()
-  const {title, children,  openCustomDialog, setOpenCustomDialog}  = props
+  const {title, children,  openCustomDialog, setOpenCustomDialog, setAddOrUpdate}  = props
 
 
   return (
@@ -41,7 +41,7 @@ const CustomOpenDialog = (props) => {
               variant="contained"
               style={{color:'blue', backgroundColor:'orange'}}
               color= "secondary"
-              onClick={() => {setOpenCustomDialog(false)}}
+              onClick={() => {setOpenCustomDialog(false); setAddOrUpdate('addFormValueToList')}}
               className={classes.root}
               startIcon={<CloseIcon></CloseIcon>}
             >

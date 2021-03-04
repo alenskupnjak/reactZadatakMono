@@ -18,6 +18,7 @@ import DatePicker from '../Components/DatePicker';
 import CustomButton from '../Components/CustomButton';
 import { getModelOptions, initVechileValue} from '../Common/VehicleService';
 import {store } from  '../Common/StoreVechile'
+import Notification from '../Components/Notification';
 
 
 
@@ -44,11 +45,12 @@ const useStyles = makeStyles((theme) => ({
 // Main funkcija
 function VehicleForm(props) {
   const classes = useStyles();
-  const {setOpenCustomDialog, addOrUpdate} = props
+  const {setOpenCustomDialog, addOrUpdate,  setAddOrUpdate, setNotify} = props
 
   // SET state
   const [errors, setErrors] = useState({});
-  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
+  const [disableSubmitButton, setDisableSubmitButton ] = useState(true);
+  // const [notify,setNotify] = useState({isOpen:false, msg:'', type:''});
 
   
   // form validation
@@ -119,6 +121,9 @@ function VehicleForm(props) {
         
         // save record to listVehicle
         store.listVehiclePut(store.vechileFormValue)
+
+        // Display info on screen
+        setNotify({isOpen:true, msg:'Add Vechile', type:'success'});
       } else {
         // find model producer to store in model record
         const modelVeh = getModelOptions().find(data => {
@@ -137,6 +142,10 @@ function VehicleForm(props) {
           isLoan: store.vechileFormValue.isLoan,
         };
         store.listVehicleUpdate(dataVehicle)
+        // Display info on screen
+        setNotify({isOpen:true, msg:'Update Vechile', type:'warning'});
+
+        setAddOrUpdate('addFormValueToList')
       }
     }
 

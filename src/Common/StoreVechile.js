@@ -45,9 +45,7 @@ class Store {
 
   //
   // PUT - add value to Vehicle list
-  listVehiclePut(data) {
-    console.log(data);
-    
+  listVehiclePut(data) {    
     this.listVehicle.push(data);
     // after save reset form
     this.vechileFormValue = initVechileValue;

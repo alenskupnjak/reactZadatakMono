@@ -22,6 +22,7 @@ import  UseTable from '../Components/UseTable'
 import {store} from  '../Common/StoreVechile'
 import InputCommon from '../Components/InputCommon';
 import CustomOpenDialog from '../Components/CustomOpenDialog';
+import Notification from '../Components/Notification';
 
 
 
@@ -52,6 +53,7 @@ function Vehicle() {
   const [filterFn, setFilterFn] = useState({ fn: (items) => { return items;}});
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
+  const [notify,setNotify] = useState({isOpen:false, msg:'', type:''});
 
 
   const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell, filterFn)
@@ -95,6 +97,9 @@ function Vehicle() {
     setOpenCustomDialog(true)
     setAddOrUpdate('updateFormValue')
 
+    // Display info on screen
+    setNotify({isOpen:true, msg:'Edit Vechile', type:'info'});
+
     // find producer name
     const producer = findProducerVehicle(dataFormValue.modelAuto)
     dataFormValue.producer = producer
@@ -105,6 +110,8 @@ function Vehicle() {
 
   // DELETE record
   const deleteVehicle= (id) => {
+    // Display info on screen
+    setNotify({isOpen:true, msg:'Delete Vechile', type:'info'});
     store.listVehicleDelete(id)
   }
 
@@ -193,14 +200,22 @@ function Vehicle() {
         <CustomOpenDialog
           openCustomDialog = {openCustomDialog}
           setOpenCustomDialog = {setOpenCustomDialog}
+          setAddOrUpdate={setAddOrUpdate}
           title="Model vehicle"
         >
         <VehicleForm
           setOpenCustomDialog={setOpenCustomDialog}
           addOrUpdate={addOrUpdate}
+          setAddOrUpdate={setAddOrUpdate}
+          setNotify={setNotify}
         >
         </VehicleForm>
       </CustomOpenDialog>
+      <Notification
+        notify={notify}
+        setNotify={setNotify}
+      >
+      </Notification>
     </React.Fragment>
 
   )
