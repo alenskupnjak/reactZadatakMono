@@ -99,7 +99,6 @@ function Vehicle() {
     console.log(producer);
     dataFormValue.producer = producer
     
-    
     store.vechileFormValue= dataFormValue
     // console.log(e.target.value);
     
@@ -107,7 +106,7 @@ function Vehicle() {
 
   // DELETE record
   const deleteVehicle= (id) => {
-      console.log(id);
+    store.listVehicleDelete(id)
   }
 
 

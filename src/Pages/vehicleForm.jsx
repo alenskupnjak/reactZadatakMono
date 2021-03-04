@@ -109,7 +109,7 @@ function VehicleForm(props) {
     //  IF FORM is valid  => save data in mobX
     if(validationForm()) {
 
-      //  ADD or  UPDATE
+      //  ADD or UPDATE
       if(addOrUpdate === 'addFormValueToList') {
         // Generate fake ID
         store.vechileFormValue.id = generateId()
@@ -125,6 +125,8 @@ function VehicleForm(props) {
         store.listVehiclePut(store.vechileFormValue)
       } else {
         console.log('U update modu SAM');
+
+        // find model producer to store in model record
         const modelVeh = getModelOptions().find(data => {
           return data.id === store.vechileFormValue.modelAuto
         })  
@@ -140,8 +142,8 @@ function VehicleForm(props) {
           sellDate: store.vechileFormValue.sellDate,
           isLoan: store.vechileFormValue.isLoan,
         };
-        console.log(dataVehicle);
-        console.log(store.vechileFormValue);
+        // console.log(dataVehicle);
+        // console.log(store.vechileFormValue);
         store.listVehicleUpdate(dataVehicle)
       }
     }

@@ -75,28 +75,25 @@ class Store {
 
   //
   // DELETE - delete one record from Vehicle list
-  listVehicleDelete(data) {
-    // some code
+  listVehicleDelete(id) {
+    const index = this.listVehicle.findIndex(data=>{
+      return data.id === id
+    })
+
+    //  DELETE
+    this.listVehicle.splice(index,1)
   }
 
   //
   // UPDATE - change one record in Vehicle list
   listVehicleUpdate(updateData) {
-    console.log('listVehicleUpdate');
-    console.log(updateData);
-    
-    //   this.listVehicle.forEach(data=>{
-    //     console.log(data);
-    //     if(data.id === updateData.id) {
-    //       data = updateData
-    //     }
-    // })
+    console.log('listVehicleUpdate',updateData);
 
       const index = this.listVehicle.findIndex(data=>{
         return data.id === updateData.id
       })
-      console.log(index);
 
+      //  replace (UPDATE) value
       this.listVehicle.splice(index,1,updateData)
       
   }
