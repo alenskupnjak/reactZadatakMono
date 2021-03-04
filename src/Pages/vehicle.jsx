@@ -10,8 +10,10 @@ import {
   InputAdornment,
   Button
 } from '@material-ui/core';
-import { Search  } from '@material-ui/icons';
+import { EditOutlined, Search  } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import { getProducerOptions , getModelOptions, headCell} from '../Common/VehicleService';
 import  VehicleForm from './VehicleForm'
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme)=>({
    newButton : {
      position:'absolute',
      right:'10px'
+   },
+   custom : {
+     '& .MuiButton-startIcon': {
+      marginRight: '0px',
+      marginLeft: '0px'
+    },
    }
 }))
 
@@ -40,13 +48,14 @@ function Vehicle() {
   const classes = useStyles();
   const [filterFn, setFilterFn] = useState({ fn: (items) => { return items;}});
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
 
 
 
   const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell,filterFn)
 
 
-  // 
+  // for populating table
   const  findProducerVehicle = (dataModelAuto) => {
     const model = getModelOptions().find(data=>{
       return data.id === dataModelAuto
@@ -55,18 +64,11 @@ function Vehicle() {
     const prod = getProducerOptions().find(data=>{
         return data.id === model.producerId
     })
-    
     return prod.producer
   }
   
 
-  // 
-  const findModelVehicle = (dataVeh) => {
-      const modelVeh = getModelOptions().find(data => {
-        return data.id === dataVeh
-      })    
-      return modelVeh.model
-  };
+
 
   // filtriranje
   const handleSearch = (e) => {    
@@ -86,6 +88,27 @@ function Vehicle() {
       });
     }
   };
+
+  // for editing and adding
+  const updateOrAddFunc = (dataFormValue) => {
+    console.log(dataFormValue);
+    setOpenCustomDialog(true)
+    setAddOrUpdate('updateFormValue')
+
+    const producer = findProducerVehicle(dataFormValue.modelAuto)
+    console.log(producer);
+    dataFormValue.producer = producer
+    
+    
+    store.vechileFormValue= dataFormValue
+    // console.log(e.target.value);
+    
+  }
+
+  // DELETE record
+  const deleteVehicle= (id) => {
+      console.log(id);
+  }
 
 
   return (
@@ -116,7 +139,7 @@ function Vehicle() {
                 onClick={() => {setOpenCustomDialog(true)}}
                 startIcon={<AddIcon></AddIcon>}
             >
-              ADD NEW
+              ADD NEW MODEL
             </Button>
           </Toolbar>
         <TblContainer>
@@ -139,6 +162,29 @@ function Vehicle() {
                     {
                       findProducerVehicle(data.modelAuto)  
                     }
+                  </TableCell>
+                  <TableCell> 
+
+                    <Button
+                      id={data.id}
+                      className={classes.custom}
+                      variant="contained"
+                      style={{backgroundColor:'#2543C5', padding:'5px', marginRight: '0px'}}
+                      onClick={() => updateOrAddFunc (data) }
+                      startIcon={<EditIcon></EditIcon>}
+                    >
+                    </Button>
+                    <Button
+                      id={data.id}
+                      className={classes.custom}
+                      variant="outlined"
+                      style={{backgroundColor:'red', padding:'5px', marginRight: '0px'}}
+                      onClick={ () => deleteVehicle(data.id) }
+                      startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
+                    >
+                    </Button>
+                  
+                  
                   </TableCell> 
                 </TableRow>
             ))
@@ -147,12 +193,16 @@ function Vehicle() {
         </TblContainer>
         < TblPagination></TblPagination>
       </Paper>
-      <CustomOpenDialog
-        openCustomDialog = {openCustomDialog}
-        setOpenCustomDialog = {setOpenCustomDialog}
-        title="Model vehicle"
-      >
-        <VehicleForm></VehicleForm>
+        <CustomOpenDialog
+          openCustomDialog = {openCustomDialog}
+          setOpenCustomDialog = {setOpenCustomDialog}
+          title="Model vehicle"
+        >
+        <VehicleForm
+          setOpenCustomDialog={setOpenCustomDialog}
+          addOrUpdate={addOrUpdate}
+        >
+        </VehicleForm>
       </CustomOpenDialog>
     </React.Fragment>
 

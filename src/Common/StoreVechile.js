@@ -46,6 +46,8 @@ class Store {
   //
   // PUT - add value to Vehicle list
   listVehiclePut(data) {
+    console.log(data);
+    
     this.listVehicle.push(data);
     // after save reset form
     this.vechileFormValue = initVechileValue;
@@ -79,8 +81,24 @@ class Store {
 
   //
   // UPDATE - change one record in Vehicle list
-  listVehicleUpdate(data) {
-    //  some code
+  listVehicleUpdate(updateData) {
+    console.log('listVehicleUpdate');
+    console.log(updateData);
+    
+    //   this.listVehicle.forEach(data=>{
+    //     console.log(data);
+    //     if(data.id === updateData.id) {
+    //       data = updateData
+    //     }
+    // })
+
+      const index = this.listVehicle.findIndex(data=>{
+        return data.id === updateData.id
+      })
+      console.log(index);
+
+      this.listVehicle.splice(index,1,updateData)
+      
   }
 }
 

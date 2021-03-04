@@ -34,7 +34,7 @@ const theme = createMuiTheme({
   shape: {
     borderRadius: '8px'
   },
-  backgroundColor: '#faebd7',
+    backgroundColor: '#faebd7',
 });
 
 function App() {

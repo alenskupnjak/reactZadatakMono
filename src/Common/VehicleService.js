@@ -44,7 +44,8 @@ export const headCell = [
   {id:'mobile', label:'Mobile'},
   {id:'city', label:'City'},
   {id:'motor', label:'Motor'},
-  {id:'producer', label:'Producer'}
+  {id:'producer', label:'Producer'},
+  {id:'action', label:'Action',disabledSorting:true}
 ]
 
 

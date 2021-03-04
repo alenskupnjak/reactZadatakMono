@@ -14,9 +14,7 @@ const useStyle = makeStyles((theme)=>({
     '& .MuiButton-root': {
       minWidth: '16px'
     },
-  
   },
-
 }))
 
 const CustomOpenDialog = (props) => {

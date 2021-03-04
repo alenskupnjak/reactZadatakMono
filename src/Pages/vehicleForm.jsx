@@ -1,4 +1,4 @@
-import React , {useState}from 'react';
+import React , {useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import {
   Grid,
@@ -29,9 +29,10 @@ const useStyles = makeStyles((theme) => ({
       width: '60%',
     },
     margin: theme.spacing(1),
-    // '& .MuiInputBase-input' : {
-    //     margin:'50px'
-    // },
+    '& .MuiButton-startIcon': {
+      marginRight: '0px',
+      marginLeft: '0px'
+    },
   },
   marginForm: {
     width: '80%',
@@ -41,12 +42,19 @@ const useStyles = makeStyles((theme) => ({
 
 // 
 // Main funkcija
-function VehicleForm() {
+function VehicleForm(props) {
   const classes = useStyles();
+  const {setOpenCustomDialog, addOrUpdate} = props
+
+
   const [errors, setErrors] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
 
 
+
+  console.log(addOrUpdate);
+  // console.log(setOpenCustomDialog);
+  
   // form validation
   const validationForm = () => {
     const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
@@ -76,6 +84,14 @@ function VehicleForm() {
   const { handleInputChange } = useForm(validationForm);
 
 
+  //  if UPDATE => ENABLE submit button
+  useEffect(() => {
+    if (addOrUpdate === 'updateFormValue')
+        setDisableSubmitButton(false)
+    }, [disableSubmitButton])
+
+
+
   // RESET form
   function resetForm() {
     store.vechileFormValue = initVechileValue
@@ -93,25 +109,45 @@ function VehicleForm() {
     //  IF FORM is valid  => save data in mobX
     if(validationForm()) {
 
-      // Generate fake ID
-      store.vechileFormValue.id = generateId()
+      //  ADD or  UPDATE
+      if(addOrUpdate === 'addFormValueToList') {
+        // Generate fake ID
+        store.vechileFormValue.id = generateId()
+  
+        const modelSave = getModelOptions().find(data=>{
+          return data.id ===  store.vechileFormValue.modelAuto
+        })
+  
+        // prepare field for sorting
+        store.vechileFormValue.model = modelSave.model
+        
+        // save record to listVehicle
+        store.listVehiclePut(store.vechileFormValue)
+      } else {
+        console.log('U update modu SAM');
+        const modelVeh = getModelOptions().find(data => {
+          return data.id === store.vechileFormValue.modelAuto
+        })  
 
-      const modelSave = getModelOptions().find(data=>{
-        return data.id ===  store.vechileFormValue.modelAuto
-      })
-
-      console.log(modelSave);
-      
-
-      console.log(store.vechileFormValue);
-      store.vechileFormValue.model = modelSave.model
-      
-
-      // save record to listVehicle
-      store.listVehiclePut(store.vechileFormValue)
-      console.log(store.listVehicle);
-      
+        const dataVehicle = {
+          id: store.vechileFormValue.id,
+          modelAuto: store.vechileFormValue.modelAuto,
+          model: modelVeh.model,
+          email:store.vechileFormValue.email,
+          mobile: store.vechileFormValue.mobile,
+          city: store.vechileFormValue.city,
+          motor:store.vechileFormValue.motor,
+          sellDate: store.vechileFormValue.sellDate,
+          isLoan: store.vechileFormValue.isLoan,
+        };
+        console.log(dataVehicle);
+        console.log(store.vechileFormValue);
+        store.listVehicleUpdate(dataVehicle)
+      }
     }
+
+    // close dialog
+    setOpenCustomDialog(false)
   }
 
 
@@ -121,8 +157,10 @@ function VehicleForm() {
   }
 
 
+
+
   return (
-    <Form style={{ backgroundColor: 'orange',}}>
+    <Form>
       <Grid container>
         <Grid item xs={6}>
           <InputSelect
@@ -214,7 +252,8 @@ function VehicleForm() {
           <div>
             <CustomButton
               onClick={handleSubmit}
-              text="SUBMIT"
+              // text="SUBMIT"
+              text= { addOrUpdate === 'addFormValueToList' ? 'SUBMIT': 'UPDATE'}
               disabled= {disableSubmitButton}
             >
             </CustomButton>
