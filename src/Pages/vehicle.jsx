@@ -21,6 +21,7 @@ import  VehicleForm from './VehicleForm'
 import  UseTable from '../Components/UseTable'
 import {store} from  '../Common/StoreVechile'
 import InputCommon from '../Components/InputCommon';
+import ConfirmDialog from '../Components/ConfirmDialog';
 import CustomOpenDialog from '../Components/CustomOpenDialog';
 import Notification from '../Components/Notification';
 
@@ -29,7 +30,7 @@ import Notification from '../Components/Notification';
 const useStyles = makeStyles((theme)=>({
    pageContent : {
      width:'80%',
-     margin:'50px auto',
+     margin:'0 auto',
   //  padding:theme.spacing(5)
    },
    newButton : {
@@ -54,6 +55,7 @@ function Vehicle() {
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
   const [notify,setNotify] = useState({isOpen:false, msg:'', type:''});
+  const [confirmDialog, setConfirmDialog] = useState({isOpen:false,title:'', subTitle:''});
 
 
   const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell, filterFn)
@@ -110,9 +112,12 @@ function Vehicle() {
 
   // DELETE record
   const deleteVehicle= (id) => {
-    // Display info on screen
-    setNotify({isOpen:true, msg:'Delete Vechile', type:'info'});
-    store.listVehicleDelete(id)
+    setConfirmDialog({isOpen:false})
+    // if(window.confirm('Are you sure to delete this record?')) {
+      // Display info on screen
+      setNotify({isOpen:true, msg:'Delete Vechile', type:'error'});
+      store.listVehicleDelete(id)
+    // }
   }
 
 
@@ -123,7 +128,7 @@ function Vehicle() {
           <Toolbar>   
             <InputCommon
               style={{width:'60%'}}
-              label='Filter'
+              label='Filter Model'
               className={classes.searchInput}
               onChange={handleSearch}
               InputProps={{
@@ -184,7 +189,14 @@ function Vehicle() {
                       className={classes.custom}
                       variant="outlined"
                       style={{backgroundColor:'red', padding:'5px', marginRight: '0px'}}
-                      onClick={ () => deleteVehicle(data.id) }
+                      onClick={() => {
+                        setConfirmDialog({
+                            isOpen:true, 
+                            title:'Are you sure to delete this record?', 
+                            subTitle:'You can not undo action',
+                            onConfirm: () => {deleteVehicle(data.id)}
+                        })
+                      }}
                       startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
                     >
                     </Button>
@@ -216,6 +228,11 @@ function Vehicle() {
         setNotify={setNotify}
       >
       </Notification>
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      >
+      </ConfirmDialog>
     </React.Fragment>
 
   )

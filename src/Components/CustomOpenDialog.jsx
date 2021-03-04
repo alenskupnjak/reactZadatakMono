@@ -6,7 +6,7 @@ const useStyle = makeStyles((theme)=>({
   dialogcustom: {
     padding: theme.spacing(2),
     // top: theme.spacing(5),
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
     '& .MuiButton-startIcon': {
       marginRight: '0px',
       marginLeft: '0px'
@@ -39,7 +39,7 @@ const CustomOpenDialog = (props) => {
             </Typography>
             <Button
               variant="contained"
-              style={{color:'blue', backgroundColor:'orange'}}
+              // style={{color:'blue', backgroundColor:'orange'}}
               color= "secondary"
               onClick={() => {setOpenCustomDialog(false); setAddOrUpdate('addFormValueToList')}}
               className={classes.root}

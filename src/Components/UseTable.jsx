@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 // 
 function UseTable(record, headerCell,filterFn) {  
   const classes = useStyles();
-  const pages = [ 3, 6 , 10];
+  const pages = [ 5, 10 , 25];
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(pages[0])
   const [orderSort, setOrderSort] = useState() 

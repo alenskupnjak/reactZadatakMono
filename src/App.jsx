@@ -15,12 +15,14 @@ const useStyles = makeStyles({
     width: '100%',
     // margin:'auto',
     height: '100vh',
-    backgroundColor: '#faebd7',
+    // backgroundColor: '#faebd7',
+    backgroundColor: '#3498db',
   },
 });
 
 const theme = createMuiTheme({
   palette: {
+    // type: 'dark',
     primary: {
       // MONO BOJA
       main: '#2543C5', 
