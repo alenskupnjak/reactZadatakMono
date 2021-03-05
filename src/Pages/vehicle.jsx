@@ -26,7 +26,7 @@ import CustomOpenDialog from '../Components/CustomOpenDialog';
 import Notification from '../Components/Notification';
 
 
-
+// 
 const useStyles = makeStyles((theme)=>({
    pageContent : {
      width:'80%',
@@ -36,6 +36,19 @@ const useStyles = makeStyles((theme)=>({
    newButton : {
      position:'absolute',
      right:'10px'
+   },
+   searchInput : {
+      width:'60%',
+      backgroundColor:'#0000001a',
+      '&:hover': {
+        borderLeft: 'solid 5px #f83245',
+      },
+      '&:focus': {
+        backgroundColor:'yellow',
+      },
+      'input[type="text"]': { 
+        backgroundColor:'yellow',
+    } 
    },
    custom : {
      '& .MuiButton-startIcon': {
@@ -121,15 +134,16 @@ function Vehicle() {
   }
 
 
+
+
   return (
     <React.Fragment>
       <Paper className={classes.pageContent}>
 
           <Toolbar>   
             <InputCommon
-              style={{width:'60%'}}
               label='Filter Model'
-              className={classes.searchInput}
+              className={classes.searchInput }
               onChange={handleSearch}
               InputProps={{
                 startAdornment: (
@@ -179,7 +193,7 @@ function Vehicle() {
                       id={data.id}
                       className={classes.custom}
                       variant="contained"
-                      style={{backgroundColor:'#2543C5', padding:'5px', marginRight: '0px'}}
+                      style={{backgroundColor:'#2543C5', padding:'10px', marginRight: '5px'}}
                       onClick={() => updateOrAddFunc (data) }
                       startIcon={<EditIcon></EditIcon>}
                     >
@@ -188,7 +202,7 @@ function Vehicle() {
                       id={data.id}
                       className={classes.custom}
                       variant="outlined"
-                      style={{backgroundColor:'red', padding:'5px', marginRight: '0px'}}
+                      style={{backgroundColor:'#f83245', padding:'10px', marginRight: '0px'}}
                       onClick={() => {
                         setConfirmDialog({
                             isOpen:true, 

@@ -117,7 +117,6 @@ function UseTable(record, headerCell,filterFn) {
     const sortDirection = orderSort === 'asc' ? 1: -1
     
     let sortRecord = [...stabilizedThis].sort((a, b) => {
-      console.log(orderSortBy);
       
       // if(orderSortBy === 'modelAuto'){
       //   console.log('xxx');

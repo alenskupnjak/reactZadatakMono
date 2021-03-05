@@ -18,7 +18,7 @@ import DatePicker from '../Components/DatePicker';
 import CustomButton from '../Components/CustomButton';
 import { getModelOptions, initVechileValue} from '../Common/VehicleService';
 import {store } from  '../Common/StoreVechile'
-import Notification from '../Components/Notification';
+
 
 
 
@@ -55,6 +55,7 @@ function VehicleForm(props) {
   
   // form validation
   const validationForm = () => {
+    // eslint-disable-next-line no-useless-escape
     const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
     // SET error
     const tempError = {}
@@ -86,7 +87,7 @@ function VehicleForm(props) {
   useEffect(() => {
     if (addOrUpdate === 'updateFormValue')
         setDisableSubmitButton(false)
-    }, [disableSubmitButton])
+    }, [addOrUpdate])
 
 
 

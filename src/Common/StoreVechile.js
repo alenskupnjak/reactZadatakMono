@@ -10,7 +10,7 @@ class Store {
       vechileFormValue: observable,
       setVechileValue: action,
       listVehicle: observable,
-      listVehiclePut: observable,
+      listVehiclePut: action,
       listVehicleGet: computed,
       listVehicleDelete: action,
       listVehicleUpdate: action,
@@ -30,17 +30,17 @@ class Store {
     };
 
     // for conosle.table() !
-    const stateValueFormEdit = {
-      id: this.vechileFormValue.id,
-      modelAuto: this.vechileFormValue.modelAuto,
-      email: this.vechileFormValue.email,
-      mobile: this.vechileFormValue.mobile,
-      city: this.vechileFormValue.city,
-      motor: this.vechileFormValue.motor,
-      sellDate: this.vechileFormValue.sellDate,
-      isLoan: this.vechileFormValue.isLoan,
-    };
-    console.table(stateValueFormEdit);
+    // const stateValueFormEdit = {
+    //   id: this.vechileFormValue.id,
+    //   modelAuto: this.vechileFormValue.modelAuto,
+    //   email: this.vechileFormValue.email,
+    //   mobile: this.vechileFormValue.mobile,
+    //   city: this.vechileFormValue.city,
+    //   motor: this.vechileFormValue.motor,
+    //   sellDate: this.vechileFormValue.sellDate,
+    //   isLoan: this.vechileFormValue.isLoan,
+    // };
+    // console.table(stateValueFormEdit);
   }
 
   //
