@@ -53,7 +53,8 @@ const useStyles = makeStyles((theme)=>({
    custom : {
      '& .MuiButton-startIcon': {
       marginRight: '0px',
-      marginLeft: '0px'
+      marginLeft: '0px',
+      color:'#fff'
     },
    }
 }))
