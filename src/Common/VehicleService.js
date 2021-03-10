@@ -40,7 +40,7 @@ export const getModelOptions = () => [
 
 // 
 // value for TABLE header
-export const headCell = [
+export const headCellVechile = [
   {id:'model', label:'Model'},
   {id:'email', label:'Email', disabledSorting:true},
   {id:'mobile', label:'Mobile'},
@@ -48,6 +48,13 @@ export const headCell = [
   {id:'motor', label:'Motor'},
   {id:'producer', label:'Producer'},
   {id:'action', label:'Action',disabledSorting:true}
+]
+
+// 
+// value for TABLE header
+export const headCellProducer = [
+  {id:'model', label:'Model'},
+  {id:'producer', label:'Producer'},
 ]
 
 // 

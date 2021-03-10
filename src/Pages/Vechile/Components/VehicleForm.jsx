@@ -11,13 +11,13 @@ import {
   Radio,
 } from '@material-ui/core';
 
-import { useForm, Form } from '../Components/UseForm';
-import InputSelect from '../Components/InputSelect';
-import InputCheckBox from '../Components/InputCheckBox';
-import DatePicker from '../Components/DatePicker';
-import CustomButton from '../Components/CustomButton';
-import { getModelOptions, initVechileValue} from '../Common/VehicleService';
-import {store } from  '../Common/StoreVechile'
+import { useForm, Form } from '../../../Components/UseForm';
+import InputSelect from '../../../Components/InputSelect';
+import InputCheckBox from '../../../Components/InputCheckBox';
+import DatePicker from '../../../Components/DatePicker';
+import CustomButton from '../../../Components/CustomButton';
+import { getModelOptions, initVechileValue} from '../../../Common/VehicleService';
+import {store } from  '../../../Common/StoreVechile'
 
 
 

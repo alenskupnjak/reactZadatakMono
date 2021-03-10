@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
       minWidth: '25px',
       backgroundColor: '#faebd7'
     },
-  },
+  }
 }));
 
 
@@ -35,7 +35,7 @@ function UseTable(record, headerCell,filterFn) {
 
   // HEADER table
   const TblHeader = (props) => {
-
+    // set sort direction
     const handleSort = (columnId) => {
       setOrderSortBy(columnId)
       setOrderSort(orderSort === 'asc'? 'desc':'asc')
@@ -43,11 +43,11 @@ function UseTable(record, headerCell,filterFn) {
 
     
     return (
-      <TableHead >
+      <TableHead>
         <TableRow >
           {
             headerCell.map(data => (
-              <TableCell key={data.id} >
+              <TableCell key={data.id}>
                 {data.disabledSorting ? data.label : 
                   <TableSortLabel
                     active={data.id === orderSort}

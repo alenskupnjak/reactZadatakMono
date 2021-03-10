@@ -16,14 +16,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
-import { getProducerOptions , getModelOptions, headCell, initVechileValue} from '../Common/VehicleService';
-import  VehicleForm from './VehicleForm'
-import  UseTable from '../Components/UseTable'
-import {store} from  '../Common/StoreVechile'
-import InputCommon from '../Components/InputCommon';
-import ConfirmDialog from '../Components/ConfirmDialog';
-import CustomOpenDialog from '../Components/CustomOpenDialog';
-import Notification from '../Components/Notification';
+import { getProducerOptions , getModelOptions, headCellProducer, initVechileValue} from '../../Common/VehicleService';
+import  ProducerForm from './Components/ProducerForm'
+import  UseTable from '../../Components/UseTable'
+import {store} from  '../../Common/StoreVechile'
+import InputCommon from '../../Components/InputCommon';
+import ConfirmDialog from '../../Components/ConfirmDialog';
+import CustomOpenDialog from '../../Components/CustomOpenDialog';
+import Notification from '../../Components/Notification';
 
 
 // 
@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme)=>({
    pageContent : {
      width:'80%',
      margin:'0 auto',
+
+
+    //  
+    //  backgroundColor:'green',
   //  padding:theme.spacing(5)
    },
    newButton : {
@@ -56,12 +60,27 @@ const useStyles = makeStyles((theme)=>({
       marginLeft: '0px',
       color:'#fff'
     },
-   }
+   },
+   tablehead: {
+    '& .MuiTableCell-head': {
+      backgroundColor:'orange',
+      color:'blue'
+    },
+    '& .MuiTableHead-root': {
+      backgroundColor:'orange'
+    },
+    '& .makeStyles-table-7 thead th': {
+      color:'red',
+      backgroundColor:' green'
+    }
+  },
+
+
 }))
 
 
 // 
-function Vehicle() {
+function Producers() {
   const classes = useStyles();
 
   // SET state
@@ -72,7 +91,7 @@ function Vehicle() {
   const [confirmDialog, setConfirmDialog] = useState({isOpen:false,title:'', subTitle:''});
 
 
-  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCell, filterFn)
+  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCellProducer, filterFn)
 
 
   // for populating table
@@ -108,13 +127,14 @@ function Vehicle() {
     }
   };
 
-  // for editing and adding
+
+  // editing and adding
   const updateOrAddFunc = (dataFormValue) => {
     setOpenCustomDialog(true)
     setAddOrUpdate('updateFormValue')
 
     // Display info on screen
-    setNotify({isOpen:true, msg:'Edit Vechile', type:'info'});
+    setNotify({isOpen:true, msg:'Edit Producer', type:'info'});
 
     // find producer name
     const producer = findProducerVehicle(dataFormValue.modelAuto)
@@ -160,15 +180,15 @@ function Vehicle() {
                 className={classes.newButton}
                 variant="contained"
                 size="large"
-                color="primary"
+                color="default"
                 onClick={() => { store.vechileFormValue = initVechileValue; setOpenCustomDialog(true)}}
                 startIcon={<AddIcon></AddIcon>}
             >
-              ADD NEW MODEL
+              ADD NEW PRODUCER
             </Button>
           </Toolbar>
         <TblContainer>
-          <TblHeader></TblHeader>
+          <TblHeader className={classes.tablehead} ></TblHeader>
           <TableBody>
           {
             afterSortingAndFiltering().map(data=> (
@@ -179,10 +199,6 @@ function Vehicle() {
                     }
                   </TableCell>  */}
                   <TableCell> {data.model}</TableCell> 
-                  <TableCell> {data.email} </TableCell> 
-                  <TableCell> {data.mobile} </TableCell> 
-                  <TableCell> {data.city} </TableCell> 
-                  <TableCell> {data.motor} </TableCell> 
                   <TableCell> 
                     {
                       findProducerVehicle(data.modelAuto)  
@@ -194,7 +210,7 @@ function Vehicle() {
                       id={data.id}
                       className={classes.custom}
                       variant="contained"
-                      style={{backgroundColor:'#2543C5', padding:'10px', marginRight: '5px'}}
+                      style={{backgroundColor:'orange', padding:'10px', marginRight: '5px'}}
                       onClick={() => updateOrAddFunc (data) }
                       startIcon={<EditIcon></EditIcon>}
                     >
@@ -222,27 +238,32 @@ function Vehicle() {
           }
           </TableBody>
         </TblContainer>
+        
         < TblPagination></TblPagination>
+
       </Paper>
+
         <CustomOpenDialog
           openCustomDialog = {openCustomDialog}
           setOpenCustomDialog = {setOpenCustomDialog}
           setAddOrUpdate={setAddOrUpdate}
-          title="Model vehicle"
+          title="Producers"
         >
-        <VehicleForm
+        <ProducerForm
           setOpenCustomDialog={setOpenCustomDialog}
           addOrUpdate={addOrUpdate}
           setAddOrUpdate={setAddOrUpdate}
           setNotify={setNotify}
         >
-        </VehicleForm>
+        </ProducerForm>
       </CustomOpenDialog>
+
       <Notification
         notify={notify}
         setNotify={setNotify}
       >
       </Notification>
+
       <ConfirmDialog
         confirmDialog={confirmDialog}
         setConfirmDialog={setConfirmDialog}
@@ -253,5 +274,5 @@ function Vehicle() {
   )
 }
 
-export default observer(Vehicle)
+export default observer(Producers)
 
