@@ -18,6 +18,7 @@ import DatePicker from '../../../Components/DatePicker';
 import CustomButton from '../../../Components/CustomButton';
 import { getModelOptions, initVechileValue} from '../../../Common/VehicleService';
 import {store } from  '../../../Common/StoreVechile'
+import {storeProducers } from  '../../../Common/StoreProducers'
 
 
 
@@ -53,8 +54,13 @@ function VehicleForm(props) {
   // const [notify,setNotify] = useState({isOpen:false, msg:'', type:''});
 
   
+  
   // form validation
   const validationForm = () => {
+    
+    console.log(getModelOptions());
+    console.log(storeProducers.listModelGet);
+
     // eslint-disable-next-line no-useless-escape
     const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
     // SET error
@@ -170,7 +176,8 @@ function VehicleForm(props) {
             name="modelAuto"
             value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}
-            dataOptions ={getModelOptions()}
+            // dataOptions ={getModelOptions()}  old solution
+            dataOptions ={storeProducers.listModelGet}
             error={errors.modelAuto}
           >
           </InputSelect>

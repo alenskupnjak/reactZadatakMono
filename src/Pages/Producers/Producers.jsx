@@ -16,10 +16,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
-import { getProducerOptions , getModelOptions, headCellProducer, initVechileValue} from '../../Common/VehicleService';
+import { getProducerOptions , getModelOptions, headCellProducer, initProducerValue} from '../../Common/VehicleService';
 import  ProducerForm from './Components/ProducerForm'
 import  UseTable from '../../Components/UseTable'
-import {store} from  '../../Common/StoreVechile'
+// import {store} from  '../../Common/StoreVechile'
+import {storeProducers} from  '../../Common/StoreProducers'
 import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
@@ -91,17 +92,24 @@ function Producers() {
   const [confirmDialog, setConfirmDialog] = useState({isOpen:false,title:'', subTitle:''});
 
 
-  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCellProducer, filterFn)
+  const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(storeProducers.listModelGet, headCellProducer, filterFn)
 
 
   // for populating table
   const  findProducerVehicle = (dataModelAuto) => {
-    const model = getModelOptions().find(data=>{
-      return data.id === dataModelAuto
-    })
+    // console.log(dataModelAuto);
+    // console.log(getModelOptions());
+    // console.log(getProducerOptions());
+    // console.log('list.modelget-',storeProducers.listModelGet);
+    
+    // const model = getModelOptions().find(data=>{
+    //   return data.id === dataModelAuto
+    // })
+
+    // console.log(model);
     
     const prod = getProducerOptions().find(data=>{
-        return data.id === model.producerId
+        return data.id === dataModelAuto
     })
     return prod.producer
   }
@@ -130,6 +138,9 @@ function Producers() {
 
   // editing and adding
   const updateOrAddFunc = (dataFormValue) => {
+    console.log('Dataform value ',dataFormValue);
+    console.log('storeProducers.producerFormValue ',storeProducers.producerFormValue);
+    
     setOpenCustomDialog(true)
     setAddOrUpdate('updateFormValue')
 
@@ -137,11 +148,11 @@ function Producers() {
     setNotify({isOpen:true, msg:'Edit Producer', type:'info'});
 
     // find producer name
-    const producer = findProducerVehicle(dataFormValue.modelAuto)
-    dataFormValue.producer = producer
+    // const producer = findProducerVehicle(dataFormValue.modelAuto)
+    // dataFormValue.producer = producer
 
     // send data to form
-    store.vechileFormValue= dataFormValue
+    storeProducers.producerFormValue= dataFormValue
   }
 
   // DELETE record
@@ -150,7 +161,7 @@ function Producers() {
     // if(window.confirm('Are you sure to delete this record?')) {
       // Display info on screen
       setNotify({isOpen:true, msg:'Delete Vechile', type:'error'});
-      store.listVehicleDelete(id)
+      storeProducers.listVehicleDelete(id)
     // }
   }
 
@@ -181,7 +192,7 @@ function Producers() {
                 variant="contained"
                 size="large"
                 color="default"
-                onClick={() => { store.vechileFormValue = initVechileValue; setOpenCustomDialog(true)}}
+                onClick={() => { storeProducers.producerFormValue = initProducerValue; setOpenCustomDialog(true)}}
                 startIcon={<AddIcon></AddIcon>}
             >
               ADD NEW PRODUCER
@@ -193,15 +204,10 @@ function Producers() {
           {
             afterSortingAndFiltering().map(data=> (
                 <TableRow key={data.id}>
-                  {/* <TableCell> 
-                    {
-                      findModelVehicle(data.modelAuto)
-                    }
-                  </TableCell>  */}
                   <TableCell> {data.model}</TableCell> 
                   <TableCell> 
                     {
-                      findProducerVehicle(data.modelAuto)  
+                      findProducerVehicle(data.producerId)  
                     }
                   </TableCell>
                   <TableCell> 

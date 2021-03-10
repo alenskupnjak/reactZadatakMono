@@ -20,11 +20,13 @@ import { getProducerOptions , getModelOptions, headCellVechile, initVechileValue
 import  VehicleForm from './Components/VehicleForm'
 // import  UseTable from '../Components/UseTable'
 import  UseTable from '../../Components/UseTable'
-import {store} from  '../../Common/StoreVechile'
 import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
+
+import { store } from  '../../Common/StoreVechile'
+import { storeProducers } from  '../../Common/StoreProducers'
 
 
 // 
@@ -78,11 +80,14 @@ function Vehicle() {
 
   // for populating table
   const  findProducerVehicle = (dataModelAuto) => {
-    const model = getModelOptions().find(data=>{
+    const model = storeProducers.listModelGet.find(data=>{
       return data.id === dataModelAuto
     })
-    
-    const prod = getProducerOptions().find(data=>{
+    // console.log(getModelOptions());
+    // console.log('list.modelget-',storeProducers.listModelGet);
+    // console.log(getProducerOptions());
+    // console.log(storeProducers.listProducerGet);
+    const prod = storeProducers.listProducerGet.find(data=>{
         return data.id === model.producerId
     })
     return prod.producer

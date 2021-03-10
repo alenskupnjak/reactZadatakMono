@@ -5,7 +5,7 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from '@material-ui/core';
-import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
+import { Route, NavLink, Switch } from 'react-router-dom';
 
 
 import Vehicle from './Pages/Vechile/Vehicle'
@@ -67,7 +67,7 @@ function App() {
           {/* <Route path="/courses/:courseId" component={Course} /> */}
           {/* <Route path='/courses' component={Courses} /> */}
           {/* <Redirect from='/all-courses' to='/courses' /> */}
-          {/* <Route component={NoMatch} /> */}
+          <Route component={Vehicle} />
         </Switch>
 
 

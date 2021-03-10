@@ -91,12 +91,14 @@ function UseTable(record, headerCell,filterFn) {
   // 
   // function for sorting
   function sortVehicle(recordData) {
+    console.log(recordData);
     
     // init setup sort
     if(!orderSort) {
       return recordData
     }
     
+    // 
     const prepareSortRecord = recordData.map(data=>{
       // prepare sorting for model
       const modelName = getModelOptions().find(model=>{
@@ -111,6 +113,8 @@ function UseTable(record, headerCell,filterFn) {
       // return {...data, modelAutoSort: modelName.model, producerSort:producerName.producer}
       return {...data, producerSort:producerName.producer}
     })
+
+
     
     // stabilization
     const stabilizedThis = prepareSortRecord.map((el, index) => [el, index]);
@@ -148,6 +152,9 @@ function UseTable(record, headerCell,filterFn) {
 
   // set page per pages
   const afterSortingAndFiltering = (event) => {    
+
+    console.log(sortVehicle(filterFn.fn(record)).slice().splice(page * rowsPerPage,rowsPerPage));
+    
     return  sortVehicle(filterFn.fn(record)).slice().splice(page * rowsPerPage,rowsPerPage)
     // return  sortVehicle(record).slice().splice(page * rowsPerPage,rowsPerPage)
   };
