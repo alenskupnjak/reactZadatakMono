@@ -215,7 +215,7 @@ function ProducerForm(props) {
             className={classes.root}
             variant="outlined"
             label="Producer"
-            name="producer"
+            name="producerId"
             value={storeProducers.producerFormValue.producerId}
             onChange={handleInputChange}
             error={errors.producer}

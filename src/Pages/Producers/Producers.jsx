@@ -161,7 +161,7 @@ function Producers() {
     // if(window.confirm('Are you sure to delete this record?')) {
       // Display info on screen
       setNotify({isOpen:true, msg:'Delete Vechile', type:'error'});
-      storeProducers.listVehicleDelete(id)
+      storeProducers.listModelDelete(id)
     // }
   }
 

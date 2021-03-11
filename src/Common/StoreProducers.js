@@ -117,6 +117,16 @@ class Producers {
     console.log(this.listModel);
   }
 
+    //
+  // DELETE - delete one record from Vehicle list
+  listModelDelete(id) {
+    const index = this.listModel.findIndex(data=>{
+      return data.id === id
+    })
+    // delete record from list
+    this.listModel.splice(index,1)
+  }
+
 
 
 
