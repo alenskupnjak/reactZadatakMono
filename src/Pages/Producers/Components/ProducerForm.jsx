@@ -6,11 +6,11 @@ import { Grid, TextField, makeStyles } from '@material-ui/core';
 import CustomButton from '../../../Components/CustomButton';
 import {
   getModelOptions,
-  initVechileValue,
+  initProducerValue,
   getProducerOptions,
 } from '../../../Common/VehicleService';
-// import { store } from  '../../../Common/StoreVechile'
 import { storeProducers } from '../../../Common/StoreProducers';
+import {store } from  '../../../Common/StoreVechile'
 
 //
 // Style CSS
@@ -46,13 +46,16 @@ function ProducerForm(props) {
   const validationForm = () => {
     // SET error
     const tempError = {};
-    // tempError.modelAuto =  storeProducers.producerFormValue.modelAuto !== '' ? '' : 'Invalid model '
+    tempError.model =
+      storeProducers.producerFormValue.model !== '' ? '' : 'Model exist ';
     // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
 
     // define error
     setErrors({
       ...tempError,
     });
+
+    console.log(tempError);
 
     // if validation all fields is TRUE, make enable button SUBMIT
     if (Object.values(tempError).every((x) => x === '')) {
@@ -65,12 +68,14 @@ function ProducerForm(props) {
     return Object.values(tempError).every((x) => x === '');
   };
 
+  //
+  const checkModel = () => {};
+
   // handle input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
     console.log(storeProducers.producerFormValue);
-    
 
     // console.log(e.target);
     // console.log(e.target.value);
@@ -112,7 +117,12 @@ function ProducerForm(props) {
 
   // RESET form
   function resetForm() {
-    storeProducers.producerFormValue = initVechileValue;
+    console.log('reset');
+    storeProducers.setProducerValue('model', '');
+    storeProducers.setProducerValue('producerId', '');
+
+    // storeProducers.producerFormValue = initProducerValue
+    console.log(storeProducers.producerFormValue);
     setDisableSubmitButton(true);
   }
 
@@ -144,14 +154,14 @@ function ProducerForm(props) {
           id: generateProducerId(),
           producer: producerId.toUpperCase(),
         };
-        // console.log(dataProducer);
+        console.log(dataProducer);
 
         const dataModel = {
           id: generateModelId(),
           model: model,
           producerId: dataProducer.id,
         };
-        // console.log(dataModel);
+        console.log(dataModel);
 
         // prepare field for sorting
         // storeProducers.producerFormValue.model = modelSave.model
@@ -166,18 +176,33 @@ function ProducerForm(props) {
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
       } else {
+        // UPDATE UPDATE
+        // *****************************************
+        // storeProducers.listModelGet   ===  getModelOptions()
+        // storeProducers.listProducerGet === getProducerOptions()
+        // **************************************
+        console.log(storeProducers.listModelGet);
+        
         // find model producer to store in model record
-        const modelVeh = getModelOptions().find((data) => {
-          return data.id === storeProducers.producerFormValue.modelAuto;
+        const modelProdOld = storeProducers.listModelGet.find((data) => {
+          return data.id === storeProducers.producerFormValue.id;
         });
 
+        console.log(modelProdOld);
+        
+
         const dataVehicle = {
-          id: storeProducers.producerFormValue.id,
-          modelAuto: storeProducers.producerFormValue.modelAuto,
-          model: modelVeh.model,
-          motor: storeProducers.producerFormValue.motor,
+          id: modelProdOld.id,
+          model:  storeProducers.producerFormValue.model,
+          producerId:  storeProducers.producerFormValue.producerId,
+          producer:  storeProducers.producerFormValue.producer,
         };
-        storeProducers.listVehicleUpdate(dataVehicle);
+        storeProducers.listModelUpdate(dataVehicle);
+
+        console.log(storeProducers.listModelGet);
+        console.log(store.listVehicleGet);
+
+        
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
 
@@ -210,17 +235,17 @@ function ProducerForm(props) {
           name='model'
           value={storeProducers.producerFormValue.model}
           onChange={handleInputChange}
-          error={errors.modelAuto}
+          // error={errors.model}
         ></TextField>
 
         <TextField
           className={classes.root}
           variant='outlined'
           label='Producer'
-          name='producerId'
-          value={storeProducers.producerFormValue.producerId}
+          name='producer'
+          value={storeProducers.producerFormValue.producer}
           onChange={handleInputChange}
-          error={errors.producer}
+          // error={errors.producer}
         ></TextField>
 
         <div>

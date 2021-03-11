@@ -114,17 +114,21 @@ function Vehicle() {
     }
   };
 
+  // 
+  // 
   // for editing and adding
   const updateOrAddFunc = (dataFormValue) => {
+    console.log(dataFormValue);
+    
     setOpenCustomDialog(true)
     setAddOrUpdate('updateFormValue')
 
     // Display info on screen
     setNotify({isOpen:true, msg:'Edit Vechile', type:'info'});
 
-    // find producer name
-    const producer = findProducerVehicle(dataFormValue.modelAuto)
-    dataFormValue.producer = producer
+    // // find producer name
+    // const producer = findProducerVehicle(dataFormValue.modelAuto)
+    // dataFormValue.producer = producer
 
     // send data to form
     store.vechileFormValue= dataFormValue
@@ -189,11 +193,12 @@ function Vehicle() {
                   <TableCell> {data.mobile} </TableCell> 
                   <TableCell> {data.city} </TableCell> 
                   <TableCell> {data.motor} </TableCell> 
-                  <TableCell> 
+                  <TableCell> {data.producer} </TableCell> 
+                  {/* <TableCell> 
                     {
                       findProducerVehicle(data.modelAuto)  
                     }
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell> 
 
                     <Button

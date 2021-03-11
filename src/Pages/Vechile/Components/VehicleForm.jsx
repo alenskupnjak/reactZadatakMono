@@ -138,6 +138,7 @@ function VehicleForm(props) {
         // Display info on screen
         setNotify({isOpen:true, msg:'Add Vechile', type:'success'});
       } else {
+        // UPDATE
         // find model producer to store in model record
         const modelVeh = storeProducers.listModelGet.find(data => {
           return data.id === store.vechileFormValue.modelAuto
@@ -147,6 +148,7 @@ function VehicleForm(props) {
           id: store.vechileFormValue.id,
           modelAuto: store.vechileFormValue.modelAuto,
           model: modelVeh.model,
+          producer: store.vechileFormValue.producer,
           email:store.vechileFormValue.email,
           mobile: store.vechileFormValue.mobile,
           city: store.vechileFormValue.city,

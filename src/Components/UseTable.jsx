@@ -8,7 +8,6 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core';
-import { getProducerOptions, getModelOptions } from '../Common/VehicleService';
 import { storeProducers } from '../Common/StoreProducers';
 
 //
@@ -117,7 +116,7 @@ function UseTable(record, headerCell, filterFn) {
         const producerName = storeProducers.listProducerGet.find((model) => {
           return model.id === modelName.producerId;
         });
-        return { ...data, producerSort: producerName.producer };
+        return { ...data, producerSort: producerName.producer, producer: producerName.producer};
       }
 
       // 

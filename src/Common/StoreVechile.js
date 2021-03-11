@@ -59,6 +59,7 @@ class Store {
         id: data.id,
         modelAuto: data.modelAuto,
         model: data.model,
+        producer: data.producer,
         email: data.email,
         mobile: data.mobile,
         city: data.city,

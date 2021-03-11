@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, computed } from 'mobx';
+import { makeObservable, observable, action, computed} from 'mobx';
 import {  initProducerValue, listProducers, listModelVechile } from './VehicleService';
 
 
@@ -37,25 +37,22 @@ class Producers {
     // console.log('Prije',this.producerFormValue.target[0].model);
     console.log({name,value});
 
-    const {model, producerId} = this.producerFormValue
-
-
-    
-    
     //set value form
     this.producerFormValue = {
       ...this.producerFormValue,
       [name]: value,
     };
 
-    // // for conosle.table() !
-    // const stateValueFormEdit = {
-    //   id: this.producerFormValue.id,
-    //   model: this.producerFormValue.model,
-    //   producerId: this.producerFormValue.producerId,
-    // };
-    // console.table(stateValueFormEdit);
+    // for conosle.table() !
+    const stateValueFormEdit = {
+      id: this.producerFormValue.id,
+      model: this.producerFormValue.model,
+      producerId: this.producerFormValue.producerId,
+    };
+    console.table(stateValueFormEdit);
   }
+
+
 
   //
   // PUT - add value to Vehicle list
@@ -102,7 +99,7 @@ class Producers {
   }
 
 
-    //
+  //
   // GET MODEL - pull data from Vehicle list
   get listModelGet() {
     console.log(this.listModel);
@@ -111,6 +108,7 @@ class Producers {
         id: data.id,
         model: data.model,
         producerId: data.producerId,
+        producer: data.producer,
       };
       return dataModel;
     });
@@ -134,7 +132,19 @@ class Producers {
     this.listModel.splice(index,1)
   }
 
-
+    //
+  // UPDATE - change one record in Model list
+  listModelUpdate(updateData) {
+    console.log(updateData);
+    
+    const index = this.listModel.findIndex(data=>{
+      return data.id === updateData.id
+    })
+    console.log(index);
+    
+    //  replace (UPDATE) value
+    this.listModel.splice(index,1,updateData)
+  }
 
 
 
