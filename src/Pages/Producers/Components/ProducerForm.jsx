@@ -41,8 +41,7 @@ function ProducerForm(props) {
   const validationForm = () => {
     // SET error
     const tempError = {};
-    tempError.model =
-      +storeProducers.producerFormValue.model.length > 1 ? '' : 'Min. 3 char';
+    tempError.model = storeProducers.producerFormValue.model.length > 0 ? '' : 'Min. 3 char';
     // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
 
     // define error
@@ -70,31 +69,7 @@ function ProducerForm(props) {
     console.log(storeProducers.producerFormValue);
     console.log(storeProducers.producerFormValue.model);
 
-    // console.log(e.target);
-    // console.log(e.target.value);
-    // console.log(e.target.name);
-
-    // const { model, producerId } = e.target;
-    // console.log(model, producerId);
-
     storeProducers.setProducerValue(name, value);
-
-    // console.log(storeProducers.listProducerGet);
-
-    // if (name ==='modelAuto') {
-    //   const modelData = getModelOptions().find(data=> {
-    //     return data.id === value
-    //   })
-
-    //   const dataVechileProducer = getProducerOptions().find(data=>{
-    //     return data.id === modelData.producerId
-    //   })
-    //   storeProducers.setVechileValue('producer',dataVechileProducer.producer)
-    //   storeProducers.setVechileValue('modelAuto',modelData.id)
-    // } else {
-    //   // save record to store validation
-    //   storeProducers.setProducerValue(name,value)
-    // }
 
     // validate form
     validationForm();
@@ -110,6 +85,7 @@ function ProducerForm(props) {
   function resetForm() {
     storeProducers.setProducerValue('model', '');
     storeProducers.setProducerValue('producer', '');
+    setErrors({});
     setDisableSubmitButton(true);
   }
 

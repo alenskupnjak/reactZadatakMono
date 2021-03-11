@@ -8,7 +8,6 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core';
-import { storeProducers } from '../Common/StoreProducers';
 
 //
 // Style CSS
@@ -42,8 +41,6 @@ function UseTable(record, headerCell, filterFn) {
   const TblHeader = (props) => {
     // set sort direction
     const handleSort = (sortColumn) => {
-      // console.log({ sortColumn });
-
       setOrderSortBy(sortColumn);
       setOrderSort(orderSort === 'asc' ? 'desc' : 'asc');
     };
@@ -99,53 +96,54 @@ function UseTable(record, headerCell, filterFn) {
       return recordData;
     }
 
-    const prepareSortRecord = recordData.map((data) => {
-      //
-      // prepare for sorting model table
-      if (data.modelAuto) {
-        // prepare sorting for model
-        const modelName = storeProducers.listModelGet.find((model) => {
-          return model.id === data.modelAuto;
-        });
+    // const prepareSortRecord = recordData.map((data) => {
+    //   //
+    //   // prepare for sorting model table
+    //   if (data.modelAuto) {
+    //     console.log('***********');
 
-        //  prepare sorting for producer
-        const producerName = storeProducers.listProducerGet.find((model) => {
-          return model.id === modelName.producerId;
-        });
-        return {
-          ...data,
-          producerSort: producerName.producer,
-          producer: producerName.producer,
-        };
-      }
+    //     // prepare sorting for model
+    //     const modelName = storeProducers.listModelGet.find((model) => {
+    //       return model.id === data.modelAuto;
+    //     });
 
-      //
-      // prepare for sorting Producer table table
-      if (data.producerId) {
-        // console.log('Sort producer', storeProducers.listModelGet,storeProducers.listProducerGet, data.producerId);
+    //     //  prepare sorting for producer
+    //     const producerName = storeProducers.listProducerGet.find((model) => {
+    //       return model.id === modelName.producerId;
+    //     });
+    //     return {
+    //       ...data,
+    //       producerSort: producerName.producer,
+    //       producer: producerName.producer,
+    //     };
+    //   }
 
-        // prepare sorting for producer
-        const modelName = storeProducers.listProducerGet.find((model) => {
-          return model.id === data.producerId;
-        });
+    //   //
+    //   // prepare for sorting Producer table table
+    //   if (data.producerId) {
+    //     console.log('***********');
+    //     // console.log('Sort producer', storeProducers.listModelGet,storeProducers.listProducerGet, data.producerId);
 
-        // console.log(modelName);
-
-        return { ...data, producerSort: modelName.producer };
-      }
-      return data;
-    });
+    //     // prepare sorting for producer
+    //     const modelName = storeProducers.listProducerGet.find((model) => {
+    //       return model.id === data.producerId;
+    //     });
+    //     return { ...data, producerSort: modelName.producer };
+    //   }
+    //   return data;
+    // });
 
     // console.log(prepareSortRecord);
 
     // stabilization
-    const stabilizedThis = prepareSortRecord.map((el, index) => [el, index]);
+    // const stabilizedThis = prepareSortRecord.map((el, index) => [el, index]);
+    const stabilizedThis = recordData.map((el, index) => [el, index]);
     const sortDirection = orderSort === 'asc' ? 1 : -1;
 
     let sortRecord = [...stabilizedThis].sort((a, b) => {
-      if (orderSortBy === 'producer') {
-        setOrderSortBy('producerSort');
-      }
+      // if (orderSortBy === 'producer') {
+      //   setOrderSortBy('producerSort');
+      // }
       const order = sortDirection * descendingComparator(a[0], b[0]);
       if (order !== 0) return order;
       return a[1] - b[1];
@@ -167,12 +165,6 @@ function UseTable(record, headerCell, filterFn) {
 
   // set page per pages
   const afterSortingAndFiltering = (event) => {
-    // console.log(
-    //   sortTable(filterFn.fn(record))
-    //     .slice()
-    //     .splice(page * rowsPerPage, rowsPerPage)
-    // );
-
     return sortTable(filterFn.fn(record))
       .slice()
       .splice(page * rowsPerPage, rowsPerPage);

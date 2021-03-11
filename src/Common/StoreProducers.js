@@ -1,6 +1,9 @@
-import { makeObservable, observable, action, computed} from 'mobx';
-import {  initProducerValue, listProducers, listModelVechile } from './VehicleService';
-
+import { makeObservable, observable, action, computed } from 'mobx';
+import {
+  initProducerValue,
+  listProducers,
+  listModelVechile,
+} from './VehicleService';
 
 //
 // MAIN MAIN MAIN
@@ -14,10 +17,10 @@ class Producers {
       listProducerGet: computed,
       listProducerDelete: action,
       listProducerUpdate: action,
-      
+
       // Models
-      listModel:observable,
-      listModelGet: computed,     
+      listModel: observable,
+      listModelGet: computed,
       listModelPut: action,
     });
   }
@@ -26,16 +29,16 @@ class Producers {
   producerFormValue = initProducerValue;
 
   // Init value for producer
-  listProducer = listProducers ;
+  listProducer = listProducers;
 
   // Init value for models
-  listModel = listModelVechile ;
+  listModel = listModelVechile;
 
   // Change value in form
   setProducerValue(name, value) {
-    console.log('Prije',this.producerFormValue);
+    console.log('Prije', this.producerFormValue);
     // console.log('Prije',this.producerFormValue.target[0].model);
-    console.log({name,value});
+    console.log({ name, value });
 
     //set value form
     this.producerFormValue = {
@@ -52,14 +55,12 @@ class Producers {
     console.table(stateValueFormEdit);
   }
 
-
-
   //
   // PUT - add value to Vehicle list
-  listProducerPut(data) {    
+  listProducerPut(data) {
     this.listProducer.push(data);
     console.log(this.listProducer);
-    
+
     // after save reset form
     // this.producerFormValue = initProducerValue;
   }
@@ -80,24 +81,23 @@ class Producers {
   //
   // DELETE - delete one record from Vehicle list
   listProducerDelete(id) {
-    const index = this.listProducer.findIndex(data=>{
-      return data.id === id
-    })
+    const index = this.listProducer.findIndex((data) => {
+      return data.id === id;
+    });
 
     // delete record from list
-    this.listProducer.splice(index,1)
+    this.listProducer.splice(index, 1);
   }
 
   //
   // UPDATE - change one record in Vehicle list
   listProducerUpdate(updateData) {
-    const index = this.listProducer.findIndex(data=>{
-      return data.id === updateData.id
-    })
+    const index = this.listProducer.findIndex((data) => {
+      return data.id === updateData.id;
+    });
     //  replace (UPDATE) value
-    this.listProducer.splice(index,1,updateData)
+    this.listProducer.splice(index, 1, updateData);
   }
-
 
   //
   // GET MODEL - pull data from Vehicle list
@@ -117,37 +117,31 @@ class Producers {
 
   //
   // PUT - add value to ModelVehicle list
-  listModelPut(data) {    
+  listModelPut(data) {
     this.listModel.push(data);
-    console.log(this.listModel);
   }
 
-    //
+  //
   // DELETE - delete one record from Vehicle list
   listModelDelete(id) {
-    const index = this.listModel.findIndex(data=>{
-      return data.id === id
-    })
+    const index = this.listModel.findIndex((data) => {
+      return data.id === id;
+    });
     // delete record from list
-    this.listModel.splice(index,1)
+    this.listModel.splice(index, 1);
   }
 
-    //
+  //
   // UPDATE - change one record in Model list
   listModelUpdate(updateData) {
-    console.log(updateData);
-    
-    const index = this.listModel.findIndex(data=>{
-      return data.id === updateData.id
-    })
+    const index = this.listModel.findIndex((data) => {
+      return data.id === updateData.id;
+    });
     console.log(index);
-    
+
     //  replace (UPDATE) value
-    this.listModel.splice(index,1,updateData)
+    this.listModel.splice(index, 1, updateData);
   }
-
-
-
 }
 
 export const storeProducers = new Producers();

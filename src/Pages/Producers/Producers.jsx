@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiTableCell-head': {
       backgroundColor: 'orange',
       color: 'blue',
+      width: '100%'
     },
     '& .MuiTableHead-root': {
       backgroundColor: 'orange',
@@ -175,7 +176,7 @@ function Producers() {
   // DELETE record
   const deleteVehicle = (id) => {
     setConfirmDialog({ isOpen: false });
-    // if(window.confirm('Are you sure to delete this record?')) {
+
     // Display info on screen
     setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
 

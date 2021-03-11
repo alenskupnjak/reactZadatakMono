@@ -49,7 +49,7 @@ function App() {
     <React.Fragment>
       <ThemeProvider theme = {theme}>
       <div className={classes.bazaCSS}>
-        <nav>
+        <nav className="Navbar">
           <ul style={{ listStyle: 'none', margin: 'auto', padding: '0' }}>
             <li style={{ margin: '10px', display: 'inline-block' }}>
               <NavLink to='/vechile'>Vechile</NavLink>

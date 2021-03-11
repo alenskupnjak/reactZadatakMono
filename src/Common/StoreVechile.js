@@ -1,7 +1,6 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import { listVehicleInit, initVechileValue } from './VehicleService';
 
-
 //
 // MAIN MAIN MAIN
 class Store {
@@ -45,7 +44,7 @@ class Store {
 
   //
   // PUT - add value to Vehicle list
-  listVehiclePut(data) {    
+  listVehiclePut(data) {
     this.listVehicle.push(data);
     // after save reset form
     this.vechileFormValue = initVechileValue;
@@ -75,24 +74,23 @@ class Store {
   //
   // DELETE - delete one record from Vehicle list
   listVehicleDelete(id) {
-    const index = this.listVehicle.findIndex(data=>{
-      return data.id === id
-    })
+    const index = this.listVehicle.findIndex((data) => {
+      return data.id === id;
+    });
 
     // delete record from list
-    this.listVehicle.splice(index,1)
+    this.listVehicle.splice(index, 1);
   }
 
   //
   // UPDATE - change one record in Vehicle list
   listVehicleUpdate(updateData) {
-    const index = this.listVehicle.findIndex(data=>{
-      return data.id === updateData.id
-    })
+    const index = this.listVehicle.findIndex((data) => {
+      return data.id === updateData.id;
+    });
 
     //  replace (UPDATE) value
-    this.listVehicle.splice(index,1,updateData)
-      
+    this.listVehicle.splice(index, 1, updateData);
   }
 }
 

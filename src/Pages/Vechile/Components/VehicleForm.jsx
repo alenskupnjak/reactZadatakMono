@@ -16,7 +16,7 @@ import InputSelect from '../../../Components/InputSelect';
 import InputCheckBox from '../../../Components/InputCheckBox';
 import DatePicker from '../../../Components/DatePicker';
 import CustomButton from '../../../Components/CustomButton';
-import { getModelOptions, initVechileValue} from '../../../Common/VehicleService';
+import { initVechileValue} from '../../../Common/VehicleService';
 import {store } from  '../../../Common/StoreVechile'
 import {storeProducers } from  '../../../Common/StoreProducers'
 
@@ -58,7 +58,7 @@ function VehicleForm(props) {
   // form validation
   const validationForm = () => {
     
-    console.log(getModelOptions());
+    // console.log(getModelOptions());
     console.log(storeProducers.listModelGet);
     console.log(storeProducers.listProducerGet);
 

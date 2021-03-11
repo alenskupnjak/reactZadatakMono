@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Observer } from 'mobx-react';
 import  { store } from  '../Common/StoreVechile'
-import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
+// import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
 import {storeProducers} from  '../Common/StoreProducers'
 
 // 
@@ -19,11 +19,11 @@ export function useForm(validationForm) {
       })
 
       console.log(modelData);
-      console.log(getModelOptions());
+      // console.log(getModelOptions());
       console.log('list.modelget-',storeProducers.listModelGet);
 
 
-      console.log(getProducerOptions());
+      // console.log(getProducerOptions());
       console.log('list.modelget-',storeProducers.listProducerGet);
       
       const dataVechileProducer = storeProducers.listProducerGet.find(data=>{
