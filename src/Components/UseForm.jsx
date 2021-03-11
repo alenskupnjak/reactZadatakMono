@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { Observer } from 'mobx-react';
 import  { store } from  '../Common/StoreVechile'
 import { getProducerOptions , getModelOptions} from '../Common/VehicleService';
+import {storeProducers} from  '../Common/StoreProducers'
 
 // 
 export function useForm(validationForm) {
@@ -13,13 +14,24 @@ export function useForm(validationForm) {
     
     
     if (name ==='modelAuto') {
-      const modelData = getModelOptions().find(data=> {
+      const modelData = storeProducers.listModelGet.find(data=> {
         return data.id === value
       })
+
+      console.log(modelData);
+      console.log(getModelOptions());
+      console.log('list.modelget-',storeProducers.listModelGet);
+
+
+      console.log(getProducerOptions());
+      console.log('list.modelget-',storeProducers.listProducerGet);
       
-      const dataVechileProducer = getProducerOptions().find(data=>{
+      const dataVechileProducer = storeProducers.listProducerGet.find(data=>{
         return data.id === modelData.producerId
       })
+
+      console.log(dataVechileProducer);
+      
       store.setVechileValue('producer',dataVechileProducer.producer)
       store.setVechileValue('modelAuto',modelData.id)
     } else {

@@ -97,18 +97,19 @@ function Producers() {
 
   // for populating table
   const  findProducerVehicle = (dataModelAuto) => {
-    // console.log(dataModelAuto);
-    // console.log(getModelOptions());
-    // console.log(getProducerOptions());
-    // console.log('list.modelget-',storeProducers.listModelGet);
+    console.log(dataModelAuto);
+    console.log(getModelOptions());
+    console.log('list.modelget-',storeProducers.listModelGet);
     
+    // console.log(getProducerOptions());
+    console.log('list.Producerget-',storeProducers.listProducerGet);
     // const model = getModelOptions().find(data=>{
     //   return data.id === dataModelAuto
     // })
 
     // console.log(model);
     
-    const prod = getProducerOptions().find(data=>{
+    const prod = storeProducers.listProducerGet.find(data=>{
         return data.id === dataModelAuto
     })
     return prod.producer

@@ -118,6 +118,8 @@ function VehicleForm(props) {
       if(addOrUpdate === 'addFormValueToList') {
         // Generate fake ID
         store.vechileFormValue.id = generateId()
+
+        
   
         const modelSave = getModelOptions().find(data=>{
           return data.id ===  store.vechileFormValue.modelAuto

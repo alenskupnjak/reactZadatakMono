@@ -75,9 +75,9 @@ function ProducerForm(props) {
     const { name, value } = e.target;
     console.log(name, value);
     
-    console.log(e.target);
-    console.log(e.target.value);
-    console.log(e.target.name);
+    // console.log(e.target);
+    // console.log(e.target.value);
+    // console.log(e.target.name);
     
     const { model, producerId } = e.target;
     console.log(model, producerId);
@@ -139,10 +139,10 @@ function ProducerForm(props) {
       //  ADD or UPDATE
       if(addOrUpdate === 'addFormValueToList') {
         // Generate fake ID
-        storeProducers.producerFormValue.id = generateId()
+        storeProducers.producerFormValue.id = generateModelId()
 
-        const {model, producer} = storeProducers.producerFormValue
-        console.log(model, producer);
+        const {model, producerId} = storeProducers.producerFormValue
+        console.log(model, producerId);
         
         console.log(storeProducers.producerFormValue);
         console.log(storeProducers.listProducerGet);
@@ -151,13 +151,28 @@ function ProducerForm(props) {
         // const modelSave = getModelOptions().find(data=>{
         //   return data.id ===   storeProducers.producerFormValue.modelAuto
         // })
+
+        const dataProducer = {
+            id: generateProducerId(),
+            producer: producerId
+        }
+        console.log(dataProducer);
+
+
+        const dataModel = {
+            id: generateModelId(),
+            model: model,
+            producerId: dataProducer.id
+        }
+        console.log(dataModel);
+        
   
         // prepare field for sorting
         // storeProducers.producerFormValue.model = modelSave.model
         
         // save record to listVehicle
-        storeProducers.listProducerPut(storeProducers.producerFormValue)
-        storeProducers.listModelPut(storeProducers.producerFormValue)
+        storeProducers.listProducerPut(dataProducer)
+        storeProducers.listModelPut(dataModel)
 
         console.log(storeProducers.listModelGet);
         console.log(storeProducers.listProducerGet);
@@ -191,8 +206,13 @@ function ProducerForm(props) {
 
 
   // Generate fake ID
-  const generateId = ()  => {
-    return 'idx'+ Date.now().toString()
+  const generateProducerId = ()  => {
+    return 'p'+ Date.now().toString()
+  }
+
+  // Generate fake ID for Producer
+  const generateModelId = ()  => {
+    return 'm'+ Date.now().toString()
   }
 
 
