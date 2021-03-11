@@ -16,7 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 
-import { getProducerOptions , getModelOptions, headCellVechile, initVechileValue} from '../../Common/VehicleService';
+import { headCellVechile, initVechileValue} from '../../Common/VehicleService';
 import  VehicleForm from './Components/VehicleForm'
 // import  UseTable from '../Components/UseTable'
 import  UseTable from '../../Components/UseTable'
@@ -26,7 +26,7 @@ import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 
 import { store } from  '../../Common/StoreVechile'
-import { storeProducers } from  '../../Common/StoreProducers'
+// import { storeProducers } from  '../../Common/StoreProducers'
 
 
 // 
@@ -78,20 +78,20 @@ function Vehicle() {
   const {TblContainer, TblHeader, TblPagination, afterSortingAndFiltering} = UseTable(store.listVehicleGet, headCellVechile, filterFn)
 
 
-  // for populating table
-  const  findProducerVehicle = (dataModelAuto) => {
-    const model = storeProducers.listModelGet.find(data=>{
-      return data.id === dataModelAuto
-    })
-    // console.log(getModelOptions());
-    // console.log('list.modelget-',storeProducers.listModelGet);
-    // console.log(getProducerOptions());
-    // console.log(storeProducers.listProducerGet);
-    const prod = storeProducers.listProducerGet.find(data=>{
-        return data.id === model.producerId
-    })
-    return prod.producer
-  }
+  // // for populating table
+  // const  findProducerVehicle = (dataModelAuto) => {
+  //   const model = storeProducers.listModelGet.find(data=>{
+  //     return data.id === dataModelAuto
+  //   })
+  //   // console.log(getModelOptions());
+  //   // console.log('list.modelget-',storeProducers.listModelGet);
+  //   // console.log(getProducerOptions());
+  //   // console.log(storeProducers.listProducerGet);
+  //   const prod = storeProducers.listProducerGet.find(data=>{
+  //       return data.id === model.producerId
+  //   })
+  //   return prod.producer
+  // }
   
 
 

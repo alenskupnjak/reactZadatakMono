@@ -60,7 +60,6 @@ function App() {
           </ul>
         </nav>
 
-
         <Switch>
           <Route path='/producers' component={ Producers } />
           <Route path='/vechile' component={ Vehicle} />
@@ -73,12 +72,16 @@ function App() {
 
       </div>
 
-
-
-
       </ThemeProvider>
     </React.Fragment>
   );
 }
 
 export default App;
+
+
+
+    // *****************************************
+    // storeProducers.listModelGet   ===  getModelOptions()
+    // storeProducers.listProducerGet === getProducerOptions()
+    // **************************************

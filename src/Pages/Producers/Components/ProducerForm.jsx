@@ -10,7 +10,7 @@ import {
   getProducerOptions,
 } from '../../../Common/VehicleService';
 import { storeProducers } from '../../../Common/StoreProducers';
-import {store } from  '../../../Common/StoreVechile'
+import { store } from '../../../Common/StoreVechile';
 
 //
 // Style CSS
@@ -44,12 +44,15 @@ function ProducerForm(props) {
 
   // form validation
   const validationForm = () => {
+    
     // SET error
     const tempError = {};
-    tempError.model =
-      storeProducers.producerFormValue.model !== '' ? '' : 'Model exist ';
+    tempError.model = checkModel() ? '' : 'Model exist';
     // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
 
+
+    console.log(checkModel());
+    
     // define error
     setErrors({
       ...tempError,
@@ -68,14 +71,31 @@ function ProducerForm(props) {
     return Object.values(tempError).every((x) => x === '');
   };
 
+
   //
-  const checkModel = () => {};
+  const checkModel = () => {
+    storeProducers.listModelGet.forEach(data =>{
+      // console.log(data.model, storeProducers.producerFormValue.model);
+      if(data.model === storeProducers.producerFormValue.model) {
+        console.log('%c imam ga', 'color:red');
+        // validationForm('model',value)
+        setErrors({
+          models: 'Greška'
+        });
+        console.log(errors);
+        
+        return true
+      }
+    })
+    return false
+  };
 
   // handle input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
     console.log(storeProducers.producerFormValue);
+    console.log(storeProducers.producerFormValue.model);
 
     // console.log(e.target);
     // console.log(e.target.value);
@@ -115,17 +135,17 @@ function ProducerForm(props) {
     if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
   }, [addOrUpdate]);
 
+  // 
   // RESET form
   function resetForm() {
     console.log('reset');
     storeProducers.setProducerValue('model', '');
-    storeProducers.setProducerValue('producerId', '');
-
-    // storeProducers.producerFormValue = initProducerValue
-    console.log(storeProducers.producerFormValue);
+    storeProducers.setProducerValue('producer', '');
     setDisableSubmitButton(true);
   }
 
+
+  // 
   // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -140,8 +160,8 @@ function ProducerForm(props) {
         // Generate fake ID
         storeProducers.producerFormValue.id = generateModelId();
 
-        const { model, producerId } = storeProducers.producerFormValue;
-        console.log(model, producerId);
+        const { model, producer } = storeProducers.producerFormValue;
+        console.log(model, producer);
 
         console.log(storeProducers.producerFormValue);
         console.log(storeProducers.listProducerGet);
@@ -152,7 +172,7 @@ function ProducerForm(props) {
 
         const dataProducer = {
           id: generateProducerId(),
-          producer: producerId.toUpperCase(),
+          producer: producer.toUpperCase(),
         };
         console.log(dataProducer);
 
@@ -160,11 +180,9 @@ function ProducerForm(props) {
           id: generateModelId(),
           model: model,
           producerId: dataProducer.id,
+          producer: producer.toUpperCase(),
         };
         console.log(dataModel);
-
-        // prepare field for sorting
-        // storeProducers.producerFormValue.model = modelSave.model
 
         // save record to listVehicle
         storeProducers.listProducerPut(dataProducer);
@@ -182,34 +200,54 @@ function ProducerForm(props) {
         // storeProducers.listProducerGet === getProducerOptions()
         // **************************************
         console.log(storeProducers.listModelGet);
-        
+
         // find model producer to store in model record
         const modelProdOld = storeProducers.listModelGet.find((data) => {
           return data.id === storeProducers.producerFormValue.id;
         });
 
         console.log(modelProdOld);
-        
 
         const dataVehicle = {
           id: modelProdOld.id,
-          model:  storeProducers.producerFormValue.model,
-          producerId:  storeProducers.producerFormValue.producerId,
-          producer:  storeProducers.producerFormValue.producer,
+          model: storeProducers.producerFormValue.model,
+          producerId: storeProducers.producerFormValue.producerId,
+          producer: storeProducers.producerFormValue.producer.toUpperCase(),
         };
         storeProducers.listModelUpdate(dataVehicle);
 
         console.log(storeProducers.listModelGet);
         console.log(store.listVehicleGet);
 
-        
+        // search list, UPDATE vechile list
+        store.listVehicle.forEach((data) => {
+          console.log(data.id, data.model, modelProdOld.model);
+
+          if (modelProdOld.model === data.model) {
+            console.log('evo me');
+            const dataVehicle = {
+              id: data.id,
+              modelAuto: data.modelAuto,
+              model: storeProducers.producerFormValue.model,
+              producer: storeProducers.producerFormValue.producer.toUpperCase(),
+              email: data.email,
+              mobile: data.mobile,
+              city: data.city,
+              motor: data.motor,
+              sellDate: data.sellDate,
+              isLoan: data.isLoan,
+            };
+            console.log(dataVehicle);
+            store.listVehicleUpdate(dataVehicle);
+          }
+        });
+
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
 
         setAddOrUpdate('addFormValueToList');
       }
     }
-
     // close dialog
     setOpenCustomDialog(false);
   };
@@ -235,7 +273,8 @@ function ProducerForm(props) {
           name='model'
           value={storeProducers.producerFormValue.model}
           onChange={handleInputChange}
-          // error={errors.model}
+          error={errors.model}
+          helperText={errors.model ? 'Invalid Model' :''}
         ></TextField>
 
         <TextField

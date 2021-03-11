@@ -16,8 +16,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import {
-  getProducerOptions,
-  getModelOptions,
+  // getProducerOptions,
+  // getModelOptions,
   headCellProducer,
   initProducerValue,
 } from '../../Common/VehicleService';
@@ -106,30 +106,30 @@ function Producers() {
   } = UseTable(storeProducers.listModelGet, headCellProducer, filterFn);
 
   // for populating table
-  const findProducerVehicle = (dataModelAuto) => {
-    // console.log(dataModelAuto);
-    // console.log(getModelOptions());
-    // console.log('list.modelget-',storeProducers.listModelGet);
+  // const findProducerVehicle = (dataModelAuto) => {
+  //   // console.log(dataModelAuto);
+  //   // console.log(getModelOptions());
+  //   // console.log('list.modelget-',storeProducers.listModelGet);
 
-    // console.log(getProducerOptions());
-    // console.log('list.Producerget-',storeProducers.listProducerGet);
+  //   // console.log(getProducerOptions());
+  //   // console.log('list.Producerget-',storeProducers.listProducerGet);
 
-    // *****************************************
-    // storeProducers.listModelGet   ===  getModelOptions()
-    // storeProducers.listProducerGet === getProducerOptions()
-    // **************************************
+  //   // *****************************************
+  //   // storeProducers.listModelGet   ===  getModelOptions()
+  //   // storeProducers.listProducerGet === getProducerOptions()
+  //   // **************************************
 
-    // const model = getModelOptions().find(data=>{
-    //   return data.id === dataModelAuto
-    // })
+  //   // const model = getModelOptions().find(data=>{
+  //   //   return data.id === dataModelAuto
+  //   // })
 
-    // console.log(model);
+  //   // console.log(model);
 
-    const prod = storeProducers.listProducerGet.find((data) => {
-      return data.id === dataModelAuto;
-    });
-    return prod.producer;
-  };
+  //   const prod = storeProducers.listProducerGet.find((data) => {
+  //     return data.id === dataModelAuto;
+  //   });
+  //   return prod.producer;
+  // };
 
   // set functui filter
   const handleSearch = (e) => {

@@ -89,6 +89,8 @@ function UseTable(record, headerCell, filterFn) {
     setPage(0);
   };
 
+
+
   //
   // function for sorting
   function sortTable(recordData) {
@@ -99,10 +101,6 @@ function UseTable(record, headerCell, filterFn) {
       return recordData;
     }
 
-    // *****************************************
-    // storeProducers.listModelGet   ===  getModelOptions()
-    // storeProducers.listProducerGet === getProducerOptions()
-    // **************************************
     const prepareSortRecord = recordData.map((data) => {
       // 
       // prepare for sorting model table
@@ -133,7 +131,7 @@ function UseTable(record, headerCell, filterFn) {
 
         return { ...data, producerSort: modelName.producer };
       }
-
+        return data
     });
 
     // console.log(prepareSortRecord);
@@ -172,11 +170,11 @@ function UseTable(record, headerCell, filterFn) {
 
   // set page per pages
   const afterSortingAndFiltering = (event) => {
-    console.log(
-      sortTable(filterFn.fn(record))
-        .slice()
-        .splice(page * rowsPerPage, rowsPerPage)
-    );
+    // console.log(
+    //   sortTable(filterFn.fn(record))
+    //     .slice()
+    //     .splice(page * rowsPerPage, rowsPerPage)
+    // );
 
     return sortTable(filterFn.fn(record))
       .slice()

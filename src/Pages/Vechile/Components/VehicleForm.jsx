@@ -150,7 +150,7 @@ function VehicleForm(props) {
           model: modelVeh.model,
           producer: store.vechileFormValue.producer,
           email:store.vechileFormValue.email,
-          mobile: store.vechileFormValue.mobile,
+          mobile: store.vechileFormValue.mobile.toString(),
           city: store.vechileFormValue.city,
           motor:store.vechileFormValue.motor,
           sellDate: store.vechileFormValue.sellDate,
