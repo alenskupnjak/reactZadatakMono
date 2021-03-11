@@ -31,10 +31,16 @@ class Producers {
   // Init value for models
   listModel = listModelVechile ;
 
-
   // Change value in form
   setProducerValue(name, value) {
     console.log('Prije',this.producerFormValue);
+    // console.log('Prije',this.producerFormValue.target[0].model);
+    console.log({name,value});
+
+    const {model, producerId} = this.producerFormValue
+
+
+    
     
     //set value form
     this.producerFormValue = {
@@ -42,12 +48,13 @@ class Producers {
       [name]: value,
     };
 
-    // for conosle.table() !
-    const stateValueFormEdit = {
-      id: this.producerFormValue.id,
-      model: this.producerFormValue.model,
-    };
-    console.table(stateValueFormEdit);
+    // // for conosle.table() !
+    // const stateValueFormEdit = {
+    //   id: this.producerFormValue.id,
+    //   model: this.producerFormValue.model,
+    //   producerId: this.producerFormValue.producerId,
+    // };
+    // console.table(stateValueFormEdit);
   }
 
   //

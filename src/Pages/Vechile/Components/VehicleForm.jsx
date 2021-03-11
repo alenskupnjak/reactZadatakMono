@@ -60,6 +60,7 @@ function VehicleForm(props) {
     
     console.log(getModelOptions());
     console.log(storeProducers.listModelGet);
+    console.log(storeProducers.listProducerGet);
 
     // eslint-disable-next-line no-useless-escape
     const regexPhone =/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
@@ -119,9 +120,12 @@ function VehicleForm(props) {
         // Generate fake ID
         store.vechileFormValue.id = generateId()
 
-        
+      // *****************************************
+      // storeProducers.listModelGet   ===  getModelOptions()
+      // storeProducers.listProducerGet === getProducerOptions()
+      // **************************************
   
-        const modelSave = getModelOptions().find(data=>{
+        const modelSave = storeProducers.listModelGet.find(data=>{
           return data.id ===  store.vechileFormValue.modelAuto
         })
   
@@ -135,7 +139,7 @@ function VehicleForm(props) {
         setNotify({isOpen:true, msg:'Add Vechile', type:'success'});
       } else {
         // find model producer to store in model record
-        const modelVeh = getModelOptions().find(data => {
+        const modelVeh = storeProducers.listModelGet.find(data => {
           return data.id === store.vechileFormValue.modelAuto
         })  
 

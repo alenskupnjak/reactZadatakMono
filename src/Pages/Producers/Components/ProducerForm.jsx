@@ -1,21 +1,18 @@
-import React , {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
-import {
-  Grid,
-  TextField,
-  makeStyles,
-} from '@material-ui/core';
+import { Grid, TextField, makeStyles } from '@material-ui/core';
 
 // import { useForm, Form } from '../../../Components/UseForm';
 import CustomButton from '../../../Components/CustomButton';
-import { getModelOptions, initVechileValue, getProducerOptions} from '../../../Common/VehicleService';
+import {
+  getModelOptions,
+  initVechileValue,
+  getProducerOptions,
+} from '../../../Common/VehicleService';
 // import { store } from  '../../../Common/StoreVechile'
-import { storeProducers } from  '../../../Common/StoreProducers'
+import { storeProducers } from '../../../Common/StoreProducers';
 
-
-
-
-// 
+//
 // Style CSS
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     '& .MuiButton-startIcon': {
       marginRight: '0px',
-      marginLeft: '0px'
+      marginLeft: '0px',
     },
   },
   marginForm: {
@@ -34,65 +31,63 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// 
+//
 // Main funkcija
 function ProducerForm(props) {
   const classes = useStyles();
-  const {setOpenCustomDialog, addOrUpdate,  setAddOrUpdate, setNotify} = props
+  const { setOpenCustomDialog, addOrUpdate, setAddOrUpdate, setNotify } = props;
 
   // SET state
   const [errors, setErrors] = useState({});
-  const [disableSubmitButton, setDisableSubmitButton ] = useState(true);
+  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
   // const [notify,setNotify] = useState({isOpen:false, msg:'', type:''});
 
-  
   // form validation
   const validationForm = () => {
     // SET error
-    const tempError = {}
+    const tempError = {};
     // tempError.modelAuto =  storeProducers.producerFormValue.modelAuto !== '' ? '' : 'Invalid model '
     // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
 
     // define error
     setErrors({
-      ...tempError
-    })
+      ...tempError,
+    });
 
     // if validation all fields is TRUE, make enable button SUBMIT
-    if(Object.values(tempError).every((x) => x === '')) {
-      setDisableSubmitButton(false)
+    if (Object.values(tempError).every((x) => x === '')) {
+      setDisableSubmitButton(false);
     } else {
-      setDisableSubmitButton(true)
+      setDisableSubmitButton(true);
     }
 
     // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
     return Object.values(tempError).every((x) => x === '');
-  }
-
+  };
 
   // handle input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
+    console.log(storeProducers.producerFormValue);
     
+
     // console.log(e.target);
     // console.log(e.target.value);
     // console.log(e.target.name);
-    
-    const { model, producerId } = e.target;
-    console.log(model, producerId);
-    
-    storeProducers.setProducerValue(name, value)
 
+    // const { model, producerId } = e.target;
+    // console.log(model, producerId);
 
-    console.log(storeProducers.listProducerGet);
-    
+    storeProducers.setProducerValue(name, value);
+
+    // console.log(storeProducers.listProducerGet);
 
     // if (name ==='modelAuto') {
     //   const modelData = getModelOptions().find(data=> {
     //     return data.id === value
     //   })
-      
+
     //   const dataVechileProducer = getProducerOptions().find(data=>{
     //     return data.id === modelData.producerId
     //   })
@@ -102,166 +97,149 @@ function ProducerForm(props) {
     //   // save record to store validation
     //   storeProducers.setProducerValue(name,value)
     // }
-  
+
     // validate form
-    validationForm()
+    validationForm();
   };
 
   //
   // const { handleInputChange } = useForm(validationForm);
 
-
   //  if UPDATE => ENABLE submit button
   useEffect(() => {
-    if (addOrUpdate === 'updateFormValue')
-        setDisableSubmitButton(false)
-    }, [addOrUpdate])
-
-
+    if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
+  }, [addOrUpdate]);
 
   // RESET form
   function resetForm() {
-    storeProducers.producerFormValue = initVechileValue
-    setDisableSubmitButton(true)
+    storeProducers.producerFormValue = initVechileValue;
+    setDisableSubmitButton(true);
   }
-
 
   // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // check input fields
-    validationForm()
+    validationForm();
 
     //  IF FORM is valid  => save data in mobX
-    if(validationForm()) {
-
+    if (validationForm()) {
       //  ADD or UPDATE
-      if(addOrUpdate === 'addFormValueToList') {
+      if (addOrUpdate === 'addFormValueToList') {
         // Generate fake ID
-        storeProducers.producerFormValue.id = generateModelId()
+        storeProducers.producerFormValue.id = generateModelId();
 
-        const {model, producerId} = storeProducers.producerFormValue
+        const { model, producerId } = storeProducers.producerFormValue;
         console.log(model, producerId);
-        
+
         console.log(storeProducers.producerFormValue);
         console.log(storeProducers.listProducerGet);
-        
-  
+
         // const modelSave = getModelOptions().find(data=>{
         //   return data.id ===   storeProducers.producerFormValue.modelAuto
         // })
 
         const dataProducer = {
-            id: generateProducerId(),
-            producer: producerId
-        }
-        console.log(dataProducer);
-
+          id: generateProducerId(),
+          producer: producerId.toUpperCase(),
+        };
+        // console.log(dataProducer);
 
         const dataModel = {
-            id: generateModelId(),
-            model: model,
-            producerId: dataProducer.id
-        }
-        console.log(dataModel);
-        
-  
+          id: generateModelId(),
+          model: model,
+          producerId: dataProducer.id,
+        };
+        // console.log(dataModel);
+
         // prepare field for sorting
         // storeProducers.producerFormValue.model = modelSave.model
-        
+
         // save record to listVehicle
-        storeProducers.listProducerPut(dataProducer)
-        storeProducers.listModelPut(dataModel)
+        storeProducers.listProducerPut(dataProducer);
+        storeProducers.listModelPut(dataModel);
 
         console.log(storeProducers.listModelGet);
         console.log(storeProducers.listProducerGet);
-        
 
         // Display info on screen
-        setNotify({isOpen:true, msg:'Add Vechile', type:'success'});
+        setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
       } else {
         // find model producer to store in model record
-        const modelVeh = getModelOptions().find(data => {
-          return data.id === storeProducers.producerFormValue.modelAuto
-        })  
+        const modelVeh = getModelOptions().find((data) => {
+          return data.id === storeProducers.producerFormValue.modelAuto;
+        });
 
         const dataVehicle = {
           id: storeProducers.producerFormValue.id,
           modelAuto: storeProducers.producerFormValue.modelAuto,
           model: modelVeh.model,
-          motor:storeProducers.producerFormValue.motor,
+          motor: storeProducers.producerFormValue.motor,
         };
-        storeProducers.listVehicleUpdate(dataVehicle)
+        storeProducers.listVehicleUpdate(dataVehicle);
         // Display info on screen
-        setNotify({isOpen:true, msg:'Update Vechile', type:'warning'});
+        setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
 
-        setAddOrUpdate('addFormValueToList')
+        setAddOrUpdate('addFormValueToList');
       }
     }
 
     // close dialog
-    setOpenCustomDialog(false)
-  }
-
+    setOpenCustomDialog(false);
+  };
 
   // Generate fake ID
-  const generateProducerId = ()  => {
-    return 'p'+ Date.now().toString()
-  }
+  const generateProducerId = () => {
+    return 'p' + Date.now().toString();
+  };
 
   // Generate fake ID for Producer
-  const generateModelId = ()  => {
-    return 'm'+ Date.now().toString()
-  }
-
+  const generateModelId = () => {
+    return 'm' + Date.now().toString();
+  };
 
   return (
     // <Form>
-      <Grid container>
-        <Grid item xs={12}>
-          <TextField
-            className={classes.root}
-            variant="outlined"
-            label="Model"
-            name="model"
-            value={storeProducers.producerFormValue.model}
-            onChange={handleInputChange}
-            error={errors.modelAuto}
-          >
-          </TextField>
+    <Grid container>
+      <Grid item xs={12}>
+        <TextField
+          className={classes.root}
+          variant='outlined'
+          label='Model'
+          name='model'
+          value={storeProducers.producerFormValue.model}
+          onChange={handleInputChange}
+          error={errors.modelAuto}
+        ></TextField>
 
-          <TextField
-            className={classes.root}
-            variant="outlined"
-            label="Producer"
-            name="producerId"
-            value={storeProducers.producerFormValue.producerId}
-            onChange={handleInputChange}
-            error={errors.producer}
-          >
-          </TextField>
+        <TextField
+          className={classes.root}
+          variant='outlined'
+          label='Producer'
+          name='producerId'
+          value={storeProducers.producerFormValue.producerId}
+          onChange={handleInputChange}
+          error={errors.producer}
+        ></TextField>
 
-
-          <div>
-            <CustomButton
-              onClick={handleSubmit}
-              // text="SUBMIT"
-              text= { addOrUpdate === 'addFormValueToList' ? 'SUBMIT': 'UPDATE'}
-              disabled= {disableSubmitButton}
-            >
-            </CustomButton>
-            <CustomButton
-              text="RESET"
-              color="default"
-              onClick={resetForm}
-            >
-            </CustomButton>
-          </div>
-        </Grid>
+        <div>
+          <CustomButton
+            onClick={handleSubmit}
+            // text="SUBMIT"
+            text={addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
+            disabled={disableSubmitButton}
+          ></CustomButton>
+          <CustomButton
+            text='RESET'
+            color='default'
+            onClick={resetForm}
+          ></CustomButton>
+        </div>
       </Grid>
+    </Grid>
     // </Form>
   );
 }
 
-export default observer(ProducerForm)
+export default observer(ProducerForm);

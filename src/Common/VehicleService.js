@@ -13,7 +13,7 @@ export const initVechileValue = {
 // 
 // Init valuues for form producers
 export const initProducerValue =  [
-  { model: 'yyy', producer: 'xxx' },
+  { id:'', model: '', producerId: '' },
 ]
 
 // 
