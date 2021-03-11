@@ -23,7 +23,7 @@ import {
 } from '../../Common/VehicleService';
 import ProducerForm from './Components/ProducerForm';
 import UseTable from '../../Components/UseTable';
-import {store} from  '../../Common/StoreVechile'
+import { store } from '../../Common/StoreVechile';
 import { storeProducers } from '../../Common/StoreProducers';
 import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
@@ -180,11 +180,11 @@ function Producers() {
     setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
 
     // delete from Vechile list
-    store.listVehicleGet.forEach((data, index)=> {
-      if(data.modelAuto === id) {
-        store.listVehicleDelete(data.id)
+    store.listVehicleGet.forEach((data, index) => {
+      if (data.modelAuto === id) {
+        store.listVehicleDelete(data.id);
       }
-    })    
+    });
     storeProducers.listModelDelete(id);
   };
 

@@ -42,7 +42,7 @@ function UseTable(record, headerCell, filterFn) {
   const TblHeader = (props) => {
     // set sort direction
     const handleSort = (sortColumn) => {
-      console.log({ sortColumn });
+      // console.log({ sortColumn });
 
       setOrderSortBy(sortColumn);
       setOrderSort(orderSort === 'asc' ? 'desc' : 'asc');
@@ -89,8 +89,6 @@ function UseTable(record, headerCell, filterFn) {
     setPage(0);
   };
 
-
-
   //
   // function for sorting
   function sortTable(recordData) {
@@ -102,7 +100,7 @@ function UseTable(record, headerCell, filterFn) {
     }
 
     const prepareSortRecord = recordData.map((data) => {
-      // 
+      //
       // prepare for sorting model table
       if (data.modelAuto) {
         // prepare sorting for model
@@ -114,10 +112,14 @@ function UseTable(record, headerCell, filterFn) {
         const producerName = storeProducers.listProducerGet.find((model) => {
           return model.id === modelName.producerId;
         });
-        return { ...data, producerSort: producerName.producer, producer: producerName.producer};
+        return {
+          ...data,
+          producerSort: producerName.producer,
+          producer: producerName.producer,
+        };
       }
 
-      // 
+      //
       // prepare for sorting Producer table table
       if (data.producerId) {
         // console.log('Sort producer', storeProducers.listModelGet,storeProducers.listProducerGet, data.producerId);
@@ -131,7 +133,7 @@ function UseTable(record, headerCell, filterFn) {
 
         return { ...data, producerSort: modelName.producer };
       }
-        return data
+      return data;
     });
 
     // console.log(prepareSortRecord);
@@ -141,11 +143,6 @@ function UseTable(record, headerCell, filterFn) {
     const sortDirection = orderSort === 'asc' ? 1 : -1;
 
     let sortRecord = [...stabilizedThis].sort((a, b) => {
-      // if(orderSortBy === 'modelAuto'){
-      //   console.log('xxx');
-      //   setOrderSortBy('modelAutoSort')
-      // }
-
       if (orderSortBy === 'producer') {
         setOrderSortBy('producerSort');
       }

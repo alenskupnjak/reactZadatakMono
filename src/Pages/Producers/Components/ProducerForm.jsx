@@ -4,11 +4,6 @@ import { Grid, TextField, makeStyles } from '@material-ui/core';
 
 // import { useForm, Form } from '../../../Components/UseForm';
 import CustomButton from '../../../Components/CustomButton';
-import {
-  getModelOptions,
-  initProducerValue,
-  getProducerOptions,
-} from '../../../Common/VehicleService';
 import { storeProducers } from '../../../Common/StoreProducers';
 import { store } from '../../../Common/StoreVechile';
 
@@ -44,15 +39,12 @@ function ProducerForm(props) {
 
   // form validation
   const validationForm = () => {
-    
     // SET error
     const tempError = {};
-    tempError.model = checkModel() ? '' : 'Model exist';
+    tempError.model =
+      +storeProducers.producerFormValue.model.length > 1 ? '' : 'Min. 3 char';
     // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
 
-
-    console.log(checkModel());
-    
     // define error
     setErrors({
       ...tempError,
@@ -69,25 +61,6 @@ function ProducerForm(props) {
 
     // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
     return Object.values(tempError).every((x) => x === '');
-  };
-
-
-  //
-  const checkModel = () => {
-    storeProducers.listModelGet.forEach(data =>{
-      // console.log(data.model, storeProducers.producerFormValue.model);
-      if(data.model === storeProducers.producerFormValue.model) {
-        console.log('%c imam ga', 'color:red');
-        // validationForm('model',value)
-        setErrors({
-          models: 'Greška'
-        });
-        console.log(errors);
-        
-        return true
-      }
-    })
-    return false
   };
 
   // handle input
@@ -127,25 +100,20 @@ function ProducerForm(props) {
     validationForm();
   };
 
-  //
-  // const { handleInputChange } = useForm(validationForm);
-
   //  if UPDATE => ENABLE submit button
   useEffect(() => {
     if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
   }, [addOrUpdate]);
 
-  // 
+  //
   // RESET form
   function resetForm() {
-    console.log('reset');
     storeProducers.setProducerValue('model', '');
     storeProducers.setProducerValue('producer', '');
     setDisableSubmitButton(true);
   }
 
-
-  // 
+  //
   // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -155,8 +123,28 @@ function ProducerForm(props) {
 
     //  IF FORM is valid  => save data in mobX
     if (validationForm()) {
-      //  ADD or UPDATE
       if (addOrUpdate === 'addFormValueToList') {
+        //  ADD
+        let findModel = storeProducers.listModelGet.find((data) => {
+          // console.log(data.model, storeProducers.producerFormValue.model);
+          if (data.model === storeProducers.producerFormValue.model) {
+            console.log('%c imam ga, vRACAM', 'color:red');
+            return data;
+          }
+          return null;
+        });
+
+        console.log(findModel);
+
+        if (findModel) {
+          console.log('nenen');
+          setErrors({
+            model: 'Greska',
+          });
+          return;
+        }
+        console.log('%c Paznja', 'color:green', findModel);
+
         // Generate fake ID
         storeProducers.producerFormValue.id = generateModelId();
 
@@ -174,7 +162,7 @@ function ProducerForm(props) {
           id: generateProducerId(),
           producer: producer.toUpperCase(),
         };
-        console.log(dataProducer);
+        // console.log(dataProducer);
 
         const dataModel = {
           id: generateModelId(),
@@ -215,16 +203,11 @@ function ProducerForm(props) {
           producer: storeProducers.producerFormValue.producer.toUpperCase(),
         };
         storeProducers.listModelUpdate(dataVehicle);
-
-        console.log(storeProducers.listModelGet);
-        console.log(store.listVehicleGet);
-
         // search list, UPDATE vechile list
         store.listVehicle.forEach((data) => {
-          console.log(data.id, data.model, modelProdOld.model);
+          // console.log(data.id, data.model, modelProdOld.model);
 
           if (modelProdOld.model === data.model) {
-            console.log('evo me');
             const dataVehicle = {
               id: data.id,
               modelAuto: data.modelAuto,
@@ -237,10 +220,12 @@ function ProducerForm(props) {
               sellDate: data.sellDate,
               isLoan: data.isLoan,
             };
-            console.log(dataVehicle);
             store.listVehicleUpdate(dataVehicle);
           }
         });
+
+        console.log(storeProducers.listModelGet);
+        console.log(store.listVehicleGet);
 
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
@@ -273,8 +258,8 @@ function ProducerForm(props) {
           name='model'
           value={storeProducers.producerFormValue.model}
           onChange={handleInputChange}
-          error={errors.model}
-          helperText={errors.model ? 'Invalid Model' :''}
+          error={errors.model ? true : false}
+          helperText={errors.model ? 'Duplicate Model' : ''}
         ></TextField>
 
         <TextField

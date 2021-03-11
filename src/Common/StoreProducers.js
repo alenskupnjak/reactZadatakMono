@@ -102,7 +102,7 @@ class Producers {
   //
   // GET MODEL - pull data from Vehicle list
   get listModelGet() {
-    console.log(this.listModel);
+    // console.log(this.listModel);
     const listModel = this.listModel.map((data) => {
       const dataModel = {
         id: data.id,
