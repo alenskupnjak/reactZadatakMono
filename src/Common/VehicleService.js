@@ -17,33 +17,6 @@ export const initProducerValue = [
   { id: '', model: '', producerId: '', producer: '' },
 ];
 
-//
-// // list of vehicle producers
-// export const getProducerOptions = () => [
-//   { id: 'p1', producer: 'BMW' },
-//   { id: 'p2', producer: 'FORD' },
-//   { id: 'p3', producer: 'AUDI' },
-//   { id: 'p4', producer: 'FIAT' },
-//   { id: 'p5', producer: 'VOLVO' },
-//   { id: 'p6', producer: 'TOYOTA' },
-// ]
-
-// //
-// // list of vehicle models
-// export const getModelOptions = () => [
-//   { id: 'm1', model: 'BMW mod1' , producerId:'p1'},
-//   { id: 'm2', model: 'FORD mod1', producerId:'p2' },
-//   { id: 'm3', model: 'AUDI mod1', producerId:'p3' },
-//   { id: 'm4', model: 'FIAT mod1', producerId:'p4'},
-//   { id: 'm5', model: 'VOLVO mod1' ,producerId:'p5' },
-//   { id: 'm6', model: 'TOYOTA mod1', producerId:'p6'},
-//   { id: 'm7', model: 'BMW 2mod' , producerId:'p1'},
-//   { id: 'm8', model: 'FORD 2mod', producerId:'p2' },
-//   { id: 'm9', model: 'AUDI 2mod', producerId:'p3' },
-//   { id: 'm10', model: 'FIAT 2mod', producerId:'p4'},
-//   { id: 'm11', model: 'VOLVO 2mod' ,producerId:'p5' },
-//   { id: 'm12', model: 'TOYOTA 2mod', producerId:'p6'},
-// ]
 
 //
 // list of vehicle producers
@@ -162,9 +135,9 @@ export const listVehicleInit = [
     model: 'BMW mod1',
     producer: 'BMW',
     email: 'email22@yahoo.com',
-    mobile: '222222222',
+    mobile: '123456',
     city: 'Zagreb',
-    motor: 'benzin',
+    motor: 'diesel',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: false,
   },
@@ -198,8 +171,8 @@ export const listVehicleInit = [
     model: 'FORD 2mod',
     producer: 'FORD',
     email: 'email22@yahoo.com',
-    mobile: '55555',
-    city: 'Pola',
+    mobile: '8885',
+    city: 'Pula',
     motor: 'benzin',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: true,

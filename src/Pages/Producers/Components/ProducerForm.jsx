@@ -40,9 +40,8 @@ function ProducerForm(props) {
   const validationForm = () => {
     // SET error
     const tempError = {};
-    tempError.model =
-      storeProducers.producerFormValue.model.length > 0 ? '' : 'Min. 3 char';
-    // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
+    tempError.model = storeProducers.producerFormValue.model.length > 2 ? '' : 'Minimum 3 character';
+    tempError.producer = storeProducers.producerFormValue.producer.length > 0 ? '' : 'Minimum 1 character';
 
     // define error
     setErrors({
@@ -70,13 +69,9 @@ function ProducerForm(props) {
     validationForm();
   };
 
+  //
   //  if UPDATE => ENABLE submit button
   useEffect(() => {
-    console.log('xxx');
-    // storeProducers.producerFormValue = initProducerValue
-    const model = storeProducers.producerFormValue.model;
-    console.log(model);
-
     if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
   }, [addOrUpdate]);
 
@@ -90,6 +85,24 @@ function ProducerForm(props) {
   }
 
   //
+  // find duplicate value => error UI
+  const findDuplicateData = (array, cellName) => {
+    const findDuplicate = array.find((data) => {
+      if (data[cellName] === storeProducers.producerFormValue[cellName]) {
+        return data;
+      }
+      return null;
+    });
+
+    if (findDuplicate) {
+      setErrors({
+        [cellName]: `Duplicate ${cellName} name`,
+      });
+      return true;
+    }
+  };
+
+  //
   // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,20 +113,13 @@ function ProducerForm(props) {
     //  IF FORM is valid  => save data in mobX
     if (validationForm()) {
       if (addOrUpdate === 'addFormValueToList') {
-        //  ADD
-        // find duplicate model
-        let findModel = storeProducers.listModelGet.find((data) => {
-          // console.log(data.model, storeProducers.producerFormValue.model);
-          if (data.model === storeProducers.producerFormValue.model) {
-            return data;
-          }
-          return null;
-        });
-
-        if (findModel) {
-          setErrors({
-            model: 'Greska',
-          });
+        //  ADD ADD ADD ADD ADD
+        // if duplicate model => return
+        if (findDuplicateData(storeProducers.listModelGet, 'model')) {
+          return;
+        }
+        // if duplicate producer => return
+        if (findDuplicateData(storeProducers.listProducerGet, 'producer')) {
           return;
         }
 
@@ -122,8 +128,8 @@ function ProducerForm(props) {
 
         const { model, producer } = storeProducers.producerFormValue;
 
-        console.log(storeProducers.producerFormValue);
-        console.log(storeProducers.listProducerGet);
+        // console.log(storeProducers.producerFormValue);
+        // console.log(storeProducers.listProducerGet);
 
         const dataProducer = {
           id: generateProducerId(),
@@ -147,7 +153,7 @@ function ProducerForm(props) {
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
       } else {
-        // UPDATE UPDATE
+        // UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
         // find model producer to store in model record
         const modelProdOld = storeProducers.listModelGet.find((data) => {
           return data.id === storeProducers.producerFormValue.id;
@@ -180,8 +186,8 @@ function ProducerForm(props) {
           }
         });
 
-        console.log(storeProducers.listModelGet);
-        console.log(store.listVehicleGet);
+        console.table(storeProducers.listModelGet);
+        console.table(store.listVehicleGet);
 
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
@@ -215,7 +221,7 @@ function ProducerForm(props) {
             value={storeProducers.producerFormValue.model}
             onChange={handleInputChange}
             error={errors.model ? true : false}
-            helperText={errors.model ? 'Duplicate Model' : ''}
+            helperText={errors.model ? errors.model : ''}
           ></TextField>
 
           <TextField
@@ -225,7 +231,8 @@ function ProducerForm(props) {
             name="producer"
             value={storeProducers.producerFormValue.producer}
             onChange={handleInputChange}
-            // error={errors.producer}
+            error={errors.producer ? true : false}
+            helperText={errors.producer ? errors.producer : ''}
           ></TextField>
 
           <div>

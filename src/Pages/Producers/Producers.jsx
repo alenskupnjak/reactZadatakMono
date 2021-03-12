@@ -15,10 +15,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-import {
-  headCellProducer,
-  initProducerValue,
-} from '../../Common/VehicleService';
+import {headCellProducer,} from '../../Common/VehicleService';
 import ProducerForm from './Components/ProducerForm';
 import UseTable from '../../Components/UseTable';
 import { store } from '../../Common/StoreVechile';
@@ -100,33 +97,8 @@ function Producers() {
     afterSortingAndFiltering,
   } = UseTable(storeProducers.listModelGet, headCellProducer, filterFn);
 
-  // for populating table
-  // const findProducerVehicle = (dataModelAuto) => {
-  //   // console.log(dataModelAuto);
-  //   // console.log(getModelOptions());
-  //   // console.log('list.modelget-',storeProducers.listModelGet);
 
-  //   // console.log(getProducerOptions());
-  //   // console.log('list.Producerget-',storeProducers.listProducerGet);
-
-  //   // *****************************************
-  //   // storeProducers.listModelGet   ===  getModelOptions()
-  //   // storeProducers.listProducerGet === getProducerOptions()
-  //   // **************************************
-
-  //   // const model = getModelOptions().find(data=>{
-  //   //   return data.id === dataModelAuto
-  //   // })
-
-  //   // console.log(model);
-
-  //   const prod = storeProducers.listProducerGet.find((data) => {
-  //     return data.id === dataModelAuto;
-  //   });
-  //   return prod.producer;
-  // };
-
-  // set functui filter
+  // set function for filter
   const handleSearch = (e) => {
     if (e.target.value === '') {
       setFilterFn({
@@ -145,32 +117,21 @@ function Producers() {
     }
   };
 
-  // editing and adding
-  const updateOrAddFunc = (dataFormValue) => {
-    console.log('Dataform value ', dataFormValue);
-    console.log(
-      'storeProducers.producerFormValue ',
-      storeProducers.producerFormValue
-    );
-
+  // 
+  // UPDATE
+  const updateFunc = (dataFormValue) => {
     setOpenCustomDialog(true);
     setAddOrUpdate('updateFormValue');
-
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
-
-    // find producer name
-    // const producer = findProducerVehicle(dataFormValue.modelAuto)
-    // dataFormValue.producer = producer
-
+    setNotify({ isOpen: true, msg: 'Update Producer', type: 'info' });
     // send data to form
     storeProducers.producerFormValue = dataFormValue;
   };
 
+  // 
   // DELETE record
   const deleteVehicle = (id) => {
     setConfirmDialog({ isOpen: false });
-
     // Display info on screen
     setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
 
@@ -231,7 +192,7 @@ function Producers() {
                       padding: '10px',
                       marginRight: '5px',
                     }}
-                    onClick={() => updateOrAddFunc(data)}
+                    onClick={() => updateFunc(data)}
                     startIcon={<EditIcon></EditIcon>}
                   ></Button>
                   <Button

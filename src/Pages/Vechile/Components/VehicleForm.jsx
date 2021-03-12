@@ -51,9 +51,8 @@ function VehicleForm(props) {
 
   // form validation
   const validationForm = () => {
-    // console.log(getModelOptions());
-    console.log(storeProducers.listModelGet);
-    console.log(storeProducers.listProducerGet);
+    console.table(storeProducers.listModelGet);
+    console.table(storeProducers.listProducerGet);
 
     // eslint-disable-next-line no-useless-escape
     const regexPhone = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;

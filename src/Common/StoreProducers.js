@@ -35,6 +35,7 @@ class Producers {
   // Init value for models
   listModel = listModelVechile;
 
+  // 
   // Change value in form
   setProducerValue(name, value) {
     //set value form
@@ -42,18 +43,10 @@ class Producers {
       ...this.producerFormValue,
       [name]: value,
     };
-
-    // for conosle.table() !
-    const stateValueFormEdit = {
-      id: this.producerFormValue.id,
-      model: this.producerFormValue.model,
-      producerId: this.producerFormValue.producerId,
-      producer: this.producerFormValue.producer,
-    };
-    console.table(stateValueFormEdit);
   }
 
-  // Change value in form
+  // 
+  // RESET producer form
   resetFormValue() {
     //set value form
     this.producerFormValue = {
@@ -78,7 +71,6 @@ class Producers {
   // PUT - add value to Vehicle list
   listProducerPut(data) {
     this.listProducer.push(data);
-    console.log(this.listProducer);
 
     // after save reset form
     // this.producerFormValue = initProducerValue;
