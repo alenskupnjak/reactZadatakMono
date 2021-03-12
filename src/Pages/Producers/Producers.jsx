@@ -57,17 +57,27 @@ const useStyles = makeStyles((theme) => ({
   },
   tablehead: {
     '& .MuiTableCell-head': {
-      backgroundColor: 'orange',
-      color: 'blue',
-      width: '100%',
+      backgroundColor: '#28A746',
+      color: '#fff',
+      // width: '100%',
     },
-    '& .MuiTableHead-root': {
-      backgroundColor: 'orange',
-    },
-    '& .makeStyles-table-7 thead th': {
-      color: 'red',
-      backgroundColor: ' green',
-    },
+    // '& .MuiTableHead-root tr th': {
+    //   backgroundColor: 'orange',
+    // },
+    // '& .MuiTableRow-root': {
+    //   backgroundColor: 'orange',
+    // },
+    // '& .MuiTableRow-head': {
+    //   backgroundColor: 'orange',
+    // },
+    // '& .makeStyles-table-7 thead th': {
+    //   color: 'red',
+    //   backgroundColor: 'green',
+    // },
+    // '& thead th': {
+    //   color: '#fff',
+    //   backgroundColor: 'green',
+    // },
   },
 }));
 
@@ -123,7 +133,7 @@ function Producers() {
     setOpenCustomDialog(true);
     setAddOrUpdate('updateFormValue');
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Update Producer', type: 'info' });
+    setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
     // send data to form
     storeProducers.producerFormValue = dataFormValue;
   };
@@ -133,7 +143,7 @@ function Producers() {
   const deleteVehicle = (id) => {
     setConfirmDialog({ isOpen: false });
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
+    setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
 
     // delete from Vechile list
     store.listVehicleGet.forEach((data, index) => {
@@ -162,9 +172,16 @@ function Producers() {
           ></InputCommon>
           <Button
             className={classes.newButton}
+            style={{
+              borderRadius: 30,
+              backgroundColor: "#28A746",
+              padding: "7px 12px",
+              fontSize: "18px",
+              color:'#fff'
+             }}
             variant="contained"
             size="large"
-            color="default"
+            // color="default"
             onClick={() => {
               storeProducers.resetFormValue();
               setOpenCustomDialog(true);
@@ -175,7 +192,7 @@ function Producers() {
           </Button>
         </Toolbar>
         <TblContainer>
-          <TblHeader className={classes.tablehead}></TblHeader>
+          <TblHeader css={classes.tablehead}></TblHeader>
           <TableBody>
             {afterSortingAndFiltering().map((data) => (
               <TableRow key={data.id}>
@@ -229,7 +246,7 @@ function Producers() {
         openCustomDialog={openCustomDialog}
         setOpenCustomDialog={setOpenCustomDialog}
         setAddOrUpdate={setAddOrUpdate}
-        title="Producers"
+        title="Model and Producer"
       >
         <ProducerForm
           setOpenCustomDialog={setOpenCustomDialog}

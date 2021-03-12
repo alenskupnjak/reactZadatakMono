@@ -151,7 +151,7 @@ function ProducerForm(props) {
         // console.log(storeProducers.listProducerGet);
 
         // Display info on screen
-        setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
+        setNotify({ isOpen: true, msg: 'Add Producer', type: 'success' });
       } else {
         // UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
         // find model producer to store in model record
@@ -186,11 +186,11 @@ function ProducerForm(props) {
           }
         });
 
-        console.table(storeProducers.listModelGet);
-        console.table(store.listVehicleGet);
+        // console.table(storeProducers.listModelGet);
+        // console.table(store.listVehicleGet);
 
         // Display info on screen
-        setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
+        setNotify({ isOpen: true, msg: 'Update Producer', type: 'warning' });
 
         setAddOrUpdate('addFormValueToList');
       }

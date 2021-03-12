@@ -5,7 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 const Notification = (props) => {
   const { notify, setNotify } = props;
 
-  const handleClose = (event, reason) => {
+  const handleClose = () => {
     setNotify({ isOpen: false, msg: '', type: 'info' });
   };
 

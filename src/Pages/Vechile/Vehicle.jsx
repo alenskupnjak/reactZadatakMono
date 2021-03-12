@@ -17,15 +17,13 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import { headCellVechile, initVechileValue } from '../../Common/VehicleService';
 import VehicleForm from './Components/VehicleForm';
-// import  UseTable from '../Components/UseTable'
 import UseTable from '../../Components/UseTable';
 import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
-
 import { store } from '../../Common/StoreVechile';
-// import { storeProducers } from  '../../Common/StoreProducers'
+
 
 //
 const useStyles = makeStyles((theme) => ({
@@ -86,22 +84,8 @@ function Vehicle() {
     afterSortingAndFiltering,
   } = UseTable(store.listVehicleGet, headCellVechile, filterFn);
 
-  // // for populating table
-  // const  findProducerVehicle = (dataModelAuto) => {
-  //   const model = storeProducers.listModelGet.find(data=>{
-  //     return data.id === dataModelAuto
-  //   })
-  //   // console.log(getModelOptions());
-  //   // console.log('list.modelget-',storeProducers.listModelGet);
-  //   // console.log(getProducerOptions());
-  //   // console.log(storeProducers.listProducerGet);
-  //   const prod = storeProducers.listProducerGet.find(data=>{
-  //       return data.id === model.producerId
-  //   })
-  //   return prod.producer
-  // }
 
-  // set functui filter
+  // set function filter
   const handleSearch = (e) => {
     if (e.target.value === '') {
       setFilterFn({
@@ -121,7 +105,6 @@ function Vehicle() {
   };
 
   //
-  //
   // for editing and adding
   const updateOrAddFunc = (dataFormValue) => {
     setOpenCustomDialog(true);
@@ -137,11 +120,9 @@ function Vehicle() {
   // DELETE record
   const deleteVehicle = (id) => {
     setConfirmDialog({ isOpen: false });
-    // if(window.confirm('Are you sure to delete this record?')) {
     // Display info on screen
     setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
     store.listVehicleDelete(id);
-    // }
   };
 
   return (

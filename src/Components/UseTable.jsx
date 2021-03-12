@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//
+// 
+//  MAIN
 function UseTable(record, headerCell, filterFn) {
   const classes = useStyles();
   const pages = [5, 10, 25];
@@ -46,7 +47,7 @@ function UseTable(record, headerCell, filterFn) {
     };
 
     return (
-      <TableHead>
+      <TableHead className={props.css} >
         <TableRow>
           {headerCell.map((data) => (
             <TableCell key={data.id}>
@@ -89,54 +90,12 @@ function UseTable(record, headerCell, filterFn) {
   //
   // function for sorting
   function sortTable(recordData) {
-    // console.log(recordData);
-
     // init setup sort
     if (!orderSort) {
       return recordData;
     }
 
-    // const prepareSortRecord = recordData.map((data) => {
-    //   //
-    //   // prepare for sorting model table
-    //   if (data.modelAuto) {
-    //     console.log('***********');
-
-    //     // prepare sorting for model
-    //     const modelName = storeProducers.listModelGet.find((model) => {
-    //       return model.id === data.modelAuto;
-    //     });
-
-    //     //  prepare sorting for producer
-    //     const producerName = storeProducers.listProducerGet.find((model) => {
-    //       return model.id === modelName.producerId;
-    //     });
-    //     return {
-    //       ...data,
-    //       producerSort: producerName.producer,
-    //       producer: producerName.producer,
-    //     };
-    //   }
-
-    //   //
-    //   // prepare for sorting Producer table table
-    //   if (data.producerId) {
-    //     console.log('***********');
-    //     // console.log('Sort producer', storeProducers.listModelGet,storeProducers.listProducerGet, data.producerId);
-
-    //     // prepare sorting for producer
-    //     const modelName = storeProducers.listProducerGet.find((model) => {
-    //       return model.id === data.producerId;
-    //     });
-    //     return { ...data, producerSort: modelName.producer };
-    //   }
-    //   return data;
-    // });
-
-    // console.log(prepareSortRecord);
-
     // stabilization
-    // const stabilizedThis = prepareSortRecord.map((el, index) => [el, index]);
     const stabilizedThis = recordData.map((el, index) => [el, index]);
     const sortDirection = orderSort === 'asc' ? 1 : -1;
 

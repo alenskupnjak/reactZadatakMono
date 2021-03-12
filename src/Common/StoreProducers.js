@@ -48,7 +48,6 @@ class Producers {
   // 
   // RESET producer form
   resetFormValue() {
-    //set value form
     this.producerFormValue = {
       ...this.producerFormValue,
       id: '',
@@ -56,22 +55,12 @@ class Producers {
       producerId: '',
       producer: '',
     };
-
-    // for conosle.table() !
-    const stateValueFormEdit = {
-      id: this.producerFormValue.id,
-      model: this.producerFormValue.model,
-      producerId: this.producerFormValue.producerId,
-      producer: this.producerFormValue.producer,
-    };
-    console.table(stateValueFormEdit);
   }
 
   //
   // PUT - add value to Vehicle list
   listProducerPut(data) {
     this.listProducer.push(data);
-
     // after save reset form
     // this.producerFormValue = initProducerValue;
   }
@@ -95,7 +84,6 @@ class Producers {
     const index = this.listProducer.findIndex((data) => {
       return data.id === id;
     });
-
     // delete record from list
     this.listProducer.splice(index, 1);
   }
@@ -148,9 +136,7 @@ class Producers {
     const index = this.listModel.findIndex((data) => {
       return data.id === updateData.id;
     });
-    console.log(index);
 
-    //  replace (UPDATE) value
     this.listModel.splice(index, 1, updateData);
   }
 }
