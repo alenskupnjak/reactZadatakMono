@@ -25,10 +25,10 @@ function DatePicker(props) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
-        margin='normal'
-        variant='dialog'
+        margin="normal"
+        variant="dialog"
         label={label}
-        format='MM/dd/yyyy'
+        format="MM/dd/yyyy"
         value={value}
         name={name}
         onChange={convertData}

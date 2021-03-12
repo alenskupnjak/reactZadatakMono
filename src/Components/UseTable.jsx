@@ -141,9 +141,6 @@ function UseTable(record, headerCell, filterFn) {
     const sortDirection = orderSort === 'asc' ? 1 : -1;
 
     let sortRecord = [...stabilizedThis].sort((a, b) => {
-      // if (orderSortBy === 'producer') {
-      //   setOrderSortBy('producerSort');
-      // }
       const order = sortDirection * descendingComparator(a[0], b[0]);
       if (order !== 0) return order;
       return a[1] - b[1];
@@ -175,7 +172,7 @@ function UseTable(record, headerCell, filterFn) {
   const TblPagination = (props) => (
     <TablePagination
       rowsPerPageOptions={pages}
-      component='div'
+      component="div"
       count={record.length}
       rowsPerPage={rowsPerPage}
       page={page}

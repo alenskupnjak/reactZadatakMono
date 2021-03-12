@@ -1,27 +1,21 @@
-import React from 'react'
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-} from '@material-ui/core';
+import React from 'react';
+import { Checkbox, FormControl, FormControlLabel } from '@material-ui/core';
 
-// 
+//
 function InputCheckBox(props) {
-  const { name, label, value, onChange} = props
-  
-  // convert to format (target:{value, name})
-  const convertData = (e) =>{
-    const convert = {
-      target:{
-        value:'',
-        name:''
-      }
-    }
-    convert.target.value = e.target.checked
-    convert.target.name = e.target.name
-    onChange(convert)
-  }
+  const { name, label, value, onChange } = props;
 
+  const convertData = (e) => {
+    const convert = {
+      target: {
+        value: '',
+        name: '',
+      },
+    };
+    convert.target.value = e.target.checked;
+    convert.target.name = e.target.name;
+    onChange(convert);
+  };
 
   return (
     <FormControl>
@@ -34,13 +28,11 @@ function InputCheckBox(props) {
             name={name}
             checked={value}
             onChange={convertData}
-          >
-          </Checkbox>
+          ></Checkbox>
         }
-      >
-      </FormControlLabel>
+      ></FormControlLabel>
     </FormControl>
-  )
+  );
 }
 
-export default InputCheckBox
+export default InputCheckBox;

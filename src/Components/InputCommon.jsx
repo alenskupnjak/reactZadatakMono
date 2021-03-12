@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { TextField } from '@material-ui/core';
 
-// 
+//
 function InputCommon(props) {
-  const {name, label, value, onChange, error=null, helperText, ...other} = props
+  const { name, label, value, onChange, error = null, helperText, ...other } = props;
 
   return (
     <TextField
@@ -13,10 +13,9 @@ function InputCommon(props) {
       onChange={onChange}
       error={error}
       {...other}
-      helperText= {helperText}
-    >
-    </TextField>
-  )
+      helperText={helperText}
+    ></TextField>
+  );
 }
 
-export default InputCommon
+export default InputCommon;

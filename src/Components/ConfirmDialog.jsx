@@ -12,7 +12,7 @@ import {
 //  custom CSS
 const useStyles = makeStyles((theme) => ({
   dialog: {
-    position: "absolute",
+    position: 'absolute',
     top: theme.spacing(3),
     padding: theme.spacing(2),
   },

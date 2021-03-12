@@ -16,8 +16,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import {
-  // getProducerOptions,
-  // getModelOptions,
   headCellProducer,
   initProducerValue,
 } from '../../Common/VehicleService';
@@ -35,10 +33,6 @@ const useStyles = makeStyles((theme) => ({
   pageContent: {
     width: '80%',
     margin: '0 auto',
-
-    //
-    //  backgroundColor:'green',
-    //  padding:theme.spacing(5)
   },
   newButton: {
     position: 'absolute',
@@ -68,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiTableCell-head': {
       backgroundColor: 'orange',
       color: 'blue',
-      width: '100%'
+      width: '100%',
     },
     '& .MuiTableHead-root': {
       backgroundColor: 'orange',
@@ -194,12 +188,12 @@ function Producers() {
       <Paper className={classes.pageContent}>
         <Toolbar>
           <InputCommon
-            label='Filter Model'
+            label="Filter Model"
             className={classes.searchInput}
             onChange={handleSearch}
             InputProps={{
               startAdornment: (
-                <InputAdornment position='start'>
+                <InputAdornment position="start">
                   <Search />
                 </InputAdornment>
               ),
@@ -207,11 +201,11 @@ function Producers() {
           ></InputCommon>
           <Button
             className={classes.newButton}
-            variant='contained'
-            size='large'
-            color='default'
+            variant="contained"
+            size="large"
+            color="default"
             onClick={() => {
-              storeProducers.producerFormValue = initProducerValue;
+              storeProducers.resetFormValue();
               setOpenCustomDialog(true);
             }}
             startIcon={<AddIcon></AddIcon>}
@@ -231,7 +225,7 @@ function Producers() {
                   <Button
                     id={data.id}
                     className={classes.custom}
-                    variant='contained'
+                    variant="contained"
                     style={{
                       backgroundColor: 'orange',
                       padding: '10px',
@@ -243,7 +237,7 @@ function Producers() {
                   <Button
                     id={data.id}
                     className={classes.custom}
-                    variant='outlined'
+                    variant="outlined"
                     style={{
                       backgroundColor: '#f83245',
                       padding: '10px',
@@ -274,7 +268,7 @@ function Producers() {
         openCustomDialog={openCustomDialog}
         setOpenCustomDialog={setOpenCustomDialog}
         setAddOrUpdate={setAddOrUpdate}
-        title='Producers'
+        title="Producers"
       >
         <ProducerForm
           setOpenCustomDialog={setOpenCustomDialog}

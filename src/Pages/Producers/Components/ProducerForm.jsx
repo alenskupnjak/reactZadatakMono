@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Grid, TextField, makeStyles } from '@material-ui/core';
 
-// import { useForm, Form } from '../../../Components/UseForm';
+import { Form } from '../../../Components/UseForm';
 import CustomButton from '../../../Components/CustomButton';
 import { storeProducers } from '../../../Common/StoreProducers';
 import { store } from '../../../Common/StoreVechile';
@@ -35,21 +35,19 @@ function ProducerForm(props) {
   // SET state
   const [errors, setErrors] = useState({});
   const [disableSubmitButton, setDisableSubmitButton] = useState(true);
-  // const [notify,setNotify] = useState({isOpen:false, msg:'', type:''});
 
   // form validation
   const validationForm = () => {
     // SET error
     const tempError = {};
-    tempError.model = storeProducers.producerFormValue.model.length > 0 ? '' : 'Min. 3 char';
+    tempError.model =
+      storeProducers.producerFormValue.model.length > 0 ? '' : 'Min. 3 char';
     // tempError.email = (/@/).test( storeProducers.producerFormValue.email)  ? '' : 'Invalid emali'
 
     // define error
     setErrors({
       ...tempError,
     });
-
-    console.log(tempError);
 
     // if validation all fields is TRUE, make enable button SUBMIT
     if (Object.values(tempError).every((x) => x === '')) {
@@ -65,9 +63,6 @@ function ProducerForm(props) {
   // handle input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
-    console.log(storeProducers.producerFormValue);
-    console.log(storeProducers.producerFormValue.model);
 
     storeProducers.setProducerValue(name, value);
 
@@ -77,6 +72,11 @@ function ProducerForm(props) {
 
   //  if UPDATE => ENABLE submit button
   useEffect(() => {
+    console.log('xxx');
+    // storeProducers.producerFormValue = initProducerValue
+    const model = storeProducers.producerFormValue.model;
+    console.log(model);
+
     if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
   }, [addOrUpdate]);
 
@@ -101,44 +101,34 @@ function ProducerForm(props) {
     if (validationForm()) {
       if (addOrUpdate === 'addFormValueToList') {
         //  ADD
+        // find duplicate model
         let findModel = storeProducers.listModelGet.find((data) => {
           // console.log(data.model, storeProducers.producerFormValue.model);
           if (data.model === storeProducers.producerFormValue.model) {
-            console.log('%c imam ga, vRACAM', 'color:red');
             return data;
           }
           return null;
         });
 
-        console.log(findModel);
-
         if (findModel) {
-          console.log('nenen');
           setErrors({
             model: 'Greska',
           });
           return;
         }
-        console.log('%c Paznja', 'color:green', findModel);
 
         // Generate fake ID
         storeProducers.producerFormValue.id = generateModelId();
 
         const { model, producer } = storeProducers.producerFormValue;
-        console.log(model, producer);
 
         console.log(storeProducers.producerFormValue);
         console.log(storeProducers.listProducerGet);
-
-        // const modelSave = getModelOptions().find(data=>{
-        //   return data.id ===   storeProducers.producerFormValue.modelAuto
-        // })
 
         const dataProducer = {
           id: generateProducerId(),
           producer: producer.toUpperCase(),
         };
-        // console.log(dataProducer);
 
         const dataModel = {
           id: generateModelId(),
@@ -146,31 +136,22 @@ function ProducerForm(props) {
           producerId: dataProducer.id,
           producer: producer.toUpperCase(),
         };
-        console.log(dataModel);
 
         // save record to listVehicle
         storeProducers.listProducerPut(dataProducer);
         storeProducers.listModelPut(dataModel);
 
-        console.log(storeProducers.listModelGet);
-        console.log(storeProducers.listProducerGet);
+        // console.log(storeProducers.listModelGet);
+        // console.log(storeProducers.listProducerGet);
 
         // Display info on screen
         setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
       } else {
         // UPDATE UPDATE
-        // *****************************************
-        // storeProducers.listModelGet   ===  getModelOptions()
-        // storeProducers.listProducerGet === getProducerOptions()
-        // **************************************
-        console.log(storeProducers.listModelGet);
-
         // find model producer to store in model record
         const modelProdOld = storeProducers.listModelGet.find((data) => {
           return data.id === storeProducers.producerFormValue.id;
         });
-
-        console.log(modelProdOld);
 
         const dataVehicle = {
           id: modelProdOld.id,
@@ -179,10 +160,9 @@ function ProducerForm(props) {
           producer: storeProducers.producerFormValue.producer.toUpperCase(),
         };
         storeProducers.listModelUpdate(dataVehicle);
+
         // search list, UPDATE vechile list
         store.listVehicle.forEach((data) => {
-          // console.log(data.id, data.model, modelProdOld.model);
-
           if (modelProdOld.model === data.model) {
             const dataVehicle = {
               id: data.id,
@@ -224,46 +204,46 @@ function ProducerForm(props) {
   };
 
   return (
-    // <Form>
-    <Grid container>
-      <Grid item xs={12}>
-        <TextField
-          className={classes.root}
-          variant='outlined'
-          label='Model'
-          name='model'
-          value={storeProducers.producerFormValue.model}
-          onChange={handleInputChange}
-          error={errors.model ? true : false}
-          helperText={errors.model ? 'Duplicate Model' : ''}
-        ></TextField>
+    <Form>
+      <Grid container>
+        <Grid item xs={12}>
+          <TextField
+            className={classes.root}
+            variant="outlined"
+            label="Model"
+            name="model"
+            value={storeProducers.producerFormValue.model}
+            onChange={handleInputChange}
+            error={errors.model ? true : false}
+            helperText={errors.model ? 'Duplicate Model' : ''}
+          ></TextField>
 
-        <TextField
-          className={classes.root}
-          variant='outlined'
-          label='Producer'
-          name='producer'
-          value={storeProducers.producerFormValue.producer}
-          onChange={handleInputChange}
-          // error={errors.producer}
-        ></TextField>
+          <TextField
+            className={classes.root}
+            variant="outlined"
+            label="Producer"
+            name="producer"
+            value={storeProducers.producerFormValue.producer}
+            onChange={handleInputChange}
+            // error={errors.producer}
+          ></TextField>
 
-        <div>
-          <CustomButton
-            onClick={handleSubmit}
-            // text="SUBMIT"
-            text={addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
-            disabled={disableSubmitButton}
-          ></CustomButton>
-          <CustomButton
-            text='RESET'
-            color='default'
-            onClick={resetForm}
-          ></CustomButton>
-        </div>
+          <div>
+            <CustomButton
+              onClick={handleSubmit}
+              // text="SUBMIT"
+              text={addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
+              disabled={disableSubmitButton}
+            ></CustomButton>
+            <CustomButton
+              text="RESET"
+              color="default"
+              onClick={resetForm}
+            ></CustomButton>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-    // </Form>
+    </Form>
   );
 }
 

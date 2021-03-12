@@ -12,6 +12,7 @@ class Producers {
     makeObservable(this, {
       producerFormValue: observable,
       setProducerValue: action,
+      resetFormValue: action,
       listProducer: observable,
       listProducerPut: action,
       listProducerGet: computed,
@@ -36,10 +37,6 @@ class Producers {
 
   // Change value in form
   setProducerValue(name, value) {
-    console.log('Prije', this.producerFormValue);
-    // console.log('Prije',this.producerFormValue.target[0].model);
-    console.log({ name, value });
-
     //set value form
     this.producerFormValue = {
       ...this.producerFormValue,
@@ -51,6 +48,28 @@ class Producers {
       id: this.producerFormValue.id,
       model: this.producerFormValue.model,
       producerId: this.producerFormValue.producerId,
+      producer: this.producerFormValue.producer,
+    };
+    console.table(stateValueFormEdit);
+  }
+
+  // Change value in form
+  resetFormValue() {
+    //set value form
+    this.producerFormValue = {
+      ...this.producerFormValue,
+      id: '',
+      model: '',
+      producerId: '',
+      producer: '',
+    };
+
+    // for conosle.table() !
+    const stateValueFormEdit = {
+      id: this.producerFormValue.id,
+      model: this.producerFormValue.model,
+      producerId: this.producerFormValue.producerId,
+      producer: this.producerFormValue.producer,
     };
     console.table(stateValueFormEdit);
   }
