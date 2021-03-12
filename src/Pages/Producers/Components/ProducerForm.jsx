@@ -40,8 +40,14 @@ function ProducerForm(props) {
   const validationForm = () => {
     // SET error
     const tempError = {};
-    tempError.model = storeProducers.producerFormValue.model.length > 2 ? '' : 'Minimum 3 character';
-    tempError.producer = storeProducers.producerFormValue.producer.length > 0 ? '' : 'Minimum 1 character';
+    tempError.model =
+      storeProducers.producerFormValue.model.length > 2
+        ? ''
+        : 'Minimum 3 character';
+    tempError.producer =
+      storeProducers.producerFormValue.producer.length > 0
+        ? ''
+        : 'Minimum 1 character';
 
     // define error
     setErrors({
@@ -87,8 +93,12 @@ function ProducerForm(props) {
   //
   // find duplicate value => error UI
   const findDuplicateData = (array, cellName) => {
+    let compareData = storeProducers.producerFormValue[cellName];
+    if (cellName === 'producer') {
+      compareData = storeProducers.producerFormValue[cellName].toUpperCase();
+    }
     const findDuplicate = array.find((data) => {
-      if (data[cellName] === storeProducers.producerFormValue[cellName]) {
+      if (data[cellName] === compareData) {
         return data;
       }
       return null;
