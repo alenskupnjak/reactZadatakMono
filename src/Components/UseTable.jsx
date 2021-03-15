@@ -9,6 +9,8 @@ import {
   TableSortLabel,
 } from '@material-ui/core'
 
+import {store} from '../Common/StoreVechile'
+
 //
 // Style CSS
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 
 //  MAIN
-function UseTable(record, headerCell, filterFn) {
+function UseTable(record, headerCell) {
   const classes = useStyles();
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -121,7 +123,7 @@ function UseTable(record, headerCell, filterFn) {
 
   // set page per pages
   const afterSortingAndFiltering = (event) => {
-    return sortTable(filterFn.fn(record))
+    return sortTable(store.filterFn.fn(record))
       .slice()
       .splice(page * rowsPerPage, rowsPerPage);
   };

@@ -9,6 +9,7 @@ import {
   Toolbar,
   InputAdornment,
   Button,
+  TextField
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
@@ -18,11 +19,12 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { headCellVechile, initVechileValue } from '../../Common/VehicleService';
 import VehicleForm from './Components/VehicleForm';
 import UseTable from '../../Components/UseTable';
-import InputCommon from '../../Components/InputCommon';
+// import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 import { store } from '../../Common/StoreVechile';
+import { storeNotification } from '../../Common/StoreNotification';
 
 
 //
@@ -62,14 +64,14 @@ function Vehicle() {
   const classes = useStyles();
 
   // SET state
-  const [filterFn, setFilterFn] = useState({
-    fn: (items) => {
-      return items;
-    },
-  });
-  // const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
-  const [notify, setNotify] = useState({ isOpen: false, msg: '', type: '' });
+  // const [filterFn, setFilterFn] = xseXXState({
+  //   fn: (items) => {
+  //     return items;
+  //   },
+  // });
+  // const [openCustomDialog, setOpenCustomDialog] = useXXState(false);
+  // const [addOrUpdate, setAddOrUpdate] = useXXState('addFormValueToList');
+  // const [notify, setNotify] = useXXState({ isOpen: false, msg: '', type: '' });
   const [confirmDialog, setConfirmDialog] = useState({
     isOpen: false,
     title: '',
@@ -81,36 +83,36 @@ function Vehicle() {
     TblHeader,
     TblPagination,
     afterSortingAndFiltering,
-  } = UseTable(store.listVehicleGet, headCellVechile, filterFn);
+  } = UseTable(store.listVehicleGet, headCellVechile);
 
 
-  // set function filter
-  const handleSearch = (e) => {
-    if (e.target.value === '') {
-      setFilterFn({
-        fn: (items) => {
-          return items;
-        },
-      });
-    } else {
-      setFilterFn({
-        fn: (items) => {
-          return items.filter((data) =>
-            data.model.toLowerCase().includes(e.target.value.toLowerCase())
-          );
-        },
-      });
-    }
-  };
+  // // set function filter
+  // const handleSearch = (e) => {
+  //   if (e.target.value === '') {
+  //     setFilterFn({
+  //       fn: (items) => {
+  //         return items;
+  //       },
+  //     });
+  //   } else {
+  //     setFilterFn({
+  //       fn: (items) => {
+  //         return items.filter((data) =>
+  //           data.model.toLowerCase().includes(e.target.value.toLowerCase())
+  //         );
+  //       },
+  //     });
+  //   }
+  // };
 
   //
   // for EDITING AND ADING
   const updateOrAddFunc = (dataFormValue) => {
     store.setOpenCustomDialog(true);
-    setAddOrUpdate('updateFormValue');
+    store.setAddOrUpdate('updateFormValue');
 
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
+    storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
 
     // send data to form
     store.vechileFormValue = dataFormValue;
@@ -120,7 +122,7 @@ function Vehicle() {
   const deleteVehicle = (id) => {
     setConfirmDialog({ isOpen: false });
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
+    storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
     store.listVehicleDelete(id);
   };
 
@@ -128,10 +130,11 @@ function Vehicle() {
     <React.Fragment>
       <Paper className={classes.pageContent}>
         <Toolbar>
-          <InputCommon
+          {/* <InputCommon
             label="Filter Model"
             className={classes.searchInput}
             onChange={handleSearch}
+            // onChange={store.handleSearch}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -139,7 +142,23 @@ function Vehicle() {
                 </InputAdornment>
               ),
             }}
-          ></InputCommon>
+          ></InputCommon> */}
+
+          <TextField
+            className={classes.searchInput}
+            label="Filter Model"
+            // value={value}
+            onChange={(e)=> {store.handleSearch(e)}}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          ></TextField>
+
+
           <Button
             className={classes.newButton}
             variant="contained"
@@ -219,17 +238,18 @@ function Vehicle() {
       <CustomOpenDialog
         openCustomDialog={store.openCustomDialog}
         // setOpenCustomDialog={store.setOpenCustomDialog}
-        setAddOrUpdate={setAddOrUpdate}
+        // setAddOrUpdate={setAddOrUpdate}
         title="Model vehicle"
       >
         <VehicleForm
           // setOpenCustomDialog={store.setOpenCustomDialog}
-          addOrUpdate={addOrUpdate}
-          setAddOrUpdate={setAddOrUpdate}
-          setNotify={setNotify}
+          // addOrUpdate={addOrUpdate}
+          // setAddOrUpdate={setAddOrUpdate}
+          // setNotify={setNotify}
         ></VehicleForm>
       </CustomOpenDialog>
-      <Notification notify={notify} setNotify={setNotify}></Notification>
+      {/* <Notification notify={storeNotification.notify} setNotify={setNotify}></Notification> */}
+      <Notification notify={storeNotification.notify.isOpen}></Notification>
       <ConfirmDialog
         confirmDialog={confirmDialog}
         setConfirmDialog={setConfirmDialog}

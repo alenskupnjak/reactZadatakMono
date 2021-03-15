@@ -14,8 +14,16 @@ class Store {
       listVehicleDelete: action,
       listVehicleUpdate: action,
 
-      openCustomDialog:observable,
+      openCustomDialog: observable,
       setOpenCustomDialog: action,
+
+      addOrUpdate: observable,
+      setAddOrUpdate: action,
+
+      filterFn: observable,
+      setFilterFn: action,
+
+      handleSearch: action
     });
   }
 
@@ -23,6 +31,13 @@ class Store {
   vechileFormValue = initVechileValue;
   listVehicle = listVehicleInit;
   openCustomDialog = false;
+  addOrUpdate = 'addFormValueToList'
+
+  filterFn = {
+    fn: (items) => {
+      return items;
+    }
+  }
 
 
   // Change value in form
@@ -82,7 +97,6 @@ class Store {
     const index = this.listVehicle.findIndex((data) => {
       return data.id === id;
     });
-
     // delete record from list
     this.listVehicle.splice(index, 1);
   }
@@ -100,10 +114,40 @@ class Store {
 
   //  Open/Close dialog
   setOpenCustomDialog(data) {
-    this.openCustomDialog= data;
+    this.openCustomDialog = data;
   }
 
+  //  Open/Close dialog
+  setAddOrUpdate(data) {
+    this.addOrUpdate = data;
+  }
 
+  setFilterFn() {
+    this.filterFn = {
+      fn: (items) => {
+        return items;
+      }
+    }
+  }
+
+  // 
+  handleSearch(e) {
+    if (e.target.value === '') {
+      this.filterFn = {
+        fn: (items) => {
+          return items;
+        },
+      };
+    } else {
+      this.filterFn = {
+        fn: (items) => {
+          return items.filter((data) =>
+            data.model.toLowerCase().includes(e.target.value.toLowerCase())
+          );
+        },
+      };
+    }
+  }
 }
 
 export const store = new Store();

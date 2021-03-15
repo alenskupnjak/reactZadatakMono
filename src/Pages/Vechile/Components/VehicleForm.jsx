@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import {
   Grid,
@@ -19,6 +20,7 @@ import CustomButton from '../../../Components/CustomButton';
 import { initVechileValue } from '../../../Common/VehicleService';
 import { store } from '../../../Common/StoreVechile';
 import { storeProducers } from '../../../Common/StoreProducers';
+import { storeNotification } from '../../../Common/StoreNotification';
 
 //
 // Style CSS
@@ -43,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
 // Main funkcija
 function VehicleForm(props) {
   const classes = useStyles();
-  const { addOrUpdate, setAddOrUpdate, setNotify } = props;
+  // const { addOrUpdate, setAddOrUpdate, setNotify } = props;
+  // const { setNotify } = props;
 
   // SET state
   const [errors, setErrors] = useState({});
@@ -86,10 +89,10 @@ function VehicleForm(props) {
   //
   const { handleInputChange } = useForm(validationForm);
 
-  //  if UPDATE => ENABLE submit button
-  useEffect(() => {
-    if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
-  }, [addOrUpdate]);
+  // //  if UPDATE => ENABLE submit button
+  // useEffect(() => {
+  //   if (store.addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
+  // }, [store.addOrUpdateaddOrUpdate]);
 
   // RESET form
   function resetForm() {
@@ -107,7 +110,7 @@ function VehicleForm(props) {
     //  IF FORM is valid  => save data in mobX
     if (validationForm()) {
       //  ADD or UPDATE
-      if (addOrUpdate === 'addFormValueToList') {
+      if (store.addOrUpdate === 'addFormValueToList') {
         // Generate fake ID
         store.vechileFormValue.id = generateId();
 
@@ -122,7 +125,7 @@ function VehicleForm(props) {
         store.listVehiclePut(store.vechileFormValue);
 
         // Display info on screen
-        setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
+        storeNotification.setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
       } else {
         // UPDATE
         // find model producer to store in model record
@@ -144,9 +147,9 @@ function VehicleForm(props) {
         };
         store.listVehicleUpdate(dataVehicle);
         // Display info on screen
-        setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
+        storeNotification.setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
 
-        setAddOrUpdate('addFormValueToList');
+        store.setAddOrUpdate('addFormValueToList');
       }
     }
 
@@ -256,7 +259,7 @@ function VehicleForm(props) {
             <CustomButton
               onClick={handleSubmit}
               // text="SUBMIT"
-              text={addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
+              text={store.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
               disabled={disableSubmitButton}
             ></CustomButton>
             <CustomButton

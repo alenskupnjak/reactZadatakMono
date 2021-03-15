@@ -31,7 +31,7 @@ const CustomOpenDialog = (props) => {
     children,
     openCustomDialog,
     // setOpenCustomDialog,
-    setAddOrUpdate,
+    // setAddOrUpdate,
   } = props;
   
 
@@ -52,9 +52,8 @@ const CustomOpenDialog = (props) => {
             onClick={() => {
               // console.log('zatvorio',setOpenCustomDialog);
               store.setOpenCustomDialog(false);
-              console.log('xxx');
               
-              setAddOrUpdate('addFormValueToList');
+              store.setAddOrUpdate('addFormValueToList');
             }}
             className={classes.root}
             startIcon={<CloseIcon></CloseIcon>}
