@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 // Main funkcija
 function VehicleForm(props) {
   const classes = useStyles();
-  const { setOpenCustomDialog, addOrUpdate, setAddOrUpdate, setNotify } = props;
+  const { addOrUpdate, setAddOrUpdate, setNotify } = props;
 
   // SET state
   const [errors, setErrors] = useState({});
@@ -151,7 +151,7 @@ function VehicleForm(props) {
     }
 
     // close dialog
-    setOpenCustomDialog(false);
+    store.setOpenCustomDialog(false);
   };
 
   // Generate fake ID

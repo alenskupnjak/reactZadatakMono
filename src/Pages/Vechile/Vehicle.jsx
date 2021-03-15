@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   pageContent: {
     width: '80%',
     margin: '0 auto',
-    //  padding:theme.spacing(5)
   },
   newButton: {
     position: 'absolute',
@@ -68,7 +67,7 @@ function Vehicle() {
       return items;
     },
   });
-  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  // const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
   const [notify, setNotify] = useState({ isOpen: false, msg: '', type: '' });
   const [confirmDialog, setConfirmDialog] = useState({
@@ -105,9 +104,9 @@ function Vehicle() {
   };
 
   //
-  // for editing and adding
+  // for EDITING AND ADING
   const updateOrAddFunc = (dataFormValue) => {
-    setOpenCustomDialog(true);
+    store.setOpenCustomDialog(true);
     setAddOrUpdate('updateFormValue');
 
     // Display info on screen
@@ -148,7 +147,7 @@ function Vehicle() {
             color="primary"
             onClick={() => {
               store.vechileFormValue = initVechileValue;
-              setOpenCustomDialog(true);
+              store.setOpenCustomDialog(true);
             }}
             startIcon={<AddIcon></AddIcon>}
           >
@@ -218,13 +217,13 @@ function Vehicle() {
         <TblPagination></TblPagination>
       </Paper>
       <CustomOpenDialog
-        openCustomDialog={openCustomDialog}
-        setOpenCustomDialog={setOpenCustomDialog}
+        openCustomDialog={store.openCustomDialog}
+        // setOpenCustomDialog={store.setOpenCustomDialog}
         setAddOrUpdate={setAddOrUpdate}
         title="Model vehicle"
       >
         <VehicleForm
-          setOpenCustomDialog={setOpenCustomDialog}
+          // setOpenCustomDialog={store.setOpenCustomDialog}
           addOrUpdate={addOrUpdate}
           setAddOrUpdate={setAddOrUpdate}
           setNotify={setNotify}

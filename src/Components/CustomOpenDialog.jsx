@@ -8,12 +8,11 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import {store} from '../Common/StoreVechile'
 
 const useStyle = makeStyles((theme) => ({
   dialogcustom: {
     padding: theme.spacing(2),
-    // top: theme.spacing(5),
-    // backgroundColor: 'blue',
     '& .MuiButton-startIcon': {
       marginRight: '0px',
       marginLeft: '0px',
@@ -31,9 +30,10 @@ const CustomOpenDialog = (props) => {
     title,
     children,
     openCustomDialog,
-    setOpenCustomDialog,
+    // setOpenCustomDialog,
     setAddOrUpdate,
   } = props;
+  
 
   return (
     <Dialog
@@ -50,7 +50,10 @@ const CustomOpenDialog = (props) => {
             variant="contained"
             color="secondary"
             onClick={() => {
-              setOpenCustomDialog(false);
+              // console.log('zatvorio',setOpenCustomDialog);
+              store.setOpenCustomDialog(false);
+              console.log('xxx');
+              
               setAddOrUpdate('addFormValueToList');
             }}
             className={classes.root}

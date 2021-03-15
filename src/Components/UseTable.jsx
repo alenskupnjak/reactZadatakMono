@@ -7,7 +7,7 @@ import {
   TableCell,
   TablePagination,
   TableSortLabel,
-} from '@material-ui/core';
+} from '@material-ui/core'
 
 //
 // Style CSS
@@ -124,7 +124,6 @@ function UseTable(record, headerCell, filterFn) {
     return sortTable(filterFn.fn(record))
       .slice()
       .splice(page * rowsPerPage, rowsPerPage);
-    // return  sortTable(record).slice().splice(page * rowsPerPage,rowsPerPage)
   };
 
   // Pagination

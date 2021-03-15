@@ -13,12 +13,17 @@ class Store {
       listVehicleGet: computed,
       listVehicleDelete: action,
       listVehicleUpdate: action,
+
+      openCustomDialog:observable,
+      setOpenCustomDialog: action,
     });
   }
 
   // Init value
   vechileFormValue = initVechileValue;
   listVehicle = listVehicleInit;
+  openCustomDialog = false;
+
 
   // Change value in form
   setVechileValue(name, value) {
@@ -92,6 +97,13 @@ class Store {
     //  replace (UPDATE) value
     this.listVehicle.splice(index, 1, updateData);
   }
+
+  //  Open/Close dialog
+  setOpenCustomDialog(data) {
+    this.openCustomDialog= data;
+  }
+
+
 }
 
 export const store = new Store();

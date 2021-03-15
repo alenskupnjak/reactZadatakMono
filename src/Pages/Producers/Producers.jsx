@@ -59,25 +59,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiTableCell-head': {
       backgroundColor: '#28A746',
       color: '#fff',
-      // width: '100%',
     },
-    // '& .MuiTableHead-root tr th': {
-    //   backgroundColor: 'orange',
-    // },
-    // '& .MuiTableRow-root': {
-    //   backgroundColor: 'orange',
-    // },
-    // '& .MuiTableRow-head': {
-    //   backgroundColor: 'orange',
-    // },
-    // '& .makeStyles-table-7 thead th': {
-    //   color: 'red',
-    //   backgroundColor: 'green',
-    // },
-    // '& thead th': {
-    //   color: '#fff',
-    //   backgroundColor: 'green',
-    // },
   },
 }));
 
@@ -110,6 +92,7 @@ function Producers() {
 
   // set function for filter
   const handleSearch = (e) => {
+
     if (e.target.value === '') {
       setFilterFn({
         fn: (items) => {
