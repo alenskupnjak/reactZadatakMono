@@ -9,7 +9,6 @@ import {
   TableSortLabel,
 } from '@material-ui/core'
 
-import {store} from '../Common/StoreVechile'
 
 //
 // Style CSS
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 
 //  MAIN
-function UseTable(record, headerCell) {
+function UseTable(record, headerCell, store) {
   const classes = useStyles();
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);

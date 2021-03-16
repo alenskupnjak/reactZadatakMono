@@ -21,9 +21,12 @@ class Store {
       setAddOrUpdate: action,
 
       filterFn: observable,
-      setFilterFn: action,
+      // setFilterFn: action,
 
-      handleSearch: action
+      handleSearch: action,
+
+      confirmDialog: observable,
+      setConfirmDialog: observable,
     });
   }
 
@@ -32,6 +35,13 @@ class Store {
   listVehicle = listVehicleInit;
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList'
+
+  confirmDialog = {
+    isOpen: false,
+    title: '',
+    subTitle: '',
+    onConfirm:''
+  }
 
   filterFn = {
     fn: (items) => {
@@ -122,13 +132,13 @@ class Store {
     this.addOrUpdate = data;
   }
 
-  setFilterFn() {
-    this.filterFn = {
-      fn: (items) => {
-        return items;
-      }
-    }
-  }
+  // setFilterFn() {
+  //   this.filterFn = {
+  //     fn: (items) => {
+  //       return items;
+  //     }
+  //   }
+  // }
 
   // 
   handleSearch(e) {
@@ -148,6 +158,14 @@ class Store {
       };
     }
   }
+
+  // 
+  setConfirmDialog( isOpen,title=null, subTitle=null,onConfirm=null) {
+    console.log(isOpen,title, subTitle, onConfirm);
+    this.confirmDialog = {isOpen:isOpen,title:title, subTitle:subTitle}
+  }
+
+
 }
 
 export const store = new Store();

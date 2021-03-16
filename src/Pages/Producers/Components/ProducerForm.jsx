@@ -4,8 +4,11 @@ import { Grid, TextField, makeStyles } from '@material-ui/core';
 
 import { Form } from '../../../Components/UseForm';
 import CustomButton from '../../../Components/CustomButton';
+
 import { storeProducers } from '../../../Common/StoreProducers';
 import { store } from '../../../Common/StoreVechile';
+import { storeNotification } from '../../../Common/StoreNotification';
+
 
 //
 // Style CSS
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 // Main funkcija
 function ProducerForm(props) {
   const classes = useStyles();
-  const { setOpenCustomDialog, addOrUpdate, setAddOrUpdate, setNotify } = props;
+  // const { setOpenCustomDialog, addOrUpdate, setAddOrUpdate, setNotify } = props;
 
   // SET state
   const [errors, setErrors] = useState({});
@@ -76,10 +79,10 @@ function ProducerForm(props) {
   };
 
   //
-  //  if UPDATE => ENABLE submit button
-  useEffect(() => {
-    if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
-  }, [addOrUpdate]);
+  // //  if UPDATE => ENABLE submit button
+  // useEffect(() => {
+  //   if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
+  // }, [addOrUpdate]);
 
   //
   // RESET form
@@ -122,7 +125,7 @@ function ProducerForm(props) {
 
     //  IF FORM is valid  => save data in mobX
     if (validationForm()) {
-      if (addOrUpdate === 'addFormValueToList') {
+      if (storeProducers.addOrUpdate === 'addFormValueToList') {
         //  ADD ADD ADD ADD ADD
         // if duplicate model => return
         if (findDuplicateData(storeProducers.listModelGet, 'model')) {
@@ -161,7 +164,7 @@ function ProducerForm(props) {
         // console.log(storeProducers.listProducerGet);
 
         // Display info on screen
-        setNotify({ isOpen: true, msg: 'Add Producer', type: 'success' });
+        storeNotification.setNotify({ isOpen: true, msg: 'Add Producer', type: 'success' });
       } else {
         // UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
         // find model producer to store in model record
@@ -200,13 +203,13 @@ function ProducerForm(props) {
         // console.table(store.listVehicleGet);
 
         // Display info on screen
-        setNotify({ isOpen: true, msg: 'Update Producer', type: 'warning' });
+        storeNotification.setNotify({ isOpen: true, msg: 'Update Producer', type: 'warning' });
 
-        setAddOrUpdate('addFormValueToList');
+        storeProducers.setAddOrUpdate('addFormValueToList');
       }
     }
     // close dialog
-    setOpenCustomDialog(false);
+    storeProducers.setOpenCustomDialog(false);
   };
 
   // Generate fake ID
@@ -249,7 +252,7 @@ function ProducerForm(props) {
             <CustomButton
               onClick={handleSubmit}
               // text="SUBMIT"
-              text={addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
+              text={storeProducers.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
               disabled={disableSubmitButton}
             ></CustomButton>
             <CustomButton

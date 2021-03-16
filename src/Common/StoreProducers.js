@@ -23,6 +23,19 @@ class Producers {
       listModel: observable,
       listModelGet: computed,
       listModelPut: action,
+
+      openCustomDialog: observable,
+      setOpenCustomDialog: action,
+
+      addOrUpdate: observable,
+      setAddOrUpdate: action,
+
+      filterFn: observable,
+      setFilterFn: action,
+
+      
+      confirmDialog: observable,
+      setConfirmDialog: observable,
     });
   }
 
@@ -34,6 +47,24 @@ class Producers {
 
   // Init value for models
   listModel = listModelVechile;
+
+  openCustomDialog = false;
+
+  confirmDialog = {
+    isOpen: false,
+    title: '',
+    subTitle: '',
+    onConfirm:''
+  }
+
+  filterFn = {
+    fn: (items) => {
+      return items;
+    }
+  }
+
+// 
+  addOrUpdate = 'addFormValueToList'
 
   // 
   // Change value in form
@@ -138,6 +169,48 @@ class Producers {
     });
 
     this.listModel.splice(index, 1, updateData);
+  }
+
+  // 
+  setOpenCustomDialog(data) {
+    console.log('xx');
+    
+    this.openCustomDialog = data;
+  }
+
+  setAddOrUpdate(data) {
+    this.addOrUpdate = data;
+  }
+
+  setFilterFn() {
+    this.filterFn = {
+      fn: (items) => {
+        return items;
+      }
+    }
+  }
+
+  handleSearch(e) {
+    if (e.target.value === '') {
+      this.filterFn = {
+        fn: (items) => {
+          return items;
+        },
+      };
+    } else {
+      this.filterFn = {
+        fn: (items) => {
+          return items.filter((data) =>
+            data.model.toLowerCase().includes(e.target.value.toLowerCase())
+          );
+        },
+      };
+    }
+  }
+
+  setConfirmDialog( isOpen,title=null, subTitle=null,onConfirm=null) {
+    console.log(isOpen,title, subTitle, onConfirm);
+    this.confirmDialog = {isOpen:isOpen,title:title, subTitle:subTitle}
   }
 }
 

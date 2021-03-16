@@ -20,21 +20,29 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfirmDialog = (props) => {
   const classes = useStyles();
-  const { confirmDialog, setConfirmDialog } = props;
+  const { dataDialog, store} = props;
+
+  // if(dataDialog) {
+  //   console.log(dataDialog.isOpen);
+  //   console.log(dataDialog.title);
+  //   console.log(dataDialog.subTitle);
+  //   console.log(dataDialog.isOpen);
+  // }
+  
 
   return (
-    <Dialog open={confirmDialog.isOpen} className={classes.dialog}>
+    <Dialog open={dataDialog.isOpen ? dataDialog.isOpen: false} className={classes.dialog}>
       <DialogTitle></DialogTitle>
       <DialogContent>
-        <Typography variant="h6">{confirmDialog.title}</Typography>
-        <Typography variant="caption">{confirmDialog.subTitle}</Typography>
+        <Typography variant="h6">{dataDialog.title}</Typography>
+        <Typography variant="caption">{dataDialog.subTitle}</Typography>
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
         <Button
           text="NO"
           color="primary"
           variant="contained"
-          onClick={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}
+          onClick={() => store.setConfirmDialog({ isOpen: false })}
         >
           NO
         </Button>
@@ -42,7 +50,7 @@ const ConfirmDialog = (props) => {
           text="YES"
           variant="contained"
           color="secondary"
-          onClick={confirmDialog.onConfirm}
+          onClick={dataDialog.onConfirm}
         >
           YES
         </Button>

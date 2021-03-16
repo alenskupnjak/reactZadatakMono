@@ -1,12 +1,13 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import { storeNotification } from '../Common/StoreNotification';
+// import { storeNotification } from '../Common/StoreNotification';
 
 const Notification = (props) => {
-  const { notify } = props;
+  const { notify , store} = props;
 
   console.log(notify.isOpen);
+  console.log(store);
   
 
   // const handleClose = () => {
@@ -19,11 +20,11 @@ const Notification = (props) => {
       autoHideDuration={3000}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       onClose={() => {
-        storeNotification.setNotify({ isOpen: false, msg: '', type: 'info' });
+        store.setNotify({ isOpen: false, msg: '', type: 'info' });
       }}
     >
       <Alert severity={notify.type} onClose={() => {
-        storeNotification.setNotify({ isOpen: false, msg: '', type: 'info' });
+        store.setNotify({ isOpen: false, msg: '', type: 'info' });
       }}>
         {notify.msg}
       </Alert>

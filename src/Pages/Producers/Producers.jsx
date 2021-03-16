@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import {
   makeStyles,
@@ -9,21 +9,25 @@ import {
   Toolbar,
   InputAdornment,
   Button,
+  TextField
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-import {headCellProducer,} from '../../Common/VehicleService';
+import { headCellProducer, } from '../../Common/VehicleService';
 import ProducerForm from './Components/ProducerForm';
 import UseTable from '../../Components/UseTable';
-import { store } from '../../Common/StoreVechile';
-import { storeProducers } from '../../Common/StoreProducers';
 import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
+
+
+import { store } from '../../Common/StoreVechile';
+import { storeProducers } from '../../Common/StoreProducers';
+import { storeNotification } from '../../Common/StoreNotification';
 
 //
 const useStyles = makeStyles((theme) => ({
@@ -68,55 +72,55 @@ function Producers() {
   const classes = useStyles();
 
   // SET state
-  const [filterFn, setFilterFn] = useState({
-    fn: (items) => {
-      return items;
-    },
-  });
-  const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  const [addOrUpdate, setAddOrUpdate] = useState('addFormValueToList');
-  const [notify, setNotify] = useState({ isOpen: false, msg: '', type: '' });
-  const [confirmDialog, setConfirmDialog] = useState({
-    isOpen: false,
-    title: '',
-    subTitle: '',
-  });
+  // const [filterFn, setFilterFn] = useXXState({
+  //   fn: (items) => {
+  //     return items;
+  //   },
+  // });
+  // const [openCustomDialog, setOpenCustomDialog] = useXXState(false);
+  // const [addOrUpdate, setAddOrUpdate] = useXXState('addFormValueToList');
+  // const [notify, setNotify] = useXXState({ isOpen: false, msg: '', type: '' });
+  // const [confirmDialog, setConfirmDialog] = useXXState({
+  //   isOpen: false,
+  //   title: '',
+  //   subTitle: '',
+  // });
 
   const {
     TblContainer,
     TblHeader,
     TblPagination,
     afterSortingAndFiltering,
-  } = UseTable(storeProducers.listModelGet, headCellProducer, filterFn);
+  } = UseTable(storeProducers.listModelGet, headCellProducer, storeProducers);
 
 
-  // set function for filter
-  const handleSearch = (e) => {
+  // // set function for filter
+  // const handleSearch = (e) => {
 
-    if (e.target.value === '') {
-      setFilterFn({
-        fn: (items) => {
-          return items;
-        },
-      });
-    } else {
-      setFilterFn({
-        fn: (items) => {
-          return items.filter((data) =>
-            data.model.toLowerCase().includes(e.target.value.toLowerCase())
-          );
-        },
-      });
-    }
-  };
+  //   if (e.target.value === '') {
+  //     setFilterFn({
+  //       fn: (items) => {
+  //         return items;
+  //       },
+  //     });
+  //   } else {
+  //     setFilterFn({
+  //       fn: (items) => {
+  //         return items.filter((data) =>
+  //           data.model.toLowerCase().includes(e.target.value.toLowerCase())
+  //         );
+  //       },
+  //     });
+  //   }
+  // };
 
   // 
   // UPDATE
   const updateFunc = (dataFormValue) => {
-    setOpenCustomDialog(true);
-    setAddOrUpdate('updateFormValue');
+    storeProducers.setOpenCustomDialog(true);
+    storeProducers.setAddOrUpdate('updateFormValue');
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
+    storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
     // send data to form
     storeProducers.producerFormValue = dataFormValue;
   };
@@ -124,9 +128,9 @@ function Producers() {
   // 
   // DELETE record
   const deleteVehicle = (id) => {
-    setConfirmDialog({ isOpen: false });
+    storeProducers.setConfirmDialog({ isOpen: false });
     // Display info on screen
-    setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
+    storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
 
     // delete from Vechile list
     store.listVehicleGet.forEach((data, index) => {
@@ -141,7 +145,7 @@ function Producers() {
     <React.Fragment>
       <Paper className={classes.pageContent}>
         <Toolbar>
-          <InputCommon
+          {/* <InputCommon
             label="Filter Model"
             className={classes.searchInput}
             onChange={handleSearch}
@@ -152,7 +156,24 @@ function Producers() {
                 </InputAdornment>
               ),
             }}
-          ></InputCommon>
+          ></InputCommon> */}
+
+          <TextField
+            className={classes.searchInput}
+            label="Filter Model"
+            // value={value}
+            onChange={(e) => { storeProducers.handleSearch(e) }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+          ></TextField>
+
+
+
           <Button
             className={classes.newButton}
             style={{
@@ -160,14 +181,14 @@ function Producers() {
               backgroundColor: "#28A746",
               padding: "7px 12px",
               fontSize: "18px",
-              color:'#fff'
-             }}
+              color: '#fff'
+            }}
             variant="contained"
             size="large"
             // color="default"
             onClick={() => {
               storeProducers.resetFormValue();
-              setOpenCustomDialog(true);
+              storeProducers.setOpenCustomDialog(true);
             }}
             startIcon={<AddIcon></AddIcon>}
           >
@@ -205,7 +226,7 @@ function Producers() {
                       marginRight: '0px',
                     }}
                     onClick={() => {
-                      setConfirmDialog({
+                      storeProducers.setConfirmDialog({
                         isOpen: true,
                         title: 'Are you sure to delete this record?',
                         subTitle: 'You can not undo action',
@@ -226,24 +247,27 @@ function Producers() {
       </Paper>
 
       <CustomOpenDialog
-        openCustomDialog={openCustomDialog}
-        setOpenCustomDialog={setOpenCustomDialog}
-        setAddOrUpdate={setAddOrUpdate}
+        store={storeProducers}
+        openCustomDialog={storeProducers.openCustomDialog}
+        // setOpenCustomDialog={setOpenCustomDialog}
+        // setAddOrUpdate={setAddOrUpdate}
         title="Model and Producer"
       >
         <ProducerForm
-          setOpenCustomDialog={setOpenCustomDialog}
-          addOrUpdate={addOrUpdate}
-          setAddOrUpdate={setAddOrUpdate}
-          setNotify={setNotify}
+        // store={storeProducers}
+        // setOpenCustomDialog={setOpenCustomDialog}
+        // addOrUpdate={addOrUpdate}
+        // setAddOrUpdate={setAddOrUpdate}
+        // setNotify={setNotify}
         ></ProducerForm>
       </CustomOpenDialog>
 
-      <Notification notify={notify} setNotify={setNotify}></Notification>
+      {/* <Notification notify={notify} setNotify={setNotify}></Notification> */}
+      <Notification notify={storeNotification.notify.isOpen} store={storeNotification}></Notification>
 
       <ConfirmDialog
-        confirmDialog={confirmDialog}
-        setConfirmDialog={setConfirmDialog}
+        dataDialog={storeProducers.confirmDialog.isOpen}
+        store={storeProducers}
       ></ConfirmDialog>
     </React.Fragment>
   );

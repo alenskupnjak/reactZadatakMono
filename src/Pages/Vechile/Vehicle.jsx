@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import {
   makeStyles,
@@ -72,18 +72,18 @@ function Vehicle() {
   // const [openCustomDialog, setOpenCustomDialog] = useXXState(false);
   // const [addOrUpdate, setAddOrUpdate] = useXXState('addFormValueToList');
   // const [notify, setNotify] = useXXState({ isOpen: false, msg: '', type: '' });
-  const [confirmDialog, setConfirmDialog] = useState({
-    isOpen: false,
-    title: '',
-    subTitle: '',
-  });
+  // const [confirmDialog, setConfirmDialog] = useXXState({
+  //   isOpen: false,
+  //   title: '',
+  //   subTitle: '',
+  // });
 
   const {
     TblContainer,
     TblHeader,
     TblPagination,
     afterSortingAndFiltering,
-  } = UseTable(store.listVehicleGet, headCellVechile);
+  } = UseTable(store.listVehicleGet, headCellVechile,store);
 
 
   // // set function filter
@@ -120,7 +120,7 @@ function Vehicle() {
 
   // DELETE record
   const deleteVehicle = (id) => {
-    setConfirmDialog({ isOpen: false });
+    store.setConfirmDialog({ isOpen: false });
     // Display info on screen
     storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
     store.listVehicleDelete(id);
@@ -217,7 +217,7 @@ function Vehicle() {
                       marginRight: '0px',
                     }}
                     onClick={() => {
-                      setConfirmDialog({
+                      store.setConfirmDialog({
                         isOpen: true,
                         title: 'Are you sure to delete this record?',
                         subTitle: 'You can not undo action',
@@ -237,6 +237,7 @@ function Vehicle() {
       </Paper>
       <CustomOpenDialog
         openCustomDialog={store.openCustomDialog}
+        store={store}
         // setOpenCustomDialog={store.setOpenCustomDialog}
         // setAddOrUpdate={setAddOrUpdate}
         title="Model vehicle"
@@ -246,13 +247,15 @@ function Vehicle() {
           // addOrUpdate={addOrUpdate}
           // setAddOrUpdate={setAddOrUpdate}
           // setNotify={setNotify}
+          store={store}
         ></VehicleForm>
       </CustomOpenDialog>
       {/* <Notification notify={storeNotification.notify} setNotify={setNotify}></Notification> */}
-      <Notification notify={storeNotification.notify.isOpen}></Notification>
+      <Notification notify={storeNotification.notify.isOpen} store={storeNotification}></Notification>
       <ConfirmDialog
-        confirmDialog={confirmDialog}
-        setConfirmDialog={setConfirmDialog}
+        dataDialog={store.confirmDialog.isOpen}
+        // setConfirmDialog={setConfirmDialog}
+        store={store}
       ></ConfirmDialog>
     </React.Fragment>
   );
