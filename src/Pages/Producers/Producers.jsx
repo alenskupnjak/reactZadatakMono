@@ -19,7 +19,6 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { headCellProducer, } from '../../Common/VehicleService';
 import ProducerForm from './Components/ProducerForm';
 import UseTable from '../../Components/UseTable';
-// import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
@@ -145,18 +144,6 @@ function Producers() {
     <React.Fragment>
       <Paper className={classes.pageContent}>
         <Toolbar>
-          {/* <InputCommon
-            label="Filter Model"
-            className={classes.searchInput}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          ></InputCommon> */}
 
           <TextField
             className={classes.searchInput}
@@ -219,7 +206,6 @@ function Producers() {
                       storeProducers.setAddOrUpdate('updateFormValue');
                       // Display info on screen
                       storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
-                      // send data to form
                       storeProducers.producerFormValue = data;
                     }}
                     startIcon={<EditIcon></EditIcon>}
@@ -239,7 +225,6 @@ function Producers() {
                         title: 'Are you sure to delete this record?',
                         subTitle: 'You can not undo action',
                         onConfirm: () => {
-                          // deleteVehicle(data.id);
                           storeProducers.setConfirmDialog({ isOpen: false });
                           // Display info on screen
                           storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });

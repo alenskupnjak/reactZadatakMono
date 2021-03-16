@@ -225,9 +225,7 @@ class Producers {
   }
 
   setErrors(data) {
-    // console.log({data});
     this.errors = data;
-    // console.log('poslije - ',this.errors);
   }
 }
 

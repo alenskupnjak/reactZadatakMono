@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Grid, TextField, makeStyles } from '@material-ui/core';
 
-// import { Form } from '../../../Components/UseForm';
 import CustomButton from '../../../Components/CustomButton';
 
 import { storeProducers } from '../../../Common/StoreProducers';
@@ -33,12 +32,9 @@ const useStyles = makeStyles((theme) => ({
 // Main funkcija
 function ProducerForm(props) {
   const classes = useStyles();
-  // const { setOpenCustomDialog, addOrUpdate, setAddOrUpdate, setNotify } = props;
 
-  // SET state
-  // const [errors, setErrors] = useXXState({});
-  // const [disableSubmitButton, setDisableSubmitButton] = useXXState(true);
 
+  // 
   // form validation
   const validationForm = () => {
     // SET error
@@ -78,11 +74,7 @@ function ProducerForm(props) {
     validationForm();
   };
 
-  //
-  // //  if UPDATE => ENABLE submit button
-  // useEffect(() => {
-  //   if (addOrUpdate === 'updateFormValue') setDisableSubmitButton(false);
-  // }, [addOrUpdate]);
+
 
   //
   // RESET form
@@ -92,6 +84,7 @@ function ProducerForm(props) {
     storeProducers.setErrors({});
     storeProducers.setDisableSubmitButton(true);
   }
+
 
   //
   // find duplicate value => error UI
@@ -114,6 +107,8 @@ function ProducerForm(props) {
       return true;
     }
   };
+
+
 
   //
   // SUBMIT form
@@ -198,7 +193,6 @@ function ProducerForm(props) {
             store.listVehicleUpdate(dataVehicle);
           }
         });
-
         // console.table(storeProducers.listModelGet);
         // console.table(store.listVehicleGet);
 
@@ -212,10 +206,12 @@ function ProducerForm(props) {
     storeProducers.setOpenCustomDialog(false);
   };
 
+
   // Generate fake ID
   const generateProducerId = () => {
     return 'p' + Date.now().toString();
   };
+
 
   // Generate fake ID for Producer
   const generateModelId = () => {
@@ -223,7 +219,6 @@ function ProducerForm(props) {
   };
 
   return (
-    // <Form>
       <Grid container>
         <Grid item xs={12}>
           <TextField
@@ -263,7 +258,6 @@ function ProducerForm(props) {
           </div>
         </Grid>
       </Grid>
-    // </Form>
   );
 }
 

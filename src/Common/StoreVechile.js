@@ -1,5 +1,7 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import { listVehicleInit, initVechileValue } from './VehicleService';
+import { storeProducers } from './StoreProducers';
+import { storeNotification } from './StoreNotification';
 
 //
 // MAIN MAIN MAIN
@@ -31,8 +33,14 @@ class Store {
       disableSubmitButton: observable,
       setDisableSubmitButton: action,
 
-      errors:observable,
+      errors: observable,
       setErrors: action,
+
+      handleInputChange: action,
+      validationForm: action,
+      handleSubmit: action,
+      generateId: action,
+      resetForm: action
     });
   }
 
@@ -182,11 +190,137 @@ class Store {
 
   // 
   setErrors(data) {
-    // console.log({data});
     this.errors = data;
-    // console.log('poslije - ',this.errors);
   }
 
+
+
+  handleInputChange(e) {
+    const { name, value } = e.target;
+    if (name === 'modelAuto') {
+      const modelData = storeProducers.listModelGet.find((data) => {
+        return data.id === value;
+      });
+
+      // console.log('list.modelget-',storeProducers.listModelGet);
+      // console.log('list.modelget-',storeProducers.listProducerGet);
+
+      const dataVechileProducer = storeProducers.listProducerGet.find(
+        (data) => {
+          return data.id === modelData.producerId;
+        }
+      );
+
+      this.setVechileValue('producer', dataVechileProducer.producer);
+      this.setVechileValue('modelAuto', modelData.id);
+    } else {
+      // save record to store validation
+      this.setVechileValue(name, value);
+    }
+
+    // validate form
+    this.validationForm();
+  };
+
+
+  validationForm() {
+    // console.table(storeProducers.listModelGet);
+    // console.table(storeProducers.listProducerGet);
+
+    // eslint-disable-next-line no-useless-escape
+    const regexPhone = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+    // SET error
+    const tempError = {};
+    tempError.modelAuto =
+      store.vechileFormValue.modelAuto !== '' ? '' : 'Invalid model ';
+    tempError.email = /@/.test(store.vechileFormValue.email)
+      ? ''
+      : 'Invalid emali';
+    tempError.mobile = regexPhone.test(store.vechileFormValue.mobile)
+      ? ''
+      : 'Invalid character';
+
+    // define error
+    this.setErrors({
+      ...tempError,
+    });
+
+    // if validation all fields is TRUE, make enable button SUBMIT
+    if (Object.values(tempError).every((x) => x === '')) {
+      this.setDisableSubmitButton(false);
+    } else {
+      this.setDisableSubmitButton(true);
+    }
+
+    // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
+    return Object.values(tempError).every((x) => x === '');
+  };
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    // check input fields
+    this.validationForm();
+
+    //  IF FORM is valid  => save data in mobX
+    if (this.validationForm()) {
+      //  ADD or UPDATE
+      if (store.addOrUpdate === 'addFormValueToList') {
+        // Generate fake ID
+        store.vechileFormValue.id = this.generateId();
+
+        const modelSave = storeProducers.listModelGet.find((data) => {
+          return data.id === store.vechileFormValue.modelAuto;
+        });
+
+        // prepare field for sorting
+        this.vechileFormValue.model = modelSave.model;
+
+        // save record to listVehicle
+        this.listVehiclePut(store.vechileFormValue);
+
+        // Display info on screen
+        storeNotification.setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
+      } else {
+        // UPDATE
+        // find model producer to store in model record
+        const modelVeh = storeProducers.listModelGet.find((data) => {
+          return data.id === store.vechileFormValue.modelAuto;
+        });
+
+        const dataVehicle = {
+          id: store.vechileFormValue.id,
+          modelAuto: store.vechileFormValue.modelAuto,
+          model: modelVeh.model,
+          producer: store.vechileFormValue.producer,
+          email: store.vechileFormValue.email,
+          mobile: store.vechileFormValue.mobile.toString(),
+          city: store.vechileFormValue.city,
+          motor: store.vechileFormValue.motor,
+          sellDate: store.vechileFormValue.sellDate,
+          isLoan: store.vechileFormValue.isLoan,
+        };
+        this.listVehicleUpdate(dataVehicle);
+        // Display info on screen
+        storeNotification.setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
+
+        this.setAddOrUpdate('addFormValueToList');
+      }
+    }
+
+    this.setOpenCustomDialog(false);
+  };
+
+
+  // Generate fake ID
+  generateId() {
+    return 'idx' + Date.now().toString();
+  };
+
+  resetForm(e) {
+    this.vechileFormValue = initVechileValue;
+    this.setDisableSubmitButton(true);
+  }
 
 }
 

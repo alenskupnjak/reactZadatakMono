@@ -19,7 +19,6 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { headCellVechile, initVechileValue } from '../../Common/VehicleService';
 import VehicleForm from './Components/VehicleForm';
 import UseTable from '../../Components/UseTable';
-// import InputCommon from '../../Components/InputCommon';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
@@ -62,22 +61,6 @@ const useStyles = makeStyles((theme) => ({
 //
 function Vehicle() {
   const classes = useStyles();
-
-  // SET state
-  // const [filterFn, setFilterFn] = xseXXState({
-  //   fn: (items) => {
-  //     return items;
-  //   },
-  // });
-  // const [openCustomDialog, setOpenCustomDialog] = useXXState(false);
-  // const [addOrUpdate, setAddOrUpdate] = useXXState('addFormValueToList');
-  // const [notify, setNotify] = useXXState({ isOpen: false, msg: '', type: '' });
-  // const [confirmDialog, setConfirmDialog] = useXXState({
-  //   isOpen: false,
-  //   title: '',
-  //   subTitle: '',
-  // });
-
   const {
     TblContainer,
     TblHeader,
@@ -86,63 +69,10 @@ function Vehicle() {
   } = UseTable(store.listVehicleGet, headCellVechile,store);
 
 
-  // // set function filter
-  // const handleSearch = (e) => {
-  //   if (e.target.value === '') {
-  //     setFilterFn({
-  //       fn: (items) => {
-  //         return items;
-  //       },
-  //     });
-  //   } else {
-  //     setFilterFn({
-  //       fn: (items) => {
-  //         return items.filter((data) =>
-  //           data.model.toLowerCase().includes(e.target.value.toLowerCase())
-  //         );
-  //       },
-  //     });
-  //   }
-  // };
-
-  //
-  // // for EDITING AND ADING
-  // const updateOrAddFunc = (dataFormValue) => {
-  //   store.setOpenCustomDialog(true);
-  //   store.setAddOrUpdate('updateFormValue');
-
-  //   // Display info on screen
-  //   storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
-
-  //   // send data to form
-  //   store.vechileFormValue = dataFormValue;
-  // };
-
-  // // DELETE record
-  // const deleteVehicle = (id) => {
-  //   store.setConfirmDialog({ isOpen: false });
-  //   // Display info on screen
-  //   storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
-  //   store.listVehicleDelete(id);
-  // };
-
   return (
     <React.Fragment>
       <Paper className={classes.pageContent}>
         <Toolbar>
-          {/* <InputCommon
-            label="Filter Model"
-            className={classes.searchInput}
-            onChange={handleSearch}
-            // onChange={store.handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          ></InputCommon> */}
 
           <TextField
             className={classes.searchInput}
@@ -156,7 +86,6 @@ function Vehicle() {
               ),
             }}
           ></TextField>
-
 
           <Button
             className={classes.newButton}
@@ -203,14 +132,10 @@ function Vehicle() {
                       padding: '10px',
                       marginRight: '5px',
                     }}
-                    // onClick={() => updateOrAddFunc(data)}
                     onClick={() => {
-                      // updateOrAddFunc(data)
                       store.setOpenCustomDialog(true);
                       store.setAddOrUpdate('updateFormValue');
-                      // Display info on screen
                       storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
-                      // send data to form
                       store.vechileFormValue = data;
                     }}
                     startIcon={<EditIcon></EditIcon>}
@@ -230,9 +155,7 @@ function Vehicle() {
                         title: 'Are you sure to delete this record?',
                         subTitle: 'You can not undo action',
                         onConfirm: () => {
-                          // deleteVehicle(data.id);
                           store.setConfirmDialog({ isOpen: false });
-                          // Display info on screen
                           storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
                           store.listVehicleDelete(data.id);
                         },
@@ -250,23 +173,15 @@ function Vehicle() {
       <CustomOpenDialog
         openCustomDialog={store.openCustomDialog}
         store={store}
-        // setOpenCustomDialog={store.setOpenCustomDialog}
-        // setAddOrUpdate={setAddOrUpdate}
         title="Model vehicle"
       >
         <VehicleForm
-          // setOpenCustomDialog={store.setOpenCustomDialog}
-          // addOrUpdate={addOrUpdate}
-          // setAddOrUpdate={setAddOrUpdate}
-          // setNotify={setNotify}
           store={store}
         ></VehicleForm>
       </CustomOpenDialog>
-      {/* <Notification notify={storeNotification.notify} setNotify={setNotify}></Notification> */}
       <Notification notify={storeNotification.notify.isOpen} store={storeNotification}></Notification>
       <ConfirmDialog
         dataDialog={store.confirmDialog.isOpen}
-        // setConfirmDialog={setConfirmDialog}
         store={store}
       ></ConfirmDialog>
     </React.Fragment>
