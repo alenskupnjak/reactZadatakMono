@@ -50,7 +50,7 @@ function VehicleForm(props) {
 
   // SET state
   const [errors, setErrors] = useState({});
-  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
+  // const [disableSubmitButton, setDisableSubmitButton] = useXXState(true);
 
   // form validation
   const validationForm = () => {
@@ -77,9 +77,9 @@ function VehicleForm(props) {
 
     // if validation all fields is TRUE, make enable button SUBMIT
     if (Object.values(tempError).every((x) => x === '')) {
-      setDisableSubmitButton(false);
+      store.setDisableSubmitButton(false);
     } else {
-      setDisableSubmitButton(true);
+      store.setDisableSubmitButton(true);
     }
 
     // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
@@ -97,7 +97,7 @@ function VehicleForm(props) {
   // RESET form
   function resetForm() {
     store.vechileFormValue = initVechileValue;
-    setDisableSubmitButton(true);
+    store.setDisableSubmitButton(true);
   }
 
   // SUBMIT form
@@ -260,7 +260,7 @@ function VehicleForm(props) {
               onClick={handleSubmit}
               // text="SUBMIT"
               text={store.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
-              disabled={disableSubmitButton}
+              disabled={store.disableSubmitButton}
             ></CustomButton>
             <CustomButton
               text="RESET"

@@ -33,9 +33,11 @@ class Producers {
       filterFn: observable,
       setFilterFn: action,
 
-      
       confirmDialog: observable,
-      setConfirmDialog: observable,
+      setConfirmDialog: action,
+
+      disableSubmitButton: observable,
+      setDisableSubmitButton: action
     });
   }
 
@@ -49,6 +51,8 @@ class Producers {
   listModel = listModelVechile;
 
   openCustomDialog = false;
+
+  disableSubmitButton = true;
 
   confirmDialog = {
     isOpen: false,
@@ -211,6 +215,10 @@ class Producers {
   setConfirmDialog( isOpen,title=null, subTitle=null,onConfirm=null) {
     console.log(isOpen,title, subTitle, onConfirm);
     this.confirmDialog = {isOpen:isOpen,title:title, subTitle:subTitle}
+  }
+
+  setDisableSubmitButton(data) {
+    this.disableSubmitButton = data;
   }
 }
 

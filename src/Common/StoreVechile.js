@@ -26,7 +26,10 @@ class Store {
       handleSearch: action,
 
       confirmDialog: observable,
-      setConfirmDialog: observable,
+      setConfirmDialog: action,
+
+      disableSubmitButton: observable,
+      setDisableSubmitButton: action
     });
   }
 
@@ -34,13 +37,15 @@ class Store {
   vechileFormValue = initVechileValue;
   listVehicle = listVehicleInit;
   openCustomDialog = false;
-  addOrUpdate = 'addFormValueToList'
+  addOrUpdate = 'addFormValueToList';
+
+  disableSubmitButton = true;
 
   confirmDialog = {
     isOpen: false,
     title: '',
     subTitle: '',
-    onConfirm:''
+    onConfirm: ''
   }
 
   filterFn = {
@@ -160,9 +165,14 @@ class Store {
   }
 
   // 
-  setConfirmDialog( isOpen,title=null, subTitle=null,onConfirm=null) {
-    console.log(isOpen,title, subTitle, onConfirm);
-    this.confirmDialog = {isOpen:isOpen,title:title, subTitle:subTitle}
+  setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
+    console.log(isOpen, title, subTitle, onConfirm);
+    this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle }
+  }
+
+  // 
+  setDisableSubmitButton(data) {
+    this.disableSubmitButton = data;
   }
 
 

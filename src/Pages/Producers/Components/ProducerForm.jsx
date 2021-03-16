@@ -37,7 +37,7 @@ function ProducerForm(props) {
 
   // SET state
   const [errors, setErrors] = useState({});
-  const [disableSubmitButton, setDisableSubmitButton] = useState(true);
+  // const [disableSubmitButton, setDisableSubmitButton] = useXXState(true);
 
   // form validation
   const validationForm = () => {
@@ -59,9 +59,9 @@ function ProducerForm(props) {
 
     // if validation all fields is TRUE, make enable button SUBMIT
     if (Object.values(tempError).every((x) => x === '')) {
-      setDisableSubmitButton(false);
+      storeProducers.setDisableSubmitButton(false);
     } else {
-      setDisableSubmitButton(true);
+      storeProducers.setDisableSubmitButton(true);
     }
 
     // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
@@ -90,7 +90,7 @@ function ProducerForm(props) {
     storeProducers.setProducerValue('model', '');
     storeProducers.setProducerValue('producer', '');
     setErrors({});
-    setDisableSubmitButton(true);
+    storeProducers.setDisableSubmitButton(true);
   }
 
   //
@@ -253,7 +253,7 @@ function ProducerForm(props) {
               onClick={handleSubmit}
               // text="SUBMIT"
               text={storeProducers.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
-              disabled={disableSubmitButton}
+              disabled={storeProducers.disableSubmitButton}
             ></CustomButton>
             <CustomButton
               text="RESET"
