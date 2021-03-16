@@ -171,7 +171,7 @@ class Store {
 
   // 
   setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
-    console.log(isOpen, title, subTitle, onConfirm);
+    // console.log(isOpen, title, subTitle, onConfirm);
     this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle }
   }
 

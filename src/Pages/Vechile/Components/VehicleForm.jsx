@@ -12,7 +12,7 @@ import {
   Radio,
 } from '@material-ui/core';
 
-import { useForm, Form } from '../../../Components/UseForm';
+// import { useForm, Form } from '../../../Components/UseForm';
 import InputSelect from '../../../Components/InputSelect';
 import InputCheckBox from '../../../Components/InputCheckBox';
 import DatePicker from '../../../Components/DatePicker';
@@ -27,7 +27,9 @@ import { storeNotification } from '../../../Common/StoreNotification';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiFormControl-root': {
-      width: '60%',
+      width: '80%',
+      margin: theme.spacing(1),
+      // backgroundColor: '#faebd7'
     },
     margin: theme.spacing(1),
     '& .MuiButton-startIcon': {
@@ -88,14 +90,39 @@ function VehicleForm(props) {
 
 
 
-  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'modelAuto') {
+      const modelData = storeProducers.listModelGet.find((data) => {
+        return data.id === value;
+      });
+
+      // console.log('list.modelget-',storeProducers.listModelGet);
+      // console.log('list.modelget-',storeProducers.listProducerGet);
+
+      const dataVechileProducer = storeProducers.listProducerGet.find(
+        (data) => {
+          return data.id === modelData.producerId;
+        }
+      );
+
+      store.setVechileValue('producer', dataVechileProducer.producer);
+      store.setVechileValue('modelAuto', modelData.id);
+    } else {
+      // save record to store validation
+      store.setVechileValue(name, value);
+    }
+
+    // validate form
+    validationForm();
+  };
 
   
   
   
   
   //
-  const { handleInputChange } = useForm(validationForm);
+  // const { handleInputChange } = useForm(validationForm);
 
 
 
@@ -174,8 +201,8 @@ function VehicleForm(props) {
   };
 
   return (
-    <Form>
-      <Grid container>
+    // <Form>
+      <Grid container className={classes.root}>
         <Grid item xs={6}>
           <InputSelect
             label="Model"
@@ -281,7 +308,7 @@ function VehicleForm(props) {
           </div>
         </Grid>
       </Grid>
-    </Form>
+    // </Form>
   );
 }
 
