@@ -67,23 +67,20 @@ function ProducerForm(props) {
   // handle input
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     storeProducers.setProducerValue(name, value);
-
     // validate form
     validationForm();
   };
 
 
-
-  //
-  // RESET form
-  function resetForm() {
-    storeProducers.setProducerValue('model', '');
-    storeProducers.setProducerValue('producer', '');
-    storeProducers.setErrors({});
-    storeProducers.setDisableSubmitButton(true);
-  }
+  // //
+  // // RESET form
+  // function resetForm() {
+  //   storeProducers.setProducerValue('model', '');
+  //   storeProducers.setProducerValue('producer', '');
+  //   storeProducers.setErrors({});
+  //   storeProducers.setDisableSubmitButton(true);
+  // }
 
 
   //
@@ -253,7 +250,7 @@ function ProducerForm(props) {
             <CustomButton
               text="RESET"
               color="default"
-              onClick={resetForm}
+              onClick={storeProducers.resetForm}
             ></CustomButton>
           </div>
         </Grid>

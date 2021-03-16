@@ -11,7 +11,6 @@ const useStyles = makeStyles({
     width: '100%',
     // margin:'auto',
     height: '100vh',
-    // backgroundColor: '#faebd7',
     backgroundColor: '#3498db',
   },
 });

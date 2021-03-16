@@ -121,7 +121,7 @@ class Store {
 
   //
   // DELETE - delete one record from Vehicle list
-  listVehicleDelete(id) {
+  listVehicleDelete(id) {    
     const index = this.listVehicle.findIndex((data) => {
       return data.id === id;
     });

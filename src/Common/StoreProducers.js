@@ -41,6 +41,8 @@ class Producers {
 
       errors:observable,
       setErrors: action,
+
+      resetForm:action
     });
   }
 
@@ -226,6 +228,13 @@ class Producers {
 
   setErrors(data) {
     this.errors = data;
+  }
+
+  resetForm() {
+    storeProducers.setProducerValue('model', '');
+    storeProducers.setProducerValue('producer', '');
+    storeProducers.setErrors({});
+    storeProducers.setDisableSubmitButton(true);
   }
 }
 

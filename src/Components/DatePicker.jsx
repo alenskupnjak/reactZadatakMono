@@ -9,19 +9,6 @@ import DateFnsUtils from '@date-io/date-fns';
 function DatePicker(props) {
   const { name, label, value, onChange } = props;
 
-  // convert to format (target:{value, name})
-  // const convertData = (e) => {
-  //   const conversion = {
-  //     target: {
-  //       value: '',
-  //       name: '',
-  //     },
-  //   };
-  //   conversion.target.value = e;
-  //   conversion.target.name = name;
-  //   onChange(conversion);
-  // };
-
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
@@ -31,7 +18,6 @@ function DatePicker(props) {
         format="MM/dd/yyyy"
         value={value}
         name={name}
-        // onChange={convertData}
         onChange={(e) => {
           const conversion = {
             target: {
@@ -39,8 +25,6 @@ function DatePicker(props) {
               name: name,
             },
           };
-          // conversion.target.value = e;
-          // conversion.target.name = name;
           onChange(conversion);
         }}
         KeyboardButtonProps={{

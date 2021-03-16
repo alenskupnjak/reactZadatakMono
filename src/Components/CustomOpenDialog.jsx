@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
-// import {store} from '../Common/StoreVechile'
 
 const useStyle = makeStyles((theme) => ({
   dialogcustom: {
@@ -31,8 +30,6 @@ const CustomOpenDialog = (props) => {
     children,
     openCustomDialog,
     store,
-    // setOpenCustomDialog,
-    // setAddOrUpdate,
   } = props;
   
 

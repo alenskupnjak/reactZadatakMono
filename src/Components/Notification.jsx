@@ -6,14 +6,6 @@ import Alert from '@material-ui/lab/Alert';
 const Notification = (props) => {
   const { notify , store} = props;
 
-  // console.log(notify.isOpen);
-  // console.log(store);
-  
-
-  // const handleClose = () => {
-  //   setNotify({ isOpen: false, msg: '', type: 'info' });
-  // };
-
   return (
     <Snackbar
       open={notify.isOpen}

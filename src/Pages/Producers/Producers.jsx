@@ -23,12 +23,11 @@ import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 
-
 import { store } from '../../Common/StoreVechile';
 import { storeProducers } from '../../Common/StoreProducers';
 import { storeNotification } from '../../Common/StoreNotification';
 
-//
+// CSS
 const useStyles = makeStyles((theme) => ({
   pageContent: {
     width: '80%',
@@ -70,21 +69,6 @@ const useStyles = makeStyles((theme) => ({
 function Producers() {
   const classes = useStyles();
 
-  // SET state
-  // const [filterFn, setFilterFn] = useXXState({
-  //   fn: (items) => {
-  //     return items;
-  //   },
-  // });
-  // const [openCustomDialog, setOpenCustomDialog] = useXXState(false);
-  // const [addOrUpdate, setAddOrUpdate] = useXXState('addFormValueToList');
-  // const [notify, setNotify] = useXXState({ isOpen: false, msg: '', type: '' });
-  // const [confirmDialog, setConfirmDialog] = useXXState({
-  //   isOpen: false,
-  //   title: '',
-  //   subTitle: '',
-  // });
-
   const {
     TblContainer,
     TblHeader,
@@ -92,53 +76,6 @@ function Producers() {
     afterSortingAndFiltering,
   } = UseTable(storeProducers.listModelGet, headCellProducer, storeProducers);
 
-
-  // // set function for filter
-  // const handleSearch = (e) => {
-
-  //   if (e.target.value === '') {
-  //     setFilterFn({
-  //       fn: (items) => {
-  //         return items;
-  //       },
-  //     });
-  //   } else {
-  //     setFilterFn({
-  //       fn: (items) => {
-  //         return items.filter((data) =>
-  //           data.model.toLowerCase().includes(e.target.value.toLowerCase())
-  //         );
-  //       },
-  //     });
-  //   }
-  // };
-
-  // 
-  // UPDATE
-  // const updateFunc = (dataFormValue) => {
-  //   storeProducers.setOpenCustomDialog(true);
-  //   storeProducers.setAddOrUpdate('updateFormValue');
-  //   // Display info on screen
-  //   storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
-  //   // send data to form
-  //   storeProducers.producerFormValue = dataFormValue;
-  // };
-
-  // 
-  // // DELETE record
-  // const deleteVehicle = (id) => {
-  //   storeProducers.setConfirmDialog({ isOpen: false });
-  //   // Display info on screen
-  //   storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
-
-  //   // delete from Vechile list
-  //   store.listVehicleGet.forEach((data, index) => {
-  //     if (data.modelAuto === id) {
-  //       store.listVehicleDelete(data.id);
-  //     }
-  //   });
-  //   storeProducers.listModelDelete(id);
-  // };
 
   return (
     <React.Fragment>
@@ -148,7 +85,6 @@ function Producers() {
           <TextField
             className={classes.searchInput}
             label="Filter Model"
-            // value={value}
             onChange={(e) => { storeProducers.handleSearch(e) }}
             InputProps={{
               startAdornment: (
@@ -158,8 +94,6 @@ function Producers() {
               ),
             }}
           ></TextField>
-
-
 
           <Button
             className={classes.newButton}
@@ -201,10 +135,8 @@ function Producers() {
                       marginRight: '5px',
                     }}
                     onClick={() => {
-                      // updateFunc(data)
                       storeProducers.setOpenCustomDialog(true);
                       storeProducers.setAddOrUpdate('updateFormValue');
-                      // Display info on screen
                       storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
                       storeProducers.producerFormValue = data;
                     }}
@@ -226,13 +158,10 @@ function Producers() {
                         subTitle: 'You can not undo action',
                         onConfirm: () => {
                           storeProducers.setConfirmDialog({ isOpen: false });
-                          // Display info on screen
                           storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
-                      
-                          // delete from Vechile list
-                          store.listVehicleGet.forEach((data, index) => {
-                            if (data.modelAuto === data.id) {
-                              store.listVehicleDelete(data.id);
+                          store.listVehicleGet.forEach((dataVechile, index) => {
+                            if (data.id === dataVechile.modelAuto) {
+                              store.listVehicleDelete(dataVechile.id);
                             }
                           });
                           storeProducers.listModelDelete(data.id);
@@ -253,20 +182,11 @@ function Producers() {
       <CustomOpenDialog
         store={storeProducers}
         openCustomDialog={storeProducers.openCustomDialog}
-        // setOpenCustomDialog={setOpenCustomDialog}
-        // setAddOrUpdate={setAddOrUpdate}
         title="Model and Producer"
       >
-        <ProducerForm
-        // store={storeProducers}
-        // setOpenCustomDialog={setOpenCustomDialog}
-        // addOrUpdate={addOrUpdate}
-        // setAddOrUpdate={setAddOrUpdate}
-        // setNotify={setNotify}
-        ></ProducerForm>
+        <ProducerForm></ProducerForm>
       </CustomOpenDialog>
 
-      {/* <Notification notify={notify} setNotify={setNotify}></Notification> */}
       <Notification notify={storeNotification.notify.isOpen} store={storeNotification}></Notification>
 
       <ConfirmDialog

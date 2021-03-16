@@ -20,15 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfirmDialog = (props) => {
   const classes = useStyles();
-  const { dataDialog, store} = props;
-
-  // if(dataDialog) {
-  //   console.log(dataDialog.isOpen);
-  //   console.log(dataDialog.title);
-  //   console.log(dataDialog.subTitle);
-  //   console.log(dataDialog.isOpen);
-  // }
-  
+  const { dataDialog, store} = props;  
 
   return (
     <Dialog open={dataDialog.isOpen ? dataDialog.isOpen: false} className={classes.dialog}>
