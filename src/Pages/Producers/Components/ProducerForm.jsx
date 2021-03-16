@@ -73,16 +73,6 @@ function ProducerForm(props) {
   };
 
 
-  // //
-  // // RESET form
-  // function resetForm() {
-  //   storeProducers.setProducerValue('model', '');
-  //   storeProducers.setProducerValue('producer', '');
-  //   storeProducers.setErrors({});
-  //   storeProducers.setDisableSubmitButton(true);
-  // }
-
-
   //
   // find duplicate value => error UI
   const findDuplicateData = (array, cellName) => {
@@ -250,7 +240,7 @@ function ProducerForm(props) {
             <CustomButton
               text="RESET"
               color="default"
-              onClick={storeProducers.resetForm}
+              onClick={(e) => storeProducers.resetForm(e)}
             ></CustomButton>
           </div>
         </Grid>

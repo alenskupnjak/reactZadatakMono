@@ -35,10 +35,8 @@ const useStyles = makeStyles((theme) => ({
 function UseTable(record, headerCell, store) {
   const classes = useStyles();
 
-
   // HEADER table
   const TblHeader = (props) => {
-
     return (
       <TableHead className={props.css} >
         <TableRow>
@@ -111,12 +109,8 @@ function UseTable(record, headerCell, store) {
   };
 
 
-
-  
-
   // Pagination
   const TblPagination = (props) => (
-
     <TablePagination
       rowsPerPageOptions={storeUseTable.pages}
       component="div"

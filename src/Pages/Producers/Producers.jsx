@@ -159,7 +159,7 @@ function Producers() {
                         onConfirm: () => {
                           storeProducers.setConfirmDialog({ isOpen: false });
                           storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
-                          store.listVehicleGet.forEach((dataVechile, index) => {
+                          store.listVehicleGet.forEach((dataVechile) => {
                             if (data.id === dataVechile.modelAuto) {
                               store.listVehicleDelete(dataVechile.id);
                             }

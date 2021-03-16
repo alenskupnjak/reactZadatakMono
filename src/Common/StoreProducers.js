@@ -230,11 +230,11 @@ class Producers {
     this.errors = data;
   }
 
-  resetForm() {
-    storeProducers.setProducerValue('model', '');
-    storeProducers.setProducerValue('producer', '');
-    storeProducers.setErrors({});
-    storeProducers.setDisableSubmitButton(true);
+  resetForm(e) {
+    this.setProducerValue('model', '');
+    this.setProducerValue('producer', '');
+    this.setErrors({});
+    this.setDisableSubmitButton(true);
   }
 }
 
