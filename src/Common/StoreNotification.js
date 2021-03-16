@@ -11,7 +11,7 @@ class Notification {
   notify = { isOpen: false, msg: '', type: '' };
 
   setNotify(isOpen, msg, type) {
-    console.log(isOpen, msg, type);
+    // console.log(isOpen, msg, type);
     this.notify = { isOpen: isOpen, msg: msg, type: type };
   }
 

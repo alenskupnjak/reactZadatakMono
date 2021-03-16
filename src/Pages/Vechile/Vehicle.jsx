@@ -106,25 +106,25 @@ function Vehicle() {
   // };
 
   //
-  // for EDITING AND ADING
-  const updateOrAddFunc = (dataFormValue) => {
-    store.setOpenCustomDialog(true);
-    store.setAddOrUpdate('updateFormValue');
+  // // for EDITING AND ADING
+  // const updateOrAddFunc = (dataFormValue) => {
+  //   store.setOpenCustomDialog(true);
+  //   store.setAddOrUpdate('updateFormValue');
 
-    // Display info on screen
-    storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
+  //   // Display info on screen
+  //   storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
 
-    // send data to form
-    store.vechileFormValue = dataFormValue;
-  };
+  //   // send data to form
+  //   store.vechileFormValue = dataFormValue;
+  // };
 
-  // DELETE record
-  const deleteVehicle = (id) => {
-    store.setConfirmDialog({ isOpen: false });
-    // Display info on screen
-    storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
-    store.listVehicleDelete(id);
-  };
+  // // DELETE record
+  // const deleteVehicle = (id) => {
+  //   store.setConfirmDialog({ isOpen: false });
+  //   // Display info on screen
+  //   storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
+  //   store.listVehicleDelete(id);
+  // };
 
   return (
     <React.Fragment>
@@ -147,7 +147,6 @@ function Vehicle() {
           <TextField
             className={classes.searchInput}
             label="Filter Model"
-            // value={value}
             onChange={(e)=> {store.handleSearch(e)}}
             InputProps={{
               startAdornment: (
@@ -204,7 +203,16 @@ function Vehicle() {
                       padding: '10px',
                       marginRight: '5px',
                     }}
-                    onClick={() => updateOrAddFunc(data)}
+                    // onClick={() => updateOrAddFunc(data)}
+                    onClick={() => {
+                      // updateOrAddFunc(data)
+                      store.setOpenCustomDialog(true);
+                      store.setAddOrUpdate('updateFormValue');
+                      // Display info on screen
+                      storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
+                      // send data to form
+                      store.vechileFormValue = data;
+                    }}
                     startIcon={<EditIcon></EditIcon>}
                   ></Button>
                   <Button
@@ -222,7 +230,11 @@ function Vehicle() {
                         title: 'Are you sure to delete this record?',
                         subTitle: 'You can not undo action',
                         onConfirm: () => {
-                          deleteVehicle(data.id);
+                          // deleteVehicle(data.id);
+                          store.setConfirmDialog({ isOpen: false });
+                          // Display info on screen
+                          storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
+                          store.listVehicleDelete(data.id);
                         },
                       });
                     }}

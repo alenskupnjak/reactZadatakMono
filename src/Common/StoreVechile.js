@@ -29,7 +29,10 @@ class Store {
       setConfirmDialog: action,
 
       disableSubmitButton: observable,
-      setDisableSubmitButton: action
+      setDisableSubmitButton: action,
+
+      errors:observable,
+      setErrors: action,
     });
   }
 
@@ -53,6 +56,8 @@ class Store {
       return items;
     }
   }
+
+  errors = {}
 
 
   // Change value in form
@@ -137,13 +142,13 @@ class Store {
     this.addOrUpdate = data;
   }
 
-  // setFilterFn() {
-  //   this.filterFn = {
-  //     fn: (items) => {
-  //       return items;
-  //     }
-  //   }
-  // }
+  setFilterFn() {
+    this.filterFn = {
+      fn: (items) => {
+        return items;
+      }
+    }
+  }
 
   // 
   handleSearch(e) {
@@ -173,6 +178,13 @@ class Store {
   // 
   setDisableSubmitButton(data) {
     this.disableSubmitButton = data;
+  }
+
+  // 
+  setErrors(data) {
+    // console.log({data});
+    this.errors = data;
+    // console.log('poslije - ',this.errors);
   }
 
 

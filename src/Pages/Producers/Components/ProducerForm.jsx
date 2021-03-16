@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { Grid, TextField, makeStyles } from '@material-ui/core';
 
@@ -36,7 +36,7 @@ function ProducerForm(props) {
   // const { setOpenCustomDialog, addOrUpdate, setAddOrUpdate, setNotify } = props;
 
   // SET state
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useXXState({});
   // const [disableSubmitButton, setDisableSubmitButton] = useXXState(true);
 
   // form validation
@@ -53,7 +53,7 @@ function ProducerForm(props) {
         : 'Minimum 1 character';
 
     // define error
-    setErrors({
+    storeProducers.setErrors({
       ...tempError,
     });
 
@@ -89,7 +89,7 @@ function ProducerForm(props) {
   function resetForm() {
     storeProducers.setProducerValue('model', '');
     storeProducers.setProducerValue('producer', '');
-    setErrors({});
+    storeProducers.setErrors({});
     storeProducers.setDisableSubmitButton(true);
   }
 
@@ -108,7 +108,7 @@ function ProducerForm(props) {
     });
 
     if (findDuplicate) {
-      setErrors({
+      storeProducers.setErrors({
         [cellName]: `Duplicate ${cellName} name`,
       });
       return true;
@@ -223,7 +223,7 @@ function ProducerForm(props) {
   };
 
   return (
-    <Form>
+    // <Form>
       <Grid container>
         <Grid item xs={12}>
           <TextField
@@ -233,8 +233,8 @@ function ProducerForm(props) {
             name="model"
             value={storeProducers.producerFormValue.model}
             onChange={handleInputChange}
-            error={errors.model ? true : false}
-            helperText={errors.model ? errors.model : ''}
+            error={storeProducers.errors.model ? true : false}
+            helperText={storeProducers.errors.model ? storeProducers.errors.model : ''}
           ></TextField>
 
           <TextField
@@ -244,8 +244,8 @@ function ProducerForm(props) {
             name="producer"
             value={storeProducers.producerFormValue.producer}
             onChange={handleInputChange}
-            error={errors.producer ? true : false}
-            helperText={errors.producer ? errors.producer : ''}
+            error={storeProducers.errors.producer ? true : false}
+            helperText={storeProducers.errors.producer ? storeProducers.errors.producer : ''}
           ></TextField>
 
           <div>
@@ -263,7 +263,7 @@ function ProducerForm(props) {
           </div>
         </Grid>
       </Grid>
-    </Form>
+    // </Form>
   );
 }
 

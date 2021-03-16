@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import {
@@ -49,7 +49,7 @@ function VehicleForm(props) {
   // const { setNotify } = props;
 
   // SET state
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useXXState({});
   // const [disableSubmitButton, setDisableSubmitButton] = useXXState(true);
 
   // form validation
@@ -71,7 +71,7 @@ function VehicleForm(props) {
       : 'Invalid character';
 
     // define error
-    setErrors({
+    store.setErrors({
       ...tempError,
     });
 
@@ -86,8 +86,19 @@ function VehicleForm(props) {
     return Object.values(tempError).every((x) => x === '');
   };
 
+
+
+  
+
+  
+  
+  
+  
   //
   const { handleInputChange } = useForm(validationForm);
+
+
+
 
   // //  if UPDATE => ENABLE submit button
   // useEffect(() => {
@@ -172,7 +183,7 @@ function VehicleForm(props) {
             value={store.vechileFormValue.modelAuto}
             onChange={handleInputChange}
             dataOptions={storeProducers.listModelGet}
-            error={errors.modelAuto}
+            error={store.errors.modelAuto}
           ></InputSelect>
 
           <TextField
@@ -182,8 +193,8 @@ function VehicleForm(props) {
             name="email"
             value={store.vechileFormValue.email}
             onChange={handleInputChange}
-            error={errors.email ? true : false}
-            helperText={errors.email ? 'Invalid Email' : ''}
+            error={store.errors.email ? true : false}
+            helperText={store.errors.email ? 'Invalid Email' : ''}
           ></TextField>
 
           <TextField
@@ -193,8 +204,8 @@ function VehicleForm(props) {
             name="mobile"
             value={store.vechileFormValue.mobile}
             onChange={handleInputChange}
-            error={errors.mobile ? true : false}
-            helperText={errors.mobile ? 'Invalid phone number' : ''}
+            error={store.errors.mobile ? true : false}
+            helperText={store.errors.mobile ? 'Invalid phone number' : ''}
           ></TextField>
 
           <TextField

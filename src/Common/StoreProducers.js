@@ -37,7 +37,10 @@ class Producers {
       setConfirmDialog: action,
 
       disableSubmitButton: observable,
-      setDisableSubmitButton: action
+      setDisableSubmitButton: action,
+
+      errors:observable,
+      setErrors: action,
     });
   }
 
@@ -66,6 +69,8 @@ class Producers {
       return items;
     }
   }
+
+  errors = {}
 
 // 
   addOrUpdate = 'addFormValueToList'
@@ -176,9 +181,7 @@ class Producers {
   }
 
   // 
-  setOpenCustomDialog(data) {
-    console.log('xx');
-    
+  setOpenCustomDialog(data) {    
     this.openCustomDialog = data;
   }
 
@@ -213,12 +216,18 @@ class Producers {
   }
 
   setConfirmDialog( isOpen,title=null, subTitle=null,onConfirm=null) {
-    console.log(isOpen,title, subTitle, onConfirm);
+    // console.log(isOpen,title, subTitle, onConfirm);
     this.confirmDialog = {isOpen:isOpen,title:title, subTitle:subTitle}
   }
 
   setDisableSubmitButton(data) {
     this.disableSubmitButton = data;
+  }
+
+  setErrors(data) {
+    // console.log({data});
+    this.errors = data;
+    // console.log('poslije - ',this.errors);
   }
 }
 
