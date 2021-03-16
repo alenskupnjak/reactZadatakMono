@@ -138,6 +138,8 @@ function VehicleForm(props) {
     store.setDisableSubmitButton(true);
   }
 
+
+
   // SUBMIT form
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -194,6 +196,11 @@ function VehicleForm(props) {
     // close dialog
     store.setOpenCustomDialog(false);
   };
+
+
+
+
+  
 
   // Generate fake ID
   const generateId = () => {

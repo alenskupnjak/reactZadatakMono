@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   makeStyles,
   Table,
@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core'
+import {storeUseTable} from '../Common/StoreUseTable'
 
 
 //
@@ -33,19 +34,21 @@ const useStyles = makeStyles((theme) => ({
 //  MAIN
 function UseTable(record, headerCell, store) {
   const classes = useStyles();
-  const pages = [5, 10, 25];
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(pages[0]);
-  const [orderSort, setOrderSort] = useState();
-  const [orderSortBy, setOrderSortBy] = useState('model');
+
+  // const pages = [5, 10, 25];
+  // const [page, setPage] = useXXState(0);
+  // const [rowsPerPage, setRowsPerPage] = useXXState(storeUseTable.pages[0]);
+  // const [orderSort, setOrderSort] = useXXState();
+  // const [orderSortBy, setOrderSortBy] = useXXState('model');
 
   // HEADER table
   const TblHeader = (props) => {
     // set sort direction
-    const handleSort = (sortColumn) => {
-      setOrderSortBy(sortColumn);
-      setOrderSort(orderSort === 'asc' ? 'desc' : 'asc');
-    };
+    // const handleSort = (sortColumn) => {
+    //   storeUseTable.setOrderSortBy(sortColumn);
+    //   // setOrderSort(orderSort === 'asc' ? 'desc' : 'asc');
+    //   storeUseTable.setOrderSort();
+    // };
 
     return (
       <TableHead className={props.css} >
@@ -56,10 +59,13 @@ function UseTable(record, headerCell, store) {
                 data.label
               ) : (
                 <TableSortLabel
-                  active={data.id === orderSort}
-                  direction={orderSort}
+                  active={data.id === storeUseTable.orderSort}
+                  direction={storeUseTable.orderSort}
                   onClick={() => {
-                    handleSort(data.id);
+                    // handleSort(data.id);
+                    storeUseTable.setOrderSortBy(data.id);
+                    // setOrderSort(orderSort === 'asc' ? 'desc' : 'asc');
+                    storeUseTable.setOrderSort();
                   }}
                 >
                   {data.label}
@@ -77,28 +83,30 @@ function UseTable(record, headerCell, store) {
     return <Table className={classes.table}>{props.children}</Table>;
   };
 
-  // change first page
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  // // change first page
+  // const handleChangePage = (event, newPage) => {
+  //   console.log(event, newPage);
+  //   storeUseTable.setPage(newPage);
+  // };
 
-  // set page per pages
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  // // // // set page per pages
+  // const handleChangeRowsPerPage = (event) => {
+  //   // setRowsPerPage(+event.target.value);
+  //   storeUseTable.setRowsPerPage(event);
+  //   storeUseTable.setPage(0);
+  // };
 
   //
   // function for sorting
   function sortTable(recordData) {
     // init setup sort
-    if (!orderSort) {
+    if (!storeUseTable.orderSort) {
       return recordData;
     }
 
     // stabilization
     const stabilizedThis = recordData.map((el, index) => [el, index]);
-    const sortDirection = orderSort === 'asc' ? 1 : -1;
+    const sortDirection = storeUseTable.orderSort === 'asc' ? 1 : -1;
 
     let sortRecord = [...stabilizedThis].sort((a, b) => {
       const order = sortDirection * descendingComparator(a[0], b[0]);
@@ -111,10 +119,10 @@ function UseTable(record, headerCell, store) {
 
   //
   function descendingComparator(a, b) {
-    if (b[orderSortBy] < a[orderSortBy]) {
+    if (b[storeUseTable.orderSortBy] < a[storeUseTable.orderSortBy]) {
       return -1;
     }
-    if (b[orderSortBy] > a[orderSortBy]) {
+    if (b[storeUseTable.orderSortBy] > a[storeUseTable.orderSortBy]) {
       return 1;
     }
     return 0;
@@ -124,19 +132,31 @@ function UseTable(record, headerCell, store) {
   const afterSortingAndFiltering = (event) => {
     return sortTable(store.filterFn.fn(record))
       .slice()
-      .splice(page * rowsPerPage, rowsPerPage);
+      .splice(storeUseTable.page * storeUseTable.rowsPerPage, storeUseTable.rowsPerPage);
   };
+
+
+
+  
 
   // Pagination
   const TblPagination = (props) => (
+
+
     <TablePagination
-      rowsPerPageOptions={pages}
+      rowsPerPageOptions={storeUseTable.pages}
       component="div"
       count={record.length}
-      rowsPerPage={rowsPerPage}
-      page={page}
-      onChangePage={handleChangePage}
-      onChangeRowsPerPage={handleChangeRowsPerPage}
+      rowsPerPage={storeUseTable.rowsPerPage}
+      page={storeUseTable.page}
+      onChangePage={ (e,newPage) => {
+        // console.log(e, newPage);
+        storeUseTable.setPage(newPage)
+        // handleChangePage(e,newPage)
+      
+      }}
+      // onChangeRowsPerPage={handleChangeRowsPerPage}
+      onChangeRowsPerPage={(e)=>storeUseTable.handleChangeRowsPerPage(e)}
     ></TablePagination>
   );
 

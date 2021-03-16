@@ -116,30 +116,30 @@ function Producers() {
 
   // 
   // UPDATE
-  const updateFunc = (dataFormValue) => {
-    storeProducers.setOpenCustomDialog(true);
-    storeProducers.setAddOrUpdate('updateFormValue');
-    // Display info on screen
-    storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
-    // send data to form
-    storeProducers.producerFormValue = dataFormValue;
-  };
+  // const updateFunc = (dataFormValue) => {
+  //   storeProducers.setOpenCustomDialog(true);
+  //   storeProducers.setAddOrUpdate('updateFormValue');
+  //   // Display info on screen
+  //   storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
+  //   // send data to form
+  //   storeProducers.producerFormValue = dataFormValue;
+  // };
 
   // 
-  // DELETE record
-  const deleteVehicle = (id) => {
-    storeProducers.setConfirmDialog({ isOpen: false });
-    // Display info on screen
-    storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
+  // // DELETE record
+  // const deleteVehicle = (id) => {
+  //   storeProducers.setConfirmDialog({ isOpen: false });
+  //   // Display info on screen
+  //   storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
 
-    // delete from Vechile list
-    store.listVehicleGet.forEach((data, index) => {
-      if (data.modelAuto === id) {
-        store.listVehicleDelete(data.id);
-      }
-    });
-    storeProducers.listModelDelete(id);
-  };
+  //   // delete from Vechile list
+  //   store.listVehicleGet.forEach((data, index) => {
+  //     if (data.modelAuto === id) {
+  //       store.listVehicleDelete(data.id);
+  //     }
+  //   });
+  //   storeProducers.listModelDelete(id);
+  // };
 
   return (
     <React.Fragment>
@@ -213,7 +213,15 @@ function Producers() {
                       padding: '10px',
                       marginRight: '5px',
                     }}
-                    onClick={() => updateFunc(data)}
+                    onClick={() => {
+                      // updateFunc(data)
+                      storeProducers.setOpenCustomDialog(true);
+                      storeProducers.setAddOrUpdate('updateFormValue');
+                      // Display info on screen
+                      storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
+                      // send data to form
+                      storeProducers.producerFormValue = data;
+                    }}
                     startIcon={<EditIcon></EditIcon>}
                   ></Button>
                   <Button
@@ -231,7 +239,18 @@ function Producers() {
                         title: 'Are you sure to delete this record?',
                         subTitle: 'You can not undo action',
                         onConfirm: () => {
-                          deleteVehicle(data.id);
+                          // deleteVehicle(data.id);
+                          storeProducers.setConfirmDialog({ isOpen: false });
+                          // Display info on screen
+                          storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
+                      
+                          // delete from Vechile list
+                          store.listVehicleGet.forEach((data, index) => {
+                            if (data.modelAuto === data.id) {
+                              store.listVehicleDelete(data.id);
+                            }
+                          });
+                          storeProducers.listModelDelete(data.id);
                         },
                       });
                     }}
