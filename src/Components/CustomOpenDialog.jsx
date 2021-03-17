@@ -25,13 +25,7 @@ const useStyle = makeStyles((theme) => ({
 //
 const CustomOpenDialog = (props) => {
   const classes = useStyle();
-  const {
-    title,
-    children,
-    openCustomDialog,
-    store,
-  } = props;
-  
+  const { title, children, openCustomDialog, store } = props;
 
   return (
     <Dialog
@@ -51,7 +45,6 @@ const CustomOpenDialog = (props) => {
               // console.log('zatvorio',setOpenCustomDialog);
               store.setOpenCustomDialog(false);
               store.setAddOrUpdate('addFormValueToList');
-              store.resetFormValue()
             }}
             className={classes.root}
             startIcon={<CloseIcon></CloseIcon>}

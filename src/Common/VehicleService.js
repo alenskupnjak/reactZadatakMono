@@ -8,15 +8,12 @@ export const initVechileValue = {
   motor: 'benzin',
   producer: '',
   sellDate: new Date(),
-  isLoan: true,
+  isLoan: false,
 };
 
 //
 // Init valuues for form producers
-export const initProducerValue = [
-  { id: '', model: '', producerId: '' },
-];
-
+export const initProducerValue = [{ id: '', model: '', producerId: '' }];
 
 //
 // list of vehicle producers
@@ -34,7 +31,7 @@ export const listProducers = [
 export const listModelVechile = [
   { id: 'm01', model: 'BMW 1', producerId: 'p1' },
   { id: 'm02', model: 'FORD 1', producerId: 'p2' },
-  { id: 'm03', model: 'AUDI 1', producerId: 'p3'},
+  { id: 'm03', model: 'AUDI 1', producerId: 'p3' },
   { id: 'm04', model: 'FIAT 1', producerId: 'p4' },
   { id: 'm05', model: 'VOLVO 1', producerId: 'p5' },
   { id: 'm06', model: 'TOYOTA 1', producerId: 'p6' },
@@ -46,7 +43,6 @@ export const listModelVechile = [
   { id: 'm12', model: 'TOYOTA 2', producerId: 'p6' },
   { id: 'm13', model: 'TOYOTA 3', producerId: 'p6' },
 ];
-
 
 //
 // value for TABLE header

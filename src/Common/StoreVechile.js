@@ -41,7 +41,7 @@ class Store {
       handleSubmit: action,
       generateId: action,
       resetForm: action,
-      findProducerVehicle:action
+      findProducerVehicle: action,
     });
   }
 
@@ -57,17 +57,16 @@ class Store {
     isOpen: false,
     title: '',
     subTitle: '',
-    onConfirm: ''
-  }
+    onConfirm: '',
+  };
 
   filterFn = {
     fn: (items) => {
       return items;
-    }
-  }
+    },
+  };
 
-  errors = {}
-
+  errors = {};
 
   // Change value in form
   setVechileValue(name, value) {
@@ -103,18 +102,16 @@ class Store {
   // GET - pull data from Vehicle list
   get listVehicleGet() {
     const listVehicle = this.listVehicle.map((data) => {
-
-      const model = storeProducers.listModelGet.find(dataModel => {
+      const model = storeProducers.listModelGet.find((dataModel) => {
         // console.log(dataModelAuto, data.id);
-        return dataModel.id === data.modelAuto
-      })
+        return dataModel.id === data.modelAuto;
+      });
       // console.log('model', model);
-  
-      const prod = storeProducers.listProducerGet.find(dataProd => {
-        return dataProd.id === model.producerId
-      })
+
+      const prod = storeProducers.listProducerGet.find((dataProd) => {
+        return dataProd.id === model.producerId;
+      });
       // console.log({prod, model});
-      
 
       const dataVehicle = {
         id: data.id,
@@ -169,11 +166,11 @@ class Store {
     this.filterFn = {
       fn: (items) => {
         return items;
-      }
-    }
+      },
+    };
   }
 
-  // 
+  //
   handleSearch(e) {
     if (e.target.value === '') {
       this.filterFn = {
@@ -185,30 +182,28 @@ class Store {
       this.filterFn = {
         fn: (items) => {
           return items.filter((data) =>
-            data.model.toLowerCase().includes(e.target.value.toLowerCase())
+            data.model.toLowerCase().includes(e.target.value.toLowerCase()),
           );
         },
       };
     }
   }
 
-  // 
+  //
   setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
     // console.log(isOpen, title, subTitle, onConfirm);
-    this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle }
+    this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle };
   }
 
-  // 
+  //
   setDisableSubmitButton(data) {
     this.disableSubmitButton = data;
   }
 
-  // 
+  //
   setErrors(data) {
     this.errors = data;
   }
-
-
 
   handleInputChange(e) {
     const { name, value } = e.target;
@@ -223,7 +218,7 @@ class Store {
       const dataVechileProducer = storeProducers.listProducerGet.find(
         (data) => {
           return data.id === modelData.producerId;
-        }
+        },
       );
 
       this.setVechileValue('producer', dataVechileProducer.producer);
@@ -235,8 +230,7 @@ class Store {
 
     // validate form
     this.validationForm();
-  };
-
+  }
 
   validationForm() {
     // console.table(storeProducers.listModelGet);
@@ -269,7 +263,7 @@ class Store {
 
     // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
     return Object.values(tempError).every((x) => x === '');
-  };
+  }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -295,7 +289,11 @@ class Store {
         this.listVehiclePut(store.vechileFormValue);
 
         // Display info on screen
-        storeNotification.setNotify({ isOpen: true, msg: 'Add Vechile', type: 'success' });
+        storeNotification.setNotify({
+          isOpen: true,
+          msg: 'Add Vechile',
+          type: 'success',
+        });
       } else {
         // UPDATE
         // find model producer to store in model record
@@ -317,27 +315,28 @@ class Store {
         };
         this.listVehicleUpdate(dataVehicle);
         // Display info on screen
-        storeNotification.setNotify({ isOpen: true, msg: 'Update Vechile', type: 'warning' });
+        storeNotification.setNotify({
+          isOpen: true,
+          msg: 'Update Vechile',
+          type: 'warning',
+        });
 
         this.setAddOrUpdate('addFormValueToList');
       }
     }
 
     this.setOpenCustomDialog(false);
-  };
-
+  }
 
   // Generate fake ID
   generateId() {
     return 'idx' + Date.now().toString();
-  };
+  }
 
   resetForm(e) {
     this.vechileFormValue = initVechileValue;
     this.setDisableSubmitButton(true);
   }
-
-
 
   // for populating table
   findProducerVehicle(dataModelAuto) {
@@ -345,23 +344,22 @@ class Store {
     // console.log('list.istProducerGet-',storeProducers.listProducerGet);
     console.log('store.listVehicleGet-', store.listVehicleGet);
     // console.log('store.listVehicleGet-',data);
-    const model = storeProducers.listModelGet.find(data => {
+    const model = storeProducers.listModelGet.find((data) => {
       // console.log(dataModelAuto, data.id);
 
-      return data.id === dataModelAuto
-    })
+      return data.id === dataModelAuto;
+    });
 
     console.log('model', model);
 
-    const prod = storeProducers.listProducerGet.find(data => {
-      return data.id === model.producerId
-    })
+    const prod = storeProducers.listProducerGet.find((data) => {
+      return data.id === model.producerId;
+    });
     console.log(prod);
-    
-    // data.producer = prod.producer
-    return prod.producer
-  }
 
+    // data.producer = prod.producer
+    return prod.producer;
+  }
 }
 
 export const store = new Store();

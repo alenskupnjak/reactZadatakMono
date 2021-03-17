@@ -20,10 +20,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfirmDialog = (props) => {
   const classes = useStyles();
-  const { dataDialog, store} = props;  
+  const { dataDialog, store } = props;
 
   return (
-    <Dialog open={dataDialog.isOpen ? dataDialog.isOpen: false} className={classes.dialog}>
+    <Dialog
+      open={dataDialog.isOpen ? dataDialog.isOpen : false}
+      className={classes.dialog}
+    >
       <DialogTitle></DialogTitle>
       <DialogContent>
         <Typography variant="h6">{dataDialog.title}</Typography>

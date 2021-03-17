@@ -9,7 +9,7 @@ import {
   Toolbar,
   InputAdornment,
   Button,
-  TextField
+  TextField,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
@@ -24,7 +24,6 @@ import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 import { store } from '../../Common/StoreVechile';
 import { storeNotification } from '../../Common/StoreNotification';
-
 
 //
 const useStyles = makeStyles((theme) => ({
@@ -65,19 +64,19 @@ function Vehicle() {
     afterSortingAndFiltering,
     TblHeader,
     TblContainer,
-    TblPagination
+    TblPagination,
   } = UseTable(store.listVehicleGet, headCellVechile, store);
-
 
   return (
     <React.Fragment>
       <Paper className={classes.pageContent}>
         <Toolbar>
-
           <TextField
             className={classes.searchInput}
             label="Filter Model"
-            onChange={(e) => { store.handleSearch(e) }}
+            onChange={(e) => {
+              store.handleSearch(e);
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -125,7 +124,11 @@ function Vehicle() {
                     onClick={() => {
                       store.setOpenCustomDialog(true);
                       store.setAddOrUpdate('updateFormValue');
-                      storeNotification.setNotify({ isOpen: true, msg: 'Edit Vechile', type: 'info' });
+                      storeNotification.setNotify({
+                        isOpen: true,
+                        msg: 'Edit Vechile',
+                        type: 'info',
+                      });
                       store.vechileFormValue = data;
                     }}
                     startIcon={<EditIcon></EditIcon>}
@@ -146,7 +149,11 @@ function Vehicle() {
                         subTitle: 'You can not undo action',
                         onConfirm: () => {
                           store.setConfirmDialog({ isOpen: false });
-                          storeNotification.setNotify({ isOpen: true, msg: 'Delete Vechile', type: 'error' });
+                          storeNotification.setNotify({
+                            isOpen: true,
+                            msg: 'Delete Vechile',
+                            type: 'error',
+                          });
                           store.listVehicleDelete(data.id);
                         },
                       });
@@ -165,11 +172,12 @@ function Vehicle() {
         store={store}
         title="Model vehicle"
       >
-        <VehicleForm
-          store={store}
-        ></VehicleForm>
+        <VehicleForm store={store}></VehicleForm>
       </CustomOpenDialog>
-      <Notification notify={storeNotification.notify.isOpen} store={storeNotification}></Notification>
+      <Notification
+        notify={storeNotification.notify.isOpen}
+        store={storeNotification}
+      ></Notification>
       <ConfirmDialog
         dataDialog={store.confirmDialog.isOpen}
         store={store}

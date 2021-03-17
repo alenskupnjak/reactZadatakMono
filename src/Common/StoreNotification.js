@@ -14,7 +14,6 @@ class Notification {
     // console.log(isOpen, msg, type);
     this.notify = { isOpen: isOpen, msg: msg, type: type };
   }
-
 }
 
 export const storeNotification = new Notification();

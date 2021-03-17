@@ -44,114 +44,115 @@ const useStyles = makeStyles((theme) => ({
 function VehicleForm(props) {
   const classes = useStyles();
 
-
   return (
-      <Grid container className={classes.root}>
-        <Grid item xs={6}>
-          <InputSelect
-            label="Model"
-            name="modelAuto"
-            value={store.vechileFormValue.modelAuto}
-            onChange={(e)=>store.handleInputChange(e)}
-            dataOptions={storeProducers.listModelGet}
-            error={store.errors.modelAuto}
-          ></InputSelect>
+    <Grid container className={classes.root}>
+      <Grid item xs={6}>
+        <InputSelect
+          label="Model"
+          name="modelAuto"
+          value={store.vechileFormValue.modelAuto}
+          onChange={(e) => store.handleInputChange(e)}
+          dataOptions={storeProducers.listModelGet}
+          error={store.errors.modelAuto}
+        ></InputSelect>
 
-          <TextField
-            className={classes.root}
-            variant="outlined"
-            label="Email"
-            name="email"
-            value={store.vechileFormValue.email}
-            onChange={(e)=>store.handleInputChange(e)}
-            error={store.errors.email ? true : false}
-            helperText={store.errors.email ? 'Invalid Email' : ''}
-          ></TextField>
+        <TextField
+          className={classes.root}
+          variant="outlined"
+          label="Email"
+          name="email"
+          value={store.vechileFormValue.email}
+          onChange={(e) => store.handleInputChange(e)}
+          error={store.errors.email ? true : false}
+          helperText={store.errors.email ? 'Invalid Email' : ''}
+        ></TextField>
 
-          <TextField
-            className={classes.root}
-            variant="outlined"
-            label="Mobile"
-            name="mobile"
-            value={store.vechileFormValue.mobile}
-            onChange={(e)=>store.handleInputChange(e)}
-            error={store.errors.mobile ? true : false}
-            helperText={store.errors.mobile ? 'Invalid phone number' : ''}
-          ></TextField>
+        <TextField
+          className={classes.root}
+          variant="outlined"
+          label="Mobile"
+          name="mobile"
+          value={store.vechileFormValue.mobile}
+          onChange={(e) => store.handleInputChange(e)}
+          error={store.errors.mobile ? true : false}
+          helperText={store.errors.mobile ? 'Invalid phone number' : ''}
+        ></TextField>
 
-          <TextField
-            className={classes.root}
-            variant="outlined"
-            label="City"
-            name="city"
-            value={store.vechileFormValue.city}
-            onChange={(e)=>store.handleInputChange(e)}
-          ></TextField>
-        </Grid>
-        <Grid item xs={6}>
-          <FormControl>
-            <FormLabel>Motor</FormLabel>
-            <RadioGroup
-              row
-              value={store.vechileFormValue.motor}
-              name="motor"
-              onChange={(e)=>store.handleInputChange(e)}
-            >
-              <FormControlLabel
-                value="diesel"
-                control={<Radio />}
-                label="Diesel"
-              ></FormControlLabel>
-              <FormControlLabel
-                value="benzin"
-                control={<Radio />}
-                label="Benzin"
-              ></FormControlLabel>
-              <FormControlLabel
-                value="electric"
-                control={<Radio />}
-                label="Electric"
-              ></FormControlLabel>
-            </RadioGroup>
-          </FormControl>
-
-          <TextField
-            className={classes.root}
-            variant="outlined"
-            label="Producer"
-            name="producer"
-            value={store.vechileFormValue.producer}
-            disabled
-          ></TextField>
-
-          <InputCheckBox
-            label="Loan for vechile"
-            name="isLoan"
-            onChange={(e)=>store.handleInputChange(e)}
-            value={store.vechileFormValue.isLoan}
-          ></InputCheckBox>
-
-          <DatePicker
-            label="Sell"
-            name="sellDate"
-            onChange={(e)=>store.handleInputChange(e)}
-            value={store.vechileFormValue.sellDate}
-          ></DatePicker>
-          <div>
-            <CustomButton
-              onClick={(e) => store.handleSubmit(e)}
-              // text="SUBMIT"
-              text={store.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
-              disabled={store.disableSubmitButton}
-            ></CustomButton>
-            <CustomButton
-              text="RESET"
-              color="default"
-              onClick={(e) =>store.resetForm(e)}
-            ></CustomButton>
-          </div>
-        </Grid>
+        <TextField
+          className={classes.root}
+          variant="outlined"
+          label="City"
+          name="city"
+          value={store.vechileFormValue.city}
+          onChange={(e) => store.handleInputChange(e)}
+        ></TextField>
       </Grid>
+      <Grid item xs={6}>
+        <FormControl>
+          <FormLabel>Motor</FormLabel>
+          <RadioGroup
+            row
+            value={store.vechileFormValue.motor}
+            name="motor"
+            onChange={(e) => store.handleInputChange(e)}
+          >
+            <FormControlLabel
+              value="diesel"
+              control={<Radio />}
+              label="Diesel"
+            ></FormControlLabel>
+            <FormControlLabel
+              value="benzin"
+              control={<Radio />}
+              label="Benzin"
+            ></FormControlLabel>
+            <FormControlLabel
+              value="electric"
+              control={<Radio />}
+              label="Electric"
+            ></FormControlLabel>
+          </RadioGroup>
+        </FormControl>
+
+        <TextField
+          className={classes.root}
+          variant="outlined"
+          label="Producer"
+          name="producer"
+          value={store.vechileFormValue.producer}
+          disabled
+        ></TextField>
+
+        <InputCheckBox
+          label="Loan for vechile"
+          name="isLoan"
+          onChange={(e) => store.handleInputChange(e)}
+          value={store.vechileFormValue.isLoan}
+        ></InputCheckBox>
+
+        <DatePicker
+          label="Sell"
+          name="sellDate"
+          onChange={(e) => store.handleInputChange(e)}
+          value={store.vechileFormValue.sellDate}
+        ></DatePicker>
+        <div>
+          <CustomButton
+            onClick={(e) => store.handleSubmit(e)}
+            // text="SUBMIT"
+            text={
+              store.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'
+            }
+            disabled={store.disableSubmitButton}
+          ></CustomButton>
+          <CustomButton
+            text="RESET"
+            color="default"
+            onClick={(e) => store.resetForm(e)}
+          ></CustomButton>
+        </div>
+      </Grid>
+    </Grid>
   );
 }
 

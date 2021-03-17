@@ -18,8 +18,7 @@ class UseTable {
 
       handleChangeRowsPerPage: action,
       descendingComparator: action,
-      sortTable: observable
-
+      sortTable: observable,
     });
   }
 

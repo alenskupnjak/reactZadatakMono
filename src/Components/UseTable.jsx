@@ -7,9 +7,8 @@ import {
   TableCell,
   TablePagination,
   TableSortLabel,
-} from '@material-ui/core'
-import { storeUseTable } from '../Common/StoreUseTable'
-
+} from '@material-ui/core';
+import { storeUseTable } from '../Common/StoreUseTable';
 
 //
 // CSS
@@ -30,44 +29,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// 
+//
 //  MAIN
 function UseTable(record, headerCell, store) {
   const classes = useStyles();
 
   // return filtered and sorted data
   const afterSortingAndFiltering = () => {
-    return storeUseTable.sortTable(store.filterFn.fn(record))
+    return storeUseTable
+      .sortTable(store.filterFn.fn(record))
       .slice()
-      .splice(storeUseTable.page * storeUseTable.rowsPerPage, storeUseTable.rowsPerPage);
+      .splice(
+        storeUseTable.page * storeUseTable.rowsPerPage,
+        storeUseTable.rowsPerPage,
+      );
   };
 
   // HEADER table
   const TblHeader = (props) => {
     return (
-      <TableHead className={props.css} >
+      <TableHead className={props.css}>
         <TableRow>
-          {
-            headerCell.map((data) => (
-              <TableCell key={data.id}>
-                {
-                  data.disabledSorting ? (data.label) :
-                    (
-                      <TableSortLabel
-                        active={data.id === storeUseTable.orderSort}
-                        direction={storeUseTable.orderSort}
-                        onClick={() => {
-                          storeUseTable.setOrderSortBy(data.id);
-                          storeUseTable.setOrderSort();
-                        }}
-                      >
-                        {data.label}
-                      </TableSortLabel>
-                    )
-                }
-              </TableCell>
-            ))
-          }
+          {headerCell.map((data) => (
+            <TableCell key={data.id}>
+              {data.disabledSorting ? (
+                data.label
+              ) : (
+                <TableSortLabel
+                  active={data.id === storeUseTable.orderSort}
+                  direction={storeUseTable.orderSort}
+                  onClick={() => {
+                    storeUseTable.setOrderSortBy(data.id);
+                    storeUseTable.setOrderSort();
+                  }}
+                >
+                  {data.label}
+                </TableSortLabel>
+              )}
+            </TableCell>
+          ))}
         </TableRow>
       </TableHead>
     );
@@ -87,7 +87,7 @@ function UseTable(record, headerCell, store) {
       rowsPerPage={storeUseTable.rowsPerPage}
       page={storeUseTable.page}
       onChangePage={(e, newPage) => {
-        storeUseTable.setPage(newPage)
+        storeUseTable.setPage(newPage);
       }}
       onChangeRowsPerPage={(e) => storeUseTable.handleChangeRowsPerPage(e)}
     ></TablePagination>
@@ -97,7 +97,7 @@ function UseTable(record, headerCell, store) {
     afterSortingAndFiltering,
     TblHeader,
     TblContainer,
-    TblPagination
+    TblPagination,
   };
 }
 
