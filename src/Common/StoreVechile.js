@@ -141,6 +141,7 @@ class Store {
     });
     // delete record from list
     this.listVehicle.splice(index, 1);
+    console.table(this.listVehicleGet);
   }
 
   //

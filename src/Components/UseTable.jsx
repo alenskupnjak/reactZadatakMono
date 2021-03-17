@@ -73,7 +73,7 @@ function UseTable(record, headerCell, store) {
     );
   };
 
-  // MAIN table
+  // CONTAINER table
   const TblContainer = (props) => {
     return <Table className={classes.table}>{props.children}</Table>;
   };

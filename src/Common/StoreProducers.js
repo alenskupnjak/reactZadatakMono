@@ -39,10 +39,12 @@ class Producers {
       disableSubmitButton: observable,
       setDisableSubmitButton: action,
 
-      errors:observable,
+      errors: observable,
       setErrors: action,
 
-      resetForm:action
+      resetForm: action,
+      generateModelId: action,
+      generateProducerId: action
     });
   }
 
@@ -63,7 +65,7 @@ class Producers {
     isOpen: false,
     title: '',
     subTitle: '',
-    onConfirm:''
+    onConfirm: ''
   }
 
   filterFn = {
@@ -74,7 +76,7 @@ class Producers {
 
   errors = {}
 
-// 
+  // 
   addOrUpdate = 'addFormValueToList'
 
   // 
@@ -95,7 +97,7 @@ class Producers {
       id: '',
       model: '',
       producerId: '',
-      producer: '',
+      producer: ''
     };
   }
 
@@ -121,18 +123,32 @@ class Producers {
   }
 
   //
-  // DELETE - delete one record from Vehicle list
-  listProducerDelete(id) {
-    const index = this.listProducer.findIndex((data) => {
-      return data.id === id;
-    });
-    // delete record from list
-    this.listProducer.splice(index, 1);
+  // DELETE - delete one record from Producer list
+  listProducerDelete(producer) {
+    // console.log('listProducerDelete=', producer);
+    let counter = 0;
+    this.listModelGet.forEach(data => {
+      if (data.producer === producer) {
+        counter++
+      }
+    })
+
+    // last producer deletet from list
+    if (counter === 0) {
+      const index = this.listProducer.findIndex((data) => {
+        return data.producer === producer;
+      });
+      // // delete record from list
+      this.listProducer.splice(index, 1);
+      // console.log(this.listProducerGet);
+    }
   }
 
   //
-  // UPDATE - change one record in Vehicle list
+  // UPDATE - change one record in Producer list
   listProducerUpdate(updateData) {
+    // console.log(updateData);
+
     const index = this.listProducer.findIndex((data) => {
       return data.id === updateData.id;
     });
@@ -145,12 +161,19 @@ class Producers {
   get listModelGet() {
     // console.log(this.listModel);
     const listModel = this.listModel.map((data) => {
+      // console.log('listModel', data.id);
+
+      const findProducerName = this.listProducer.find(dataProd => {
+        return dataProd.id === data.producerId
+      })
+
       const dataModel = {
         id: data.id,
         model: data.model,
         producerId: data.producerId,
-        producer: data.producer,
+        producer: findProducerName.producer,
       };
+
       return dataModel;
     });
     return listModel;
@@ -183,7 +206,7 @@ class Producers {
   }
 
   // 
-  setOpenCustomDialog(data) {    
+  setOpenCustomDialog(data) {
     this.openCustomDialog = data;
   }
 
@@ -217,9 +240,9 @@ class Producers {
     }
   }
 
-  setConfirmDialog( isOpen,title=null, subTitle=null,onConfirm=null) {
+  setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
     // console.log(isOpen,title, subTitle, onConfirm);
-    this.confirmDialog = {isOpen:isOpen,title:title, subTitle:subTitle}
+    this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle }
   }
 
   setDisableSubmitButton(data) {
@@ -236,6 +259,18 @@ class Producers {
     this.setErrors({});
     this.setDisableSubmitButton(true);
   }
+
+  // Generate fake ID for MODEL
+  generateModelId() {
+    return 'm' + Date.now().toString();
+  };
+
+  
+  // Generate fake ID for Producer
+  generateProducerId () {
+    return 'p' + Date.now().toString();
+  };
+
 }
 
 export const storeProducers = new Producers();

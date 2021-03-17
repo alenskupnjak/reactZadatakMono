@@ -14,7 +14,7 @@ export const initVechileValue = {
 //
 // Init valuues for form producers
 export const initProducerValue = [
-  { id: '', model: '', producerId: '', producer: '' },
+  { id: '', model: '', producerId: '' },
 ];
 
 
@@ -32,18 +32,19 @@ export const listProducers = [
 //
 // list of vehicle models
 export const listModelVechile = [
-  { id: 'm1', model: 'BMW mod1', producerId: 'p1', producer: 'BMW' },
-  { id: 'm2', model: 'FORD mod1', producerId: 'p2', producer: 'FORD' },
-  { id: 'm3', model: 'AUDI mod1', producerId: 'p3', producer: 'AUDI' },
-  { id: 'm4', model: 'FIAT mod1', producerId: 'p4', producer: 'FIAT' },
-  { id: 'm5', model: 'VOLVO mod1', producerId: 'p5', producer: 'VOLVO' },
-  { id: 'm6', model: 'TOYOTA mod1', producerId: 'p6', producer: 'TOYOTA' },
-  { id: 'm7', model: 'BMW 2mod', producerId: 'p1', producer: 'BMW' },
-  { id: 'm8', model: 'FORD 2mod', producerId: 'p2', producer: 'FORD' },
-  { id: 'm9', model: 'AUDI 2mod', producerId: 'p3', producer: 'AUDI' },
-  { id: 'm10', model: 'FIAT 2mod', producerId: 'p4', producer: 'FIAT' },
-  { id: 'm11', model: 'VOLVO 2mod', producerId: 'p5', producer: 'VOLVO' },
-  { id: 'm12', model: 'TOYOTA 2mod', producerId: 'p6', producer: 'TOYOTA' },
+  { id: 'm01', model: 'BMW 1', producerId: 'p1' },
+  { id: 'm02', model: 'FORD 1', producerId: 'p2' },
+  { id: 'm03', model: 'AUDI 1', producerId: 'p3'},
+  { id: 'm04', model: 'FIAT 1', producerId: 'p4' },
+  { id: 'm05', model: 'VOLVO 1', producerId: 'p5' },
+  { id: 'm06', model: 'TOYOTA 1', producerId: 'p6' },
+  { id: 'm07', model: 'BMW 2', producerId: 'p1' },
+  { id: 'm08', model: 'FORD 2', producerId: 'p2' },
+  { id: 'm09', model: 'AUDI 2', producerId: 'p3' },
+  { id: 'm10', model: 'FIAT 2', producerId: 'p4' },
+  { id: 'm11', model: 'VOLVO 2', producerId: 'p5' },
+  { id: 'm12', model: 'TOYOTA 2', producerId: 'p6' },
+  { id: 'm13', model: 'TOYOTA 3', producerId: 'p6' },
 ];
 
 
@@ -72,9 +73,9 @@ export const headCellProducer = [
 export const listVehicleInit = [
   {
     id: 'idx001',
-    modelAuto: 'm7',
+    modelAuto: 'm07',
     email: 'email11@yahoo',
-    mobile: '11',
+    mobile: '111111',
     city: 'Sesvete',
     motor: 'diesel',
     sellDate: '2021-02-26T10:51:22.509Z',
@@ -82,9 +83,9 @@ export const listVehicleInit = [
   },
   {
     id: 'idx002',
-    modelAuto: 'm8',
+    modelAuto: 'm08',
     email: 'email22@yahoo.com',
-    mobile: '222',
+    mobile: '222222',
     city: 'Vukovar',
     motor: 'benzin',
     sellDate: '2021-02-26T10:51:22.509Z',
@@ -92,7 +93,7 @@ export const listVehicleInit = [
   },
   {
     id: 'idx003',
-    modelAuto: 'm8',
+    modelAuto: 'm08',
     email: 'email22@yahoo.com',
     mobile: '3333',
     city: 'Split',
@@ -112,7 +113,7 @@ export const listVehicleInit = [
   },
   {
     id: 'idx005',
-    modelAuto: 'm1',
+    modelAuto: 'm01',
     email: 'email22@yahoo.com',
     mobile: '55555522',
     city: 'Vinkovci',
@@ -122,7 +123,7 @@ export const listVehicleInit = [
   },
   {
     id: 'idx006',
-    modelAuto: 'm1',
+    modelAuto: 'm01',
     email: 'email22@yahoo.com',
     mobile: '6666666',
     city: 'Buzet',
@@ -132,7 +133,7 @@ export const listVehicleInit = [
   },
   {
     id: 'idx007',
-    modelAuto: 'm9',
+    modelAuto: 'm09',
     email: 'email22@yahoo.com',
     mobile: '7777777',
     city: 'Prag',
@@ -146,13 +147,13 @@ export const listVehicleInit = [
     email: 'email22@yahoo.com',
     mobile: '8888888',
     city: 'Osijek',
-    motor: 'benzin',
+    motor: 'electric',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: false,
   },
   {
     id: 'idx009',
-    modelAuto: 'm8',
+    modelAuto: 'm08',
     email: 'email22@yahoo.com',
     mobile: '9999999',
     city: 'Kutina',
@@ -162,21 +163,21 @@ export const listVehicleInit = [
   },
   {
     id: 'idx010',
-    modelAuto: 'm8',
+    modelAuto: 'm08',
     email: 'email22@yahoo.com',
     mobile: '100000',
     city: 'Pula',
     motor: 'benzin',
     sellDate: '2021-02-26T10:51:22.509Z',
-    isLoan: true,
+    isLoan: false,
   },
   {
     id: 'idx011',
-    modelAuto: 'm5',
+    modelAuto: 'm05',
     email: 'email22@yahoo.com',
     mobile: '101000',
     city: 'Pula',
-    motor: 'benzin',
+    motor: 'electric',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: true,
   },

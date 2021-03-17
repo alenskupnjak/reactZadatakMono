@@ -24,7 +24,6 @@ import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 import { store } from '../../Common/StoreVechile';
 import { storeNotification } from '../../Common/StoreNotification';
-// import { storeProducers } from '../../Common/StoreProducers';
 
 
 //
@@ -107,22 +106,12 @@ function Vehicle() {
           <TableBody>
             {afterSortingAndFiltering().map((data) => (
               <TableRow key={data.id}>
-                {/* <TableCell> 
-                    {
-                      findModelVehicle(data.modelAuto,data)
-                    }
-                  </TableCell>  */}
                 <TableCell> {data.model} </TableCell>
                 <TableCell> {data.email} </TableCell>
                 <TableCell> {data.mobile} </TableCell>
                 <TableCell> {data.city} </TableCell>
                 <TableCell> {data.motor} </TableCell>
                 <TableCell> {data.producer} </TableCell>
-                {/* <TableCell> 
-                    {
-                      findProducerVehicle(data.modelAuto, data)  
-                    }
-                  </TableCell> */}
                 <TableCell>
                   <Button
                     id={data.id}

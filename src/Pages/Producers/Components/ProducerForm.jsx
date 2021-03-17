@@ -118,21 +118,15 @@ function ProducerForm(props) {
           return;
         }
 
-        // Generate fake ID
-        storeProducers.producerFormValue.id = generateModelId();
-
         const { model, producer } = storeProducers.producerFormValue;
 
-        // console.log(storeProducers.producerFormValue);
-        // console.log(storeProducers.listProducerGet);
-
         const dataProducer = {
-          id: generateProducerId(),
+          id: storeProducers.generateProducerId(),
           producer: producer.toUpperCase(),
         };
 
         const dataModel = {
-          id: generateModelId(),
+          id: storeProducers.generateModelId(),
           model: model,
           producerId: dataProducer.id,
           producer: producer.toUpperCase(),
@@ -149,18 +143,36 @@ function ProducerForm(props) {
         storeNotification.setNotify({ isOpen: true, msg: 'Add Producer', type: 'success' });
       } else {
         // UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
+        // console.log('BEFORE.listModelGet',storeProducers.listModelGet);
+        // console.log('BEFORE.listProducerGet',storeProducers.listProducerGet);
+        
         // find model producer to store in model record
         const modelProdOld = storeProducers.listModelGet.find((data) => {
           return data.id === storeProducers.producerFormValue.id;
         });
 
+        const producerOld = storeProducers.listProducerGet.find(data=>{
+          return data.id === modelProdOld.producerId
+        })
+
+        // console.log(producerOld, storeProducers.producerFormValue.producer.toUpperCase());
+
+        const dataProducer = {
+          id:producerOld.id,
+          producer: storeProducers.producerFormValue.producer.toUpperCase()
+        }
+          // console.log(dataProducer);
+          
+        storeProducers.listProducerUpdate(dataProducer)
+        
         const dataVehicle = {
           id: modelProdOld.id,
           model: storeProducers.producerFormValue.model,
           producerId: storeProducers.producerFormValue.producerId,
-          producer: storeProducers.producerFormValue.producer.toUpperCase(),
         };
         storeProducers.listModelUpdate(dataVehicle);
+
+        // console.log('storeProducers.listProducerGet',storeProducers.listProducerGet);
 
         // search list, UPDATE vechile list
         store.listVehicle.forEach((data) => {
@@ -180,12 +192,12 @@ function ProducerForm(props) {
             store.listVehicleUpdate(dataVehicle);
           }
         });
-        // console.table(storeProducers.listModelGet);
-        // console.table(store.listVehicleGet);
+
+        // console.log('AFTER.listModelGet',storeProducers.listModelGet);
+        // console.log('AFTER.listProducerGet',storeProducers.listProducerGet);
 
         // Display info on screen
         storeNotification.setNotify({ isOpen: true, msg: 'Update Producer', type: 'warning' });
-
         storeProducers.setAddOrUpdate('addFormValueToList');
       }
     }
@@ -194,16 +206,16 @@ function ProducerForm(props) {
   };
 
 
-  // Generate fake ID
-  const generateProducerId = () => {
-    return 'p' + Date.now().toString();
-  };
+  // // Generate fake ID
+  // const generateProducerId = () => {
+  //   return 'p' + Date.now().toString();
+  // };
 
 
-  // Generate fake ID for Producer
-  const generateModelId = () => {
-    return 'm' + Date.now().toString();
-  };
+  // // Generate fake ID for Producer
+  // const generateModelId = () => {
+  //   return 'm' + Date.now().toString();
+  // };
 
   return (
       <Grid container>

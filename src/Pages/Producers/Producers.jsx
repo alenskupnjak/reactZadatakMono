@@ -119,60 +119,62 @@ function Producers() {
         <TblContainer>
           <TblHeader css={classes.tablehead}></TblHeader>
           <TableBody>
-            {afterSortingAndFiltering().map((data) => (
-              <TableRow key={data.id}>
-                <TableCell> {data.model}</TableCell>
-                {/* <TableCell>{findProducerVehicle(data.producerId)}</TableCell> */}
-                <TableCell>{data.producer}</TableCell>
-                <TableCell>
-                  <Button
-                    id={data.id}
-                    className={classes.custom}
-                    variant="contained"
-                    style={{
-                      backgroundColor: 'orange',
-                      padding: '10px',
-                      marginRight: '5px',
-                    }}
-                    onClick={() => {
-                      storeProducers.setOpenCustomDialog(true);
-                      storeProducers.setAddOrUpdate('updateFormValue');
-                      storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
-                      storeProducers.producerFormValue = data;
-                    }}
-                    startIcon={<EditIcon></EditIcon>}
-                  ></Button>
-                  <Button
-                    id={data.id}
-                    className={classes.custom}
-                    variant="outlined"
-                    style={{
-                      backgroundColor: '#f83245',
-                      padding: '10px',
-                      marginRight: '0px',
-                    }}
-                    onClick={() => {
-                      storeProducers.setConfirmDialog({
-                        isOpen: true,
-                        title: 'Are you sure to delete this record?',
-                        subTitle: 'You can not undo action',
-                        onConfirm: () => {
-                          storeProducers.setConfirmDialog({ isOpen: false });
-                          storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
-                          store.listVehicleGet.forEach((dataVechile) => {
-                            if (data.id === dataVechile.modelAuto) {
-                              store.listVehicleDelete(dataVechile.id);
-                            }
-                          });
-                          storeProducers.listModelDelete(data.id);
-                        },
-                      });
-                    }}
-                    startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
-                  ></Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {
+              afterSortingAndFiltering().map((data) => (
+                <TableRow key={data.id}>
+                  <TableCell>{data.model}</TableCell>
+                  <TableCell>{data.producer}</TableCell>
+                  <TableCell>
+                    <Button
+                      id={data.id}
+                      className={classes.custom}
+                      variant="contained"
+                      style={{
+                        backgroundColor: 'orange',
+                        padding: '10px',
+                        marginRight: '5px',
+                      }}
+                      onClick={() => {
+                        storeProducers.setOpenCustomDialog(true);
+                        storeProducers.setAddOrUpdate('updateFormValue');
+                        storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
+                        storeProducers.producerFormValue = data;
+                      }}
+                      startIcon={<EditIcon></EditIcon>}
+                    ></Button>
+                    <Button
+                      id={data.id}
+                      className={classes.custom}
+                      variant="outlined"
+                      style={{
+                        backgroundColor: '#f83245',
+                        padding: '10px',
+                        marginRight: '0px',
+                      }}
+                      onClick={() => {
+                        storeProducers.setConfirmDialog({
+                          isOpen: true,
+                          title: 'Are you sure to delete this record?',
+                          subTitle: 'You can not undo action',
+                          onConfirm: () => {
+                            storeProducers.setConfirmDialog({ isOpen: false });
+                            storeNotification.setNotify({ isOpen: true, msg: 'Delete Producer', type: 'error' });
+                            store.listVehicleGet.forEach((dataVechile) => {
+                              if (data.id === dataVechile.modelAuto) {
+                                store.listVehicleDelete(dataVechile.id);
+                              }
+                            });
+                            storeProducers.listModelDelete(data.id);
+                            storeProducers.listProducerDelete(data.producer);
+                          },
+                        });
+                      }}
+                      startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
+                    ></Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            }
           </TableBody>
         </TblContainer>
 

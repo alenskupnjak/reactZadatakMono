@@ -25,9 +25,9 @@ function InputSelect(props) {
           <MenuItem value="">None</MenuItem>
           {
             dataOptions.map((data) => (
-              <MenuItem 
-                key={data.id} 
-                value={data.id} 
+              <MenuItem
+                key={data.id}
+                value={data.id}
                 producer={data.producerId}
               >
                 {data.model}
