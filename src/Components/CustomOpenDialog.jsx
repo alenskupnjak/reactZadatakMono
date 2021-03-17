@@ -51,6 +51,7 @@ const CustomOpenDialog = (props) => {
               // console.log('zatvorio',setOpenCustomDialog);
               store.setOpenCustomDialog(false);
               store.setAddOrUpdate('addFormValueToList');
+              store.resetFormValue()
             }}
             className={classes.root}
             startIcon={<CloseIcon></CloseIcon>}

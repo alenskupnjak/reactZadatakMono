@@ -66,7 +66,7 @@ function Vehicle() {
     TblHeader,
     TblContainer,
     TblPagination
-  } = UseTable(store.listVehicleGet, headCellVechile,store);
+  } = UseTable(store.listVehicleGet, headCellVechile, store);
 
 
   return (
@@ -77,7 +77,7 @@ function Vehicle() {
           <TextField
             className={classes.searchInput}
             label="Filter Model"
-            onChange={(e)=> {store.handleSearch(e)}}
+            onChange={(e) => { store.handleSearch(e) }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

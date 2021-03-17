@@ -291,10 +291,14 @@ class Producers {
 
     // 
     if (findDuplicate) {
+      console.log('findDuplicate=',findDuplicate);
+      
       this.setErrors({
         [cellName]: `Duplicate ${cellName} name`,
       });
-      return true;
+      return findDuplicate;
+    } else {
+      return null
     }
   };
 
@@ -333,13 +337,10 @@ class Producers {
   handleSubmit(e) {
     e.preventDefault();
 
-    // check input fields
-    this.validationForm();
     const { model, producer } = this.producerFormValue;
 
     //  ADD ADD ADD ADD ADD
     if (this.addOrUpdate === 'addFormValueToList') {
-
       // if duplicate MODEL => return
       if (this.findDuplicateData(this.listModelGet, 'model')) {
         return;
@@ -388,11 +389,26 @@ class Producers {
 
 
     //  UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
-    if (this.validationForm() && this.addOrUpdate === 'updateFormValue') {
+    if (this.addOrUpdate === 'updateFormValue') {
+      // if duplicate MODEL => return
+      const duplicateModel = this.findDuplicateData(this.listModelGet, 'model');
+      // console.log(duplicateModel, this.producerFormValue.id);
 
-      if(this.findDuplicateData(this.listProducerGet, 'producer')) {
-        console.log('vec postoji');
-        return
+      if (duplicateModel && duplicateModel.id !== this.producerFormValue.id) {
+        if (this.findDuplicateData(this.listModelGet, 'model')) {
+          console.log('%c MODEL exist', 'color:red');
+          return
+        }
+      }
+
+      const duplicateProducer = this.findDuplicateData(this.listModelGet, 'producer');
+      // console.log(duplicateProducer, this.producerFormValue.producerId);
+
+      if (duplicateProducer && duplicateProducer.producerId !== this.producerFormValue.producerId) {
+        if (this.findDuplicateData(this.listProducerGet, 'producer')) {
+          console.log('%c PRODUCER exist', 'color:red');
+          return
+        }
       }
 
       // console.log('BEFORE.listModelGet',this.listModelGet);
@@ -413,7 +429,6 @@ class Producers {
         id: producerOld.id,
         producer: this.producerFormValue.producer.toUpperCase()
       }
-      // console.log(dataProducer);
 
       this.listProducerUpdate(dataProducer)
 
@@ -423,8 +438,6 @@ class Producers {
         producerId: this.producerFormValue.producerId,
       };
       this.listModelUpdate(dataVehicle);
-
-      // console.log('this.listProducerGet',this.listProducerGet);
 
       // search list, UPDATE vechile list
       store.listVehicle.forEach((data) => {
@@ -453,7 +466,10 @@ class Producers {
       this.setAddOrUpdate('addFormValueToList');
     }
     // close dialog
+
     this.setOpenCustomDialog(false);
+    this.resetFormValue();
+    this.setErrors({});
   };
 
 

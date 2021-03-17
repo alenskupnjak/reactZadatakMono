@@ -139,6 +139,7 @@ function Producers() {
                         storeProducers.setAddOrUpdate('updateFormValue');
                         storeNotification.setNotify({ isOpen: true, msg: 'Edit Producer', type: 'info' });
                         storeProducers.producerFormValue = data;
+                        storeProducers.setDisableSubmitButton(false);
                       }}
                       startIcon={<EditIcon></EditIcon>}
                     ></Button>
