@@ -8,7 +8,7 @@ const Notification = (props) => {
   return (
     <Snackbar
       open={notify.isOpen}
-      autoHideDuration={4000}
+      autoHideDuration={3000}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       onClose={() => {
         store.setNotify({ isOpen: false, msg: '', type: 'info' });

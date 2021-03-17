@@ -4,6 +4,8 @@ import {
   listProducers,
   listModelVechile,
 } from './VehicleService';
+import { storeNotification } from './StoreNotification';
+import { store } from './StoreVechile';
 
 //
 // MAIN MAIN MAIN
@@ -44,7 +46,9 @@ class Producers {
 
       resetForm: action,
       generateModelId: action,
-      generateProducerId: action
+      generateProducerId: action,
+      validationForm: action,
+      handleInputChange: action
     });
   }
 
@@ -125,7 +129,6 @@ class Producers {
   //
   // DELETE - delete one record from Producer list
   listProducerDelete(producer) {
-    // console.log('listProducerDelete=', producer);
     let counter = 0;
     this.listModelGet.forEach(data => {
       if (data.producer === producer) {
@@ -140,7 +143,6 @@ class Producers {
       });
       // // delete record from list
       this.listProducer.splice(index, 1);
-      // console.log(this.listProducerGet);
     }
   }
 
@@ -265,11 +267,196 @@ class Producers {
     return 'm' + Date.now().toString();
   };
 
-  
+
   // Generate fake ID for Producer
-  generateProducerId () {
+  generateProducerId() {
     return 'p' + Date.now().toString();
   };
+
+
+  // find duplicate value => error UI
+  findDuplicateData(array, cellName) {
+    let compareData = this.producerFormValue[cellName];
+    // all producers data are Uppercase
+    if (cellName === 'producer') {
+      compareData = this.producerFormValue[cellName].toUpperCase();
+    }
+    // 
+    const findDuplicate = array.find((data) => {
+      if (data[cellName] === compareData) {
+        return data;
+      }
+      return null;
+    });
+
+    // 
+    if (findDuplicate) {
+      this.setErrors({
+        [cellName]: `Duplicate ${cellName} name`,
+      });
+      return true;
+    }
+  };
+
+  // 
+  // form validation
+  validationForm() {
+    // SET error
+    const tempError = {};
+
+    tempError.model = this.producerFormValue.model.length > 2 ? '' : 'Minimum 3 character';
+    tempError.producer = this.producerFormValue.producer.length > 0 ? '' : 'Minimum 1 character';
+
+    // define error
+    this.setErrors({ ...tempError });
+
+    // if validation all fields is TRUE, make enable button SUBMIT
+    if (Object.values(tempError).every((x) => x === '')) {
+      this.setDisableSubmitButton(false);
+    } else {
+      this.setDisableSubmitButton(true);
+    }
+
+    // check tempError, if all values ="" => NO error  =>  set validationForm=TRUE
+    return Object.values(tempError).every((x) => x === '');
+  };
+
+  // handle input
+  handleInputChange(e) {
+    const { name, value } = e.target;
+    this.setProducerValue(name, value);
+    this.validationForm();
+  };
+
+  //
+  // SUBMIT form
+  handleSubmit(e) {
+    e.preventDefault();
+
+    // check input fields
+    this.validationForm();
+    const { model, producer } = this.producerFormValue;
+
+    //  ADD ADD ADD ADD ADD
+    if (this.addOrUpdate === 'addFormValueToList') {
+
+      // if duplicate MODEL => return
+      if (this.findDuplicateData(this.listModelGet, 'model')) {
+        return;
+      }
+
+      // 
+      if (!this.findDuplicateData(this.listProducerGet, 'producer')) {
+        // add NEW producer
+        const dataProducer = {
+          id: this.generateProducerId(),
+          producer: producer.toUpperCase(),
+        };
+        this.listProducerPut(dataProducer);
+
+        const dataModel = {
+          id: this.generateModelId(),
+          model: model,
+          producerId: dataProducer.id,
+        };
+
+        // save record to lists
+        this.listModelPut(dataModel);
+      } else {
+        // producer already exist
+        const producer = this.listProducerGet.find(data => {
+          // console.log(data.producer, this.producerFormValue.producer);
+          return data.producer === this.producerFormValue.producer.toUpperCase();
+
+        })
+
+        const dataModel = {
+          id: this.generateModelId(),
+          model: model,
+          producerId: producer.id,
+        };
+
+        // save record to lists
+        this.listModelPut(dataModel);
+
+      }
+      console.table(this.listModelGet);
+      console.table(this.listProducerGet);
+
+      storeNotification.setNotify({ isOpen: true, msg: 'Add Producer', type: 'success' });
+    }
+
+
+    //  UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
+    if (this.validationForm() && this.addOrUpdate === 'updateFormValue') {
+
+      if(this.findDuplicateData(this.listProducerGet, 'producer')) {
+        console.log('vec postoji');
+        return
+      }
+
+      // console.log('BEFORE.listModelGet',this.listModelGet);
+      // console.log('BEFORE.listProducerGet',this.listProducerGet);
+
+      // find model producer to store in model record
+      const modelProdOld = this.listModelGet.find((data) => {
+        return data.id === this.producerFormValue.id;
+      });
+
+      const producerOld = this.listProducerGet.find(data => {
+        return data.id === modelProdOld.producerId
+      })
+
+      // console.log(producerOld, this.producerFormValue.producer.toUpperCase());
+
+      const dataProducer = {
+        id: producerOld.id,
+        producer: this.producerFormValue.producer.toUpperCase()
+      }
+      // console.log(dataProducer);
+
+      this.listProducerUpdate(dataProducer)
+
+      const dataVehicle = {
+        id: modelProdOld.id,
+        model: this.producerFormValue.model,
+        producerId: this.producerFormValue.producerId,
+      };
+      this.listModelUpdate(dataVehicle);
+
+      // console.log('this.listProducerGet',this.listProducerGet);
+
+      // search list, UPDATE vechile list
+      store.listVehicle.forEach((data) => {
+        if (modelProdOld.model === data.model) {
+          const dataVehicle = {
+            id: data.id,
+            modelAuto: data.modelAuto,
+            model: this.producerFormValue.model,
+            producer: this.producerFormValue.producer.toUpperCase(),
+            email: data.email,
+            mobile: data.mobile,
+            city: data.city,
+            motor: data.motor,
+            sellDate: data.sellDate,
+            isLoan: data.isLoan,
+          };
+          store.listVehicleUpdate(dataVehicle);
+        }
+      });
+
+      console.table(this.listModelGet);
+      console.table(this.listProducerGet);
+
+      // Display info on screen
+      storeNotification.setNotify({ isOpen: true, msg: 'Update Producer', type: 'warning' });
+      this.setAddOrUpdate('addFormValueToList');
+    }
+    // close dialog
+    this.setOpenCustomDialog(false);
+  };
+
+
 
 }
 
