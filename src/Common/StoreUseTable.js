@@ -16,7 +16,9 @@ class UseTable {
       orderSortBy: observable,
       setOrderSortBy: action,
 
-      handleChangeRowsPerPage:action
+      handleChangeRowsPerPage: action,
+      descendingComparator: action,
+      sortTable: observable
 
     });
   }
@@ -30,26 +32,26 @@ class UseTable {
   //  setup init sorting direction
   orderSort = 'asc';
 
-  orderSortBy = 'model'
+  orderSortBy = 'model';
 
   setPage(page) {
     this.page = page;
   }
 
   setRowsPerPage(event) {
-    this.rowsPerPage = +event.target.value
+    this.rowsPerPage = +event.target.value;
   }
 
   // set order sort
   setOrderSort() {
     if (this.orderSort === 'asc') {
-      this.orderSort = 'desc'
+      this.orderSort = 'desc';
     } else {
-      this.orderSort = 'asc'
+      this.orderSort = 'asc';
     }
-    // console.log(this.orderSort);
   }
 
+  //  define column to sort
   setOrderSortBy(sortColumn) {
     this.orderSortBy = sortColumn;
   }
@@ -59,6 +61,33 @@ class UseTable {
     this.setPage(0);
   }
 
+  descendingComparator(a, b) {
+    if (b[this.orderSortBy] < a[this.orderSortBy]) {
+      return -1;
+    }
+    if (b[this.orderSortBy] > a[this.orderSortBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  sortTable(recordData) {
+    // init setup sort
+    if (!this.orderSort) {
+      return recordData;
+    }
+
+    // stabilization
+    const stabilizedThis = recordData.map((el, index) => [el, index]);
+    const sortDirection = this.orderSort === 'asc' ? 1 : -1;
+
+    let sortRecord = [...stabilizedThis].sort((a, b) => {
+      const order = sortDirection * this.descendingComparator(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return sortRecord.map((el) => el[0]);
+  }
 }
 
 export const storeUseTable = new UseTable();

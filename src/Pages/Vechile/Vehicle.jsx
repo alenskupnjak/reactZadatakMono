@@ -24,6 +24,7 @@ import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 import { store } from '../../Common/StoreVechile';
 import { storeNotification } from '../../Common/StoreNotification';
+// import { storeProducers } from '../../Common/StoreProducers';
 
 
 //
@@ -62,10 +63,10 @@ const useStyles = makeStyles((theme) => ({
 function Vehicle() {
   const classes = useStyles();
   const {
-    TblContainer,
-    TblHeader,
-    TblPagination,
     afterSortingAndFiltering,
+    TblHeader,
+    TblContainer,
+    TblPagination
   } = UseTable(store.listVehicleGet, headCellVechile,store);
 
 
@@ -108,10 +109,10 @@ function Vehicle() {
               <TableRow key={data.id}>
                 {/* <TableCell> 
                     {
-                      findModelVehicle(data.modelAuto)
+                      findModelVehicle(data.modelAuto,data)
                     }
                   </TableCell>  */}
-                <TableCell> {data.model}</TableCell>
+                <TableCell> {data.model} </TableCell>
                 <TableCell> {data.email} </TableCell>
                 <TableCell> {data.mobile} </TableCell>
                 <TableCell> {data.city} </TableCell>
@@ -119,7 +120,7 @@ function Vehicle() {
                 <TableCell> {data.producer} </TableCell>
                 {/* <TableCell> 
                     {
-                      findProducerVehicle(data.modelAuto)  
+                      findProducerVehicle(data.modelAuto, data)  
                     }
                   </TableCell> */}
                 <TableCell>

@@ -23,11 +23,17 @@ function InputSelect(props) {
           error={error ? true : false}
         >
           <MenuItem value="">None</MenuItem>
-          {dataOptions.map((data) => (
-            <MenuItem key={data.id} value={data.id} producer={data.producerId}>
-              {data.model}
-            </MenuItem>
-          ))}
+          {
+            dataOptions.map((data) => (
+              <MenuItem 
+                key={data.id} 
+                value={data.id} 
+                producer={data.producerId}
+              >
+                {data.model}
+              </MenuItem>
+            ))
+          }
         </Select>
         {error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>

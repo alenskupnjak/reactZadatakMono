@@ -40,7 +40,8 @@ class Store {
       validationForm: action,
       handleSubmit: action,
       generateId: action,
-      resetForm: action
+      resetForm: action,
+      findProducerVehicle:action
     });
   }
 
@@ -102,11 +103,24 @@ class Store {
   // GET - pull data from Vehicle list
   get listVehicleGet() {
     const listVehicle = this.listVehicle.map((data) => {
+
+      const model = storeProducers.listModelGet.find(dataModel => {
+        // console.log(dataModelAuto, data.id);
+        return dataModel.id === data.modelAuto
+      })
+      // console.log('model', model);
+  
+      const prod = storeProducers.listProducerGet.find(dataProd => {
+        return dataProd.id === model.producerId
+      })
+      // console.log({prod, model});
+      
+
       const dataVehicle = {
         id: data.id,
         modelAuto: data.modelAuto,
-        model: data.model,
-        producer: data.producer,
+        model: model.model,
+        producer: prod.producer,
         email: data.email,
         mobile: data.mobile,
         city: data.city,
@@ -121,7 +135,7 @@ class Store {
 
   //
   // DELETE - delete one record from Vehicle list
-  listVehicleDelete(id) {    
+  listVehicleDelete(id) {
     const index = this.listVehicle.findIndex((data) => {
       return data.id === id;
     });
@@ -264,17 +278,17 @@ class Store {
 
     //  IF FORM is valid  => save data in mobX
     if (this.validationForm()) {
-      //  ADD or UPDATE
       if (store.addOrUpdate === 'addFormValueToList') {
+        // ADD ADD ADD
         // Generate fake ID
         store.vechileFormValue.id = this.generateId();
 
-        const modelSave = storeProducers.listModelGet.find((data) => {
-          return data.id === store.vechileFormValue.modelAuto;
-        });
+        // const modelSave = storeProducers.listModelGet.find((data) => {
+        //   return data.id === store.vechileFormValue.modelAuto;
+        // });
 
         // prepare field for sorting
-        this.vechileFormValue.model = modelSave.model;
+        // this.vechileFormValue.model = modelSave.model;
 
         // save record to listVehicle
         this.listVehiclePut(store.vechileFormValue);
@@ -320,6 +334,31 @@ class Store {
   resetForm(e) {
     this.vechileFormValue = initVechileValue;
     this.setDisableSubmitButton(true);
+  }
+
+
+
+  // for populating table
+  findProducerVehicle(dataModelAuto) {
+    // console.log('list.modelget-',storeProducers.listModelGet);
+    // console.log('list.istProducerGet-',storeProducers.listProducerGet);
+    console.log('store.listVehicleGet-', store.listVehicleGet);
+    // console.log('store.listVehicleGet-',data);
+    const model = storeProducers.listModelGet.find(data => {
+      // console.log(dataModelAuto, data.id);
+
+      return data.id === dataModelAuto
+    })
+
+    console.log('model', model);
+
+    const prod = storeProducers.listProducerGet.find(data => {
+      return data.id === model.producerId
+    })
+    console.log(prod);
+    
+    // data.producer = prod.producer
+    return prod.producer
   }
 
 }
