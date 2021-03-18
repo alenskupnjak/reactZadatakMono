@@ -70,11 +70,17 @@ class UseTable {
     return 0;
   }
 
-  sortTable(recordData) {
+  sortTable(recordData, lengthRecord) {
     // init setup sort
     if (!this.orderSort) {
       return recordData;
     }
+
+    // some filtering data set to first page
+    if(recordData.length !== lengthRecord.length) {
+      this.setPage(0)
+    }
+    
 
     // stabilization
     const stabilizedThis = recordData.map((el, index) => [el, index]);

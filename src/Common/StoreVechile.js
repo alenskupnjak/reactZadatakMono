@@ -366,7 +366,7 @@ class Store {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return storeUseTable
-      .sortTable(this.filterFn.fn(this.listVehicleGet))
+      .sortTable(this.filterFn.fn(this.listVehicleGet),this.listVehicleGet)
       .slice()
       .splice(
         storeUseTable.page * storeUseTable.rowsPerPage,

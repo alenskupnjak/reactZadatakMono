@@ -494,7 +494,7 @@ class Producers {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return storeUseTable
-      .sortTable(this.filterFn.fn(this.listModelGet))
+      .sortTable(this.filterFn.fn(this.listModelGet),this.listModelGet)
       .slice()
       .splice(
         storeUseTable.page * storeUseTable.rowsPerPage,
