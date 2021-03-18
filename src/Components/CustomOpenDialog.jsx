@@ -43,9 +43,10 @@ const CustomOpenDialog = (props) => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => {
+            onClick={(e) => {
               store.setOpenCustomDialog(false);
               store.setAddOrUpdate('addFormValueToList');
+              store.resetForm(e)
             }}
             className={classes.root}
             startIcon={<CloseIcon></CloseIcon>}
