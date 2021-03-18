@@ -54,7 +54,7 @@ function ProducerForm(props) {
           onChange={(e) => storeProducers.handleInputChange(e)}
           error={storeProducers.errors.producer ? true : false}
           helperText={
-            storeProducers.errors.producer ? storeProducers.errors.producer +' Use +ADD MODEL' : ''
+            storeProducers.errors.producer ? storeProducers.errors.producer +' Have to use +ADD MODEL' : ''
           }
         ></TextField>
 
