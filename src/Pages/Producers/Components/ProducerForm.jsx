@@ -48,7 +48,7 @@ function ProducerForm(props) {
         <TextField
           className={classes.root}
           variant="outlined"
-          label="Producer"
+          label="Producer name"
           name="producer"
           value={storeProducers.producerFormValue.producer}
           onChange={(e) => storeProducers.handleInputChange(e)}
