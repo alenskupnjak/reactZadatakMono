@@ -128,6 +128,7 @@ function Vehicle() {
                         type: 'info',
                       });
                       store.vechileFormValue = data;
+                      store.setDisableSubmitButton(false);
                     }}
                     startIcon={<ListIcon></ListIcon>}
                   ></Button>
