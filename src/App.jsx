@@ -44,7 +44,7 @@ function App() {
           <nav className="Navbar">
             <ul style={{ listStyle: 'none', margin: 'auto', padding: '0' }}>
               <li style={{ margin: '10px', display: 'inline-block' }}>
-                <NavLink to="/vechile">Vehicles</NavLink>
+                <NavLink to="/vehicle">Vehicles</NavLink>
               </li>
               <li style={{ margin: '10px', display: 'inline-block' }}>
                 <NavLink style={{ color: '#28A746' }} to="/producers">
@@ -56,7 +56,7 @@ function App() {
 
           <Switch>
             <Route path="/producers" component={Producers} />
-            <Route path="/vechile" component={Vehicle} />
+            <Route path="/vehicle" component={Vehicle} />
             <Route component={Vehicle} />
           </Switch>
         </div>
