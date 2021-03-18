@@ -6,6 +6,7 @@ import {
 } from './VehicleService';
 import { storeNotification } from './StoreNotification';
 import { store } from './StoreVechile';
+import { storeUseTable } from './StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -48,6 +49,7 @@ class Producers {
       generateProducerId: action,
       validationForm: action,
       handleInputChange: action,
+      afterSortingAndFiltering: observable,
     });
   }
 
@@ -141,7 +143,7 @@ class Producers {
       const index = this.listProducer.findIndex((data) => {
         return data.producer === producer;
       });
-      // // delete record from list
+      //  delete record from list
       this.listProducer.splice(index, 1);
     }
   }
@@ -160,8 +162,6 @@ class Producers {
   // GET MODEL - pull data from Vehicle list
   get listModelGet() {
     const listModel = this.listModel.map((data) => {
-      // console.log('listModel', data.id);
-
       const findProducerName = this.listProducer.find((dataProd) => {
         return dataProd.id === data.producerId;
       });
@@ -205,14 +205,19 @@ class Producers {
   }
 
   //
+  // Open /close dialog
   setOpenCustomDialog(data) {
     this.openCustomDialog = data;
   }
 
+  //
+  // ADD or UPDATE vehicle
   setAddOrUpdate(data) {
     this.addOrUpdate = data;
   }
 
+  //
+  // init set filter function
   setFilterFn() {
     this.filterFn = {
       fn: (items) => {
@@ -221,6 +226,8 @@ class Producers {
     };
   }
 
+  //
+  // define filter search function
   handleSearch(e) {
     if (e.target.value === '') {
       this.filterFn = {
@@ -239,19 +246,22 @@ class Producers {
     }
   }
 
+  //
   setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
-    // console.log(isOpen,title, subTitle, onConfirm);
     this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle };
   }
 
+  //
   setDisableSubmitButton(data) {
     this.disableSubmitButton = data;
   }
 
+  //
   setErrors(data) {
     this.errors = data;
   }
 
+  //
   resetForm(e) {
     this.setProducerValue('model', '');
     this.setProducerValue('producer', '');
@@ -259,16 +269,19 @@ class Producers {
     this.setDisableSubmitButton(true);
   }
 
+  //
   // Generate fake ID for MODEL
   generateModelId() {
     return 'm' + Date.now().toString();
   }
 
+  //
   // Generate fake ID for Producer
   generateProducerId() {
     return 'p' + Date.now().toString();
   }
 
+  //
   // find duplicate value => error UI
   findDuplicateData(array, cellName) {
     let compareData = this.producerFormValue[cellName];
@@ -286,10 +299,8 @@ class Producers {
 
     //
     if (findDuplicate) {
-      console.log('findDuplicate=', findDuplicate);
-
       this.setErrors({
-        [cellName]: `Duplicate ${cellName} name`,
+        [cellName]: `Duplicate ${cellName} name!`,
       });
       return findDuplicate;
     } else {
@@ -322,6 +333,7 @@ class Producers {
     return Object.values(tempError).every((x) => x === '');
   }
 
+  //
   // handle input
   handleInputChange(e) {
     const { name, value } = e.target;
@@ -378,12 +390,12 @@ class Producers {
         // save record to lists
         this.listModelPut(dataModel);
       }
-      console.table(this.listModelGet);
-      console.table(this.listProducerGet);
+      // console.table(this.listModelGet);
+      // console.table(this.listProducerGet);
 
       storeNotification.setNotify({
         isOpen: true,
-        msg: 'Add Producer',
+        msg: 'Add Model',
         type: 'success',
       });
     }
@@ -396,7 +408,6 @@ class Producers {
 
       if (duplicateModel && duplicateModel.id !== this.producerFormValue.id) {
         if (this.findDuplicateData(this.listModelGet, 'model')) {
-          console.log('%c MODEL exist', 'color:red');
           return;
         }
       }
@@ -412,7 +423,6 @@ class Producers {
         duplicateProducer.producerId !== this.producerFormValue.producerId
       ) {
         if (this.findDuplicateData(this.listProducerGet, 'producer')) {
-          console.log('%c PRODUCER exist', 'color:red');
           return;
         }
       }
@@ -467,16 +477,27 @@ class Producers {
       // Display info on screen
       storeNotification.setNotify({
         isOpen: true,
-        msg: 'Update Producer',
+        msg: 'Update Model',
         type: 'warning',
       });
       this.setAddOrUpdate('addFormValueToList');
     }
-    // close dialog
 
     this.setOpenCustomDialog(false);
     this.resetFormValue();
     this.setErrors({});
+  }
+
+  //
+  // return filtered and sorted data
+  afterSortingAndFiltering() {
+    return storeUseTable
+      .sortTable(this.filterFn.fn(this.listModelGet))
+      .slice()
+      .splice(
+        storeUseTable.page * storeUseTable.rowsPerPage,
+        storeUseTable.rowsPerPage,
+      );
   }
 }
 

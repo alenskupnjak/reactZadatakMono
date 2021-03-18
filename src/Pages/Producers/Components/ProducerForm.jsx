@@ -2,10 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Grid, TextField, makeStyles } from '@material-ui/core';
 
-
 import CustomButton from '../../../Components/CustomButton';
 import { storeProducers } from '../../../Common/StoreProducers';
-
 
 //
 // Style CSS
@@ -42,7 +40,9 @@ function ProducerForm(props) {
           value={storeProducers.producerFormValue.model}
           onChange={(e) => storeProducers.handleInputChange(e)}
           error={storeProducers.errors.model ? true : false}
-          helperText={storeProducers.errors.model ? storeProducers.errors.model : ''}
+          helperText={
+            storeProducers.errors.model ? storeProducers.errors.model : ''
+          }
         ></TextField>
 
         <TextField
@@ -53,14 +53,20 @@ function ProducerForm(props) {
           value={storeProducers.producerFormValue.producer}
           onChange={(e) => storeProducers.handleInputChange(e)}
           error={storeProducers.errors.producer ? true : false}
-          helperText={storeProducers.errors.producer ? storeProducers.errors.producer : ''}
+          helperText={
+            storeProducers.errors.producer ? storeProducers.errors.producer : ''
+          }
         ></TextField>
 
         <div>
           <CustomButton
-            onClick={ (e) => storeProducers.handleSubmit(e)}
+            onClick={(e) => storeProducers.handleSubmit(e)}
             // text="SUBMIT"
-            text={storeProducers.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'}
+            text={
+              storeProducers.addOrUpdate === 'addFormValueToList'
+                ? 'SUBMIT'
+                : 'UPDATE'
+            }
             disabled={storeProducers.disableSubmitButton}
           ></CustomButton>
           <CustomButton

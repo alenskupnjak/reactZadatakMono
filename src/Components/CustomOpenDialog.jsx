@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,7 +7,6 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyle = makeStyles((theme) => ({
@@ -36,13 +36,14 @@ const CustomOpenDialog = (props) => {
       <DialogTitle>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h6" component="div">
-            {title}
+            {store.addOrUpdate === 'addFormValueToList'
+              ? 'Add new ' + title
+              : 'Edit ' + title}
           </Typography>
           <Button
             variant="contained"
             color="secondary"
             onClick={() => {
-              // console.log('zatvorio',setOpenCustomDialog);
               store.setOpenCustomDialog(false);
               store.setAddOrUpdate('addFormValueToList');
             }}

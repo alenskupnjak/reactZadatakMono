@@ -44,10 +44,12 @@ function App() {
           <nav className="Navbar">
             <ul style={{ listStyle: 'none', margin: 'auto', padding: '0' }}>
               <li style={{ margin: '10px', display: 'inline-block' }}>
-                <NavLink to="/vechile">Vechile</NavLink>
+                <NavLink to="/vechile">Vehicles</NavLink>
               </li>
-              <li style={{ margin: '10px', display: 'inline-block'}}>
-                <NavLink style={{ color:'#28A746' }} to="/producers">Producers</NavLink>
+              <li style={{ margin: '10px', display: 'inline-block' }}>
+                <NavLink style={{ color: '#28A746' }} to="/producers">
+                  Models
+                </NavLink>
               </li>
             </ul>
           </nav>
@@ -55,9 +57,6 @@ function App() {
           <Switch>
             <Route path="/producers" component={Producers} />
             <Route path="/vechile" component={Vehicle} />
-            {/* <Route path="/courses/:courseId" component={Course} /> */}
-            {/* <Route path='/courses' component={Courses} /> */}
-            {/* <Redirect from='/all-courses' to='/courses' /> */}
             <Route component={Vehicle} />
           </Switch>
         </div>
@@ -67,8 +66,3 @@ function App() {
 }
 
 export default App;
-
-// *****************************************
-// storeProducers.listModelGet   ===  getModelOptions()
-// storeProducers.listProducerGet === getProducerOptions()
-// **************************************

@@ -2,6 +2,7 @@ import { makeObservable, observable, action, computed } from 'mobx';
 import { listVehicleInit, initVechileValue } from './VehicleService';
 import { storeProducers } from './StoreProducers';
 import { storeNotification } from './StoreNotification';
+import { storeUseTable } from './StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -42,6 +43,7 @@ class Store {
       generateId: action,
       resetForm: action,
       findProducerVehicle: action,
+      afterSortingAndFiltering: observable,
     });
   }
 
@@ -291,7 +293,7 @@ class Store {
         // Display info on screen
         storeNotification.setNotify({
           isOpen: true,
-          msg: 'Add Vechile',
+          msg: 'Add Vehicle',
           type: 'success',
         });
       } else {
@@ -317,7 +319,7 @@ class Store {
         // Display info on screen
         storeNotification.setNotify({
           isOpen: true,
-          msg: 'Update Vechile',
+          msg: 'Update Vehicle',
           type: 'warning',
         });
 
@@ -359,6 +361,17 @@ class Store {
 
     // data.producer = prod.producer
     return prod.producer;
+  }
+
+  // return filtered and sorted data
+  afterSortingAndFiltering() {
+    return storeUseTable
+      .sortTable(this.filterFn.fn(this.listVehicleGet))
+      .slice()
+      .splice(
+        storeUseTable.page * storeUseTable.rowsPerPage,
+        storeUseTable.rowsPerPage,
+      );
   }
 }
 

@@ -70,7 +70,7 @@ export const listVehicleInit = [
   {
     id: 'idx001',
     modelAuto: 'm07',
-    email: 'email11@yahoo',
+    email: 'sesvete@yahoo',
     mobile: '111111',
     city: 'Sesvete',
     motor: 'diesel',
@@ -80,7 +80,7 @@ export const listVehicleInit = [
   {
     id: 'idx002',
     modelAuto: 'm08',
-    email: 'email22@yahoo.com',
+    email: 'ford-email@yahoo.com',
     mobile: '222222',
     city: 'Vukovar',
     motor: 'benzin',
@@ -90,7 +90,7 @@ export const listVehicleInit = [
   {
     id: 'idx003',
     modelAuto: 'm08',
-    email: 'email22@yahoo.com',
+    email: 'split@yahoo.com',
     mobile: '3333',
     city: 'Split',
     motor: 'benzin',
@@ -100,7 +100,7 @@ export const listVehicleInit = [
   {
     id: 'idx004',
     modelAuto: 'm10',
-    email: 'email22@yahoo.com',
+    email: 'fiat-email@yahoo.com',
     mobile: '44444',
     city: 'Zagreb',
     motor: 'benzin',
@@ -110,7 +110,7 @@ export const listVehicleInit = [
   {
     id: 'idx005',
     modelAuto: 'm01',
-    email: 'email22@yahoo.com',
+    email: 'vinkovci@yahoo.com',
     mobile: '55555522',
     city: 'Vinkovci',
     motor: 'benzin',
@@ -130,7 +130,7 @@ export const listVehicleInit = [
   {
     id: 'idx007',
     modelAuto: 'm09',
-    email: 'email22@yahoo.com',
+    email: 'audi-email@yahoo.com',
     mobile: '7777777',
     city: 'Prag',
     motor: 'benzin',
@@ -140,7 +140,7 @@ export const listVehicleInit = [
   {
     id: 'idx008',
     modelAuto: 'm12',
-    email: 'email22@yahoo.com',
+    email: 'osijek@gmail.com',
     mobile: '8888888',
     city: 'Osijek',
     motor: 'electric',
@@ -150,7 +150,7 @@ export const listVehicleInit = [
   {
     id: 'idx009',
     modelAuto: 'm08',
-    email: 'email22@yahoo.com',
+    email: 'ford-email@yahoo.com',
     mobile: '9999999',
     city: 'Kutina',
     motor: 'benzin',
@@ -160,7 +160,7 @@ export const listVehicleInit = [
   {
     id: 'idx010',
     modelAuto: 'm08',
-    email: 'email22@yahoo.com',
+    email: 'ford-email123@yahoo.com',
     mobile: '100000',
     city: 'Pula',
     motor: 'benzin',
@@ -170,11 +170,41 @@ export const listVehicleInit = [
   {
     id: 'idx011',
     modelAuto: 'm05',
-    email: 'email22@yahoo.com',
+    email: 'volvo-1@yahoo.com',
     mobile: '101000',
     city: 'Pula',
     motor: 'electric',
     sellDate: '2021-02-26T10:51:22.509Z',
     isLoan: true,
+  },
+  {
+    id: 'idx012',
+    modelAuto: 'm04',
+    email: 'karlovac@yahoo.com',
+    mobile: '101100',
+    city: 'Karlovac',
+    motor: 'electric',
+    sellDate: '2021-02-26T10:51:22.509Z',
+    isLoan: false,
+  },
+  {
+    id: 'idx013',
+    modelAuto: 'm13',
+    email: 'toyota-email@yahoo.com',
+    mobile: '101100',
+    city: 'Aljmaš',
+    motor: 'electric',
+    sellDate: '2021-02-26T10:51:22.509Z',
+    isLoan: false,
+  },
+  {
+    id: 'idx014',
+    modelAuto: 'm01',
+    email: 'bmw-email@yahoo.com',
+    mobile: '101100',
+    city: 'Buzet',
+    motor: 'diesel',
+    sellDate: '2021-02-26T10:51:22.509Z',
+    isLoan: false,
   },
 ];

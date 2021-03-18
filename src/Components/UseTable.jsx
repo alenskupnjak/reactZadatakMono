@@ -31,19 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 //
 //  MAIN
-function UseTable(record, headerCell, store) {
+function UseTable(record, headerCell) {
   const classes = useStyles();
-
-  // return filtered and sorted data
-  const afterSortingAndFiltering = () => {
-    return storeUseTable
-      .sortTable(store.filterFn.fn(record))
-      .slice()
-      .splice(
-        storeUseTable.page * storeUseTable.rowsPerPage,
-        storeUseTable.rowsPerPage,
-      );
-  };
 
   // HEADER table
   const TblHeader = (props) => {
@@ -94,7 +83,6 @@ function UseTable(record, headerCell, store) {
   );
 
   return {
-    afterSortingAndFiltering,
     TblHeader,
     TblContainer,
     TblPagination,

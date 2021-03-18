@@ -13,8 +13,8 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import ListIcon from '@material-ui/icons/List';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 import { headCellVechile, initVechileValue } from '../../Common/VehicleService';
 import VehicleForm from './Components/VehicleForm';
@@ -60,12 +60,10 @@ const useStyles = makeStyles((theme) => ({
 //
 function Vehicle() {
   const classes = useStyles();
-  const {
-    afterSortingAndFiltering,
-    TblHeader,
-    TblContainer,
-    TblPagination,
-  } = UseTable(store.listVehicleGet, headCellVechile, store);
+  const { TblHeader, TblContainer, TblPagination } = UseTable(
+    store.listVehicleGet,
+    headCellVechile,
+  );
 
   return (
     <React.Fragment>
@@ -97,13 +95,13 @@ function Vehicle() {
             }}
             startIcon={<AddIcon></AddIcon>}
           >
-            ADD NEW MODEL
+            ADD VEHICLE
           </Button>
         </Toolbar>
         <TblContainer>
           <TblHeader></TblHeader>
           <TableBody>
-            {afterSortingAndFiltering().map((data) => (
+            {store.afterSortingAndFiltering().map((data) => (
               <TableRow key={data.id}>
                 <TableCell> {data.model} </TableCell>
                 <TableCell> {data.email} </TableCell>
@@ -126,12 +124,12 @@ function Vehicle() {
                       store.setAddOrUpdate('updateFormValue');
                       storeNotification.setNotify({
                         isOpen: true,
-                        msg: 'Edit Vechile',
+                        msg: 'Edit Vehicle',
                         type: 'info',
                       });
                       store.vechileFormValue = data;
                     }}
-                    startIcon={<EditIcon></EditIcon>}
+                    startIcon={<ListIcon></ListIcon>}
                   ></Button>
                   <Button
                     id={data.id}
@@ -145,20 +143,22 @@ function Vehicle() {
                     onClick={() => {
                       store.setConfirmDialog({
                         isOpen: true,
-                        title: 'Are you sure to delete this record?',
-                        subTitle: 'You can not undo action',
+                        title: 'Are you sure to delete this Vehicle?',
+                        subTitle: "You can't undo this operation.",
                         onConfirm: () => {
                           store.setConfirmDialog({ isOpen: false });
                           storeNotification.setNotify({
                             isOpen: true,
-                            msg: 'Delete Vechile',
+                            msg: 'Delete Vehicle',
                             type: 'error',
                           });
                           store.listVehicleDelete(data.id);
                         },
                       });
                     }}
-                    startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
+                    startIcon={
+                      <DeleteForeverOutlinedIcon></DeleteForeverOutlinedIcon>
+                    }
                   ></Button>
                 </TableCell>
               </TableRow>
@@ -170,7 +170,7 @@ function Vehicle() {
       <CustomOpenDialog
         openCustomDialog={store.openCustomDialog}
         store={store}
-        title="Model vehicle"
+        title="Vehicle"
       >
         <VehicleForm store={store}></VehicleForm>
       </CustomOpenDialog>
