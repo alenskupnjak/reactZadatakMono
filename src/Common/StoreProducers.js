@@ -345,9 +345,9 @@ class Producers {
   // SUBMIT form
   handleSubmit(e) {
     e.preventDefault();
-
     const { model, producer } = this.producerFormValue;
 
+    //
     //  ADD ADD ADD ADD ADD
     if (this.addOrUpdate === 'addFormValueToList') {
       // if duplicate MODEL => return
@@ -400,6 +400,7 @@ class Producers {
       });
     }
 
+    //
     //  UPDATE UPDATE UPDATE UPDATE UPDATE UPDATE
     if (this.addOrUpdate === 'updateFormValue') {
       // if duplicate MODEL => return
@@ -413,25 +414,26 @@ class Producers {
       }
 
       const duplicateProducer = this.findDuplicateData(
-        this.listModelGet,
+        this.listProducerGet,
         'producer',
       );
-      // console.log(duplicateProducer, this.producerFormValue.producerId);
+      // console.log(duplicateProducer,duplicateProducer.id, this.producerFormValue.producerId);
 
       if (
         duplicateProducer &&
-        duplicateProducer.producerId !== this.producerFormValue.producerId
+        duplicateProducer.id !== this.producerFormValue.producerId
       ) {
         if (this.findDuplicateData(this.listProducerGet, 'producer')) {
           return;
         }
       }
 
-      // find model producer to store in model record
+      // find old model to store ID in model record
       const modelProdOld = this.listModelGet.find((data) => {
         return data.id === this.producerFormValue.id;
       });
 
+      // find old producer to store ID in producer record
       const producerOld = this.listProducerGet.find((data) => {
         return data.id === modelProdOld.producerId;
       });

@@ -24,6 +24,8 @@ export const listProducers = [
   { id: 'p4', producer: 'FIAT' },
   { id: 'p5', producer: 'VOLVO' },
   { id: 'p6', producer: 'TOYOTA' },
+  { id: 'p7', producer: 'KIA' },
+  { id: 'p8', producer: 'MAZDA' },
 ];
 
 //
