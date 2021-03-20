@@ -11,6 +11,9 @@ import {
 function InputSelect(props) {
   const { name, label, value, onChange, dataOptions, error = null } = props;
 
+  console.log(dataOptions);
+  
+
   return (
     <div>
       <FormControl outline="variant">

@@ -16,7 +16,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ListIcon from '@material-ui/icons/List';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
-// import { headCellVechile, initVechileValue } from '../../Common/VehicleService';
+// import { headCellVechile, getInitVehicleValue } from '../../Common/VehicleService';
 import VehicleForm from './Components/VehicleForm';
 import UseTable from '../../Components/UseTable';
 import ConfirmDialog from '../../Components/ConfirmDialog';
@@ -92,8 +92,8 @@ function Vehicle() {
             variant="contained"
             size="large"
             color="primary"
-            onClick={() => {
-              store.vechileFormValue = store.getinitVechileValue;
+            onClick={() => {            
+              store.resetFormValue();
               store.setOpenCustomDialog(true);
             }}
             startIcon={<AddIcon></AddIcon>}

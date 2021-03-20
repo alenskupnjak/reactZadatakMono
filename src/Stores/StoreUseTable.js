@@ -25,7 +25,6 @@ class UseTableSort {
   pages = [5, 10, 25];
   // Start page for sorting and filtering
   page = 0;
-
   rowsPerPage = this.pages[0];
 
   //  setup init sorting direction
@@ -91,11 +90,8 @@ class UseTableSort {
       return a[1] - b[1];
     });
 
-    
     return sortRecord.map((el) => el[0]);
-
   }
 }
 
-// export const storeUseTable = new UseTableSort();
 export default UseTableSort;

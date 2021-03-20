@@ -1,6 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Grid, TextField, makeStyles } from '@material-ui/core';
+import {
+  Grid,
+  TextField,
+  makeStyles,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@material-ui/core';
 
 import CustomButton from '../../../Components/CustomButton';
 import { storeProducers } from '../StoreProducers';
@@ -45,18 +53,28 @@ function ProducerForm(props) {
           }
         ></TextField>
 
-        <TextField
-          className={classes.root}
-          variant="outlined"
-          label="Producer name"
-          name="producer"
-          value={storeProducers.producerFormValue.producer}
-          onChange={(e) => storeProducers.handleInputChange(e)}
-          error={storeProducers.errors.producer ? true : false}
-          helperText={
-            storeProducers.errors.producer ? storeProducers.errors.producer +' Have to use +ADD MODEL' : ''
-          }
-        ></TextField>
+        <FormControl outline="variant" style={{ width: '200px' }}>
+          <InputLabel>Producer</InputLabel>
+          <Select
+            label="Producer"
+            name="producer"
+            value={storeProducers.producerFormValue.producer}
+            onChange={(e) => storeProducers.handleInputChange(e)}
+            // error={error ? true : false}
+          >
+            <MenuItem value="">None</MenuItem>
+            {storeProducers.listProducerGet.map((data) => (
+              <MenuItem
+                key={data.id}
+                value={data.producer}
+                producer={data.producer}
+              >
+                {data.producer}
+              </MenuItem>
+            ))}
+          </Select>
+          {/* {error && <FormHelperText>{error}</FormHelperText>} */}
+        </FormControl>
 
         <div>
           <CustomButton

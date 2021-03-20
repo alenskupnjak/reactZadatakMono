@@ -1,14 +1,12 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import {
   getInitProducerValue,
-  // listModelVechile,
   getListModelVechileData,
   getCellHeaderProducers,
   getListProducersData,
 } from '../../Common/VehicleService';
 import { storeNotification } from '../../Stores/StoreNotification';
-import { store } from '../Vechile/StoreVechile';
-// import { storeUseTable } from '../../Stores/StoreUseTable';
+// import { store } from '../Vechile/StoreVechile';
 import UseTableSort from '../../Stores/StoreUseTable';
 
 //
@@ -54,7 +52,7 @@ class Producers {
       handleInputChange: action,
       afterSortingAndFiltering: observable,
       headCellProducers: computed,
-      storeUseTable:observable
+      storeUseTable: observable,
     });
   }
 
@@ -323,8 +321,8 @@ class Producers {
 
     tempError.model =
       this.producerFormValue.model.length > 2 ? '' : 'Minimum 3 character';
-    tempError.producer =
-      this.producerFormValue.producer.length > 0 ? '' : 'Minimum 1 character';
+    // tempError.producer =
+    //   this.producerFormValue.producer.length > 0 ? '' : 'Minimum 1 character';
 
     // define error
     this.setErrors({ ...tempError });
@@ -354,6 +352,8 @@ class Producers {
     e.preventDefault();
     const { model, producer } = this.producerFormValue;
 
+    console.log(model, producer);
+
     //
     //  ADD ADD ADD ADD ADD
     if (this.addOrUpdate === 'addFormValueToList') {
@@ -362,43 +362,46 @@ class Producers {
         return;
       }
 
-      //
-      if (!this.findDuplicateData(this.listProducerGet, 'producer')) {
-        // add NEW producer
-        const dataProducer = {
-          id: this.generateProducerId(),
-          producer: producer.toUpperCase(),
-        };
-        this.listProducerPut(dataProducer);
+      // //
+      // if (!this.findDuplicateData(this.listProducerGet, 'producer')) {
+      //   // add NEW producer
+      //   const dataProducer = {
+      //     id: this.generateProducerId(),
+      //     producer: producer.toUpperCase(),
+      //   };
+      //   this.listProducerPut(dataProducer);
 
-        const dataModel = {
-          id: this.generateModelId(),
-          model: model,
-          producerId: dataProducer.id,
-        };
+      //   const dataModel = {
+      //     id: this.generateModelId(),
+      //     model: model,
+      //     producerId: dataProducer.id,
+      //   };
 
-        // save record to lists
-        this.listModelPut(dataModel);
-      } else {
-        // producer already exist
-        const producer = this.listProducerGet.find((data) => {
-          // console.log(data.producer, this.producerFormValue.producer);
-          return (
-            data.producer === this.producerFormValue.producer.toUpperCase()
-          );
-        });
+      //   // save record to lists
+      //   this.listModelPut(dataModel);
+      // } else {
+      // producer already exist
 
-        const dataModel = {
-          id: this.generateModelId(),
-          model: model,
-          producerId: producer.id,
-        };
+      const producerData = this.listProducerGet.find((data) => {
+        // console.log(data.producer, this.producerFormValue.producer);
+        return data.producer === producer;
+      });
+      console.log(producerData);
+      
 
-        // save record to lists
-        this.listModelPut(dataModel);
-      }
-      // console.table(this.listModelGet);
-      // console.table(this.listProducerGet);
+      const dataModel = {
+        id: this.generateModelId(),
+        model: model,
+        producerId: producerData.id,
+      };
+
+      // save record to lists
+      this.listModelPut(dataModel);
+
+      // }
+
+      console.table(this.listModelGet);
+      console.table(this.listProducerGet);
 
       storeNotification.setNotify({
         isOpen: true,
@@ -420,20 +423,20 @@ class Producers {
         }
       }
 
-      const duplicateProducer = this.findDuplicateData(
-        this.listProducerGet,
-        'producer',
-      );
+      // const duplicateProducer = this.findDuplicateData(
+      //   this.listProducerGet,
+      //   'producer',
+      // );
       // console.log(duplicateProducer,duplicateProducer.id, this.producerFormValue.producerId);
 
-      if (
-        duplicateProducer &&
-        duplicateProducer.id !== this.producerFormValue.producerId
-      ) {
-        if (this.findDuplicateData(this.listProducerGet, 'producer')) {
-          return;
-        }
-      }
+      // if (
+      //   duplicateProducer &&
+      //   duplicateProducer.id !== this.producerFormValue.producerId
+      // ) {
+      //   if (this.findDuplicateData(this.listProducerGet, 'producer')) {
+      //     return;
+      //   }
+      // }
 
       // find old model to store ID in model record
       const modelProdOld = this.listModelGet.find((data) => {
@@ -441,44 +444,26 @@ class Producers {
       });
 
       // find old producer to store ID in producer record
-      const producerOld = this.listProducerGet.find((data) => {
-        return data.id === modelProdOld.producerId;
+      const producerNew = this.listProducerGet.find((data) => {
+        return data.producer === producer;
       });
 
-      // console.log(producerOld, this.producerFormValue.producer.toUpperCase());
+      // console.log(producerNew, this.producerFormValue.producer, this.producerFormValue.producerId);
 
-      const dataProducer = {
-        id: producerOld.id,
-        producer: this.producerFormValue.producer.toUpperCase(),
-      };
+      // const dataProducer = {
+      //   id: producerOld.id,
+      //   producer: this.producerFormValue.producer.toUpperCase(),
+      // };
 
-      this.listProducerUpdate(dataProducer);
+      // this.listProducerUpdate(dataProducer);
 
       const dataVehicle = {
         id: modelProdOld.id,
         model: this.producerFormValue.model,
-        producerId: this.producerFormValue.producerId,
+        producerId: producerNew.id,
       };
       this.listModelUpdate(dataVehicle);
 
-      // search list, UPDATE vechile list
-      store.listVehicle.forEach((data) => {
-        if (modelProdOld.model === data.model) {
-          const dataVehicle = {
-            id: data.id,
-            modelAuto: data.modelAuto,
-            model: this.producerFormValue.model,
-            producer: this.producerFormValue.producer.toUpperCase(),
-            email: data.email,
-            mobile: data.mobile,
-            city: data.city,
-            motor: data.motor,
-            sellDate: data.sellDate,
-            isLoan: data.isLoan,
-          };
-          store.listVehicleUpdate(dataVehicle);
-        }
-      });
 
       console.table(this.listModelGet);
       console.table(this.listProducerGet);

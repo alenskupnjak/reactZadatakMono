@@ -50,7 +50,8 @@ class Store {
       findProducerVehicle: action,
       afterSortingAndFiltering: observable,
       headCellVechileData: computed,
-      storeUseTable:observable
+      storeUseTable:observable,
+      resetFormValue: action,
     });
   }
 
@@ -386,6 +387,13 @@ class Store {
 
   get headCellVechileData() {
     return getHeadCellVechileData();
+  }
+
+
+  
+  //  reset vehicle form
+  resetFormValue() {    
+    return getInitVehicleValue()
   }
 
 }
