@@ -44,10 +44,12 @@ function App(props) {
           <nav className="Navbar">
             <ul style={{ listStyle: 'none', margin: 'auto', padding: '0' }}>
               <li style={{ margin: '10px', display: 'inline-block' }}>
-                <NavLink to="/vehicle">Vehicles</NavLink>
+                <NavLink to="/vehicle">
+                  Vehicles
+                </NavLink>
               </li>
               <li style={{ margin: '10px', display: 'inline-block' }}>
-                <NavLink style={{ color: '#28A746' }} to="/producers">
+                <NavLink  to="/producers" style={{ color: '#28A746' }}>
                   Models
                 </NavLink>
               </li>

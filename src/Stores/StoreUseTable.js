@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from 'mobx';
 
-class UseTable {
+class UseTableSort {
   constructor() {
     makeObservable(this, {
       pages: observable,
@@ -70,17 +70,16 @@ class UseTable {
     return 0;
   }
 
-  sortTable(recordData, lengthRecord) {
+  sortTable(recordData, lengthRecord) {    
     // init setup sort
     if (!this.orderSort) {
       return recordData;
     }
 
     // some filtering data set to first page
-    if(recordData.length !== lengthRecord.length) {
-      this.setPage(0)
+    if (recordData.length !== lengthRecord.length) {
+      this.setPage(0);
     }
-    
 
     // stabilization
     const stabilizedThis = recordData.map((el, index) => [el, index]);
@@ -91,9 +90,12 @@ class UseTable {
       if (order !== 0) return order;
       return a[1] - b[1];
     });
+
+    
     return sortRecord.map((el) => el[0]);
+
   }
 }
 
-export const storeUseTable = new UseTable();
-// export default UseTable();
+// export const storeUseTable = new UseTableSort();
+export default UseTableSort;

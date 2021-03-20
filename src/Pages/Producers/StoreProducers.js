@@ -4,13 +4,12 @@ import {
   // listModelVechile,
   getListModelVechileData,
   getCellHeaderProducers,
-  getListProducersData
+  getListProducersData,
 } from '../../Common/VehicleService';
 import { storeNotification } from '../../Stores/StoreNotification';
 import { store } from '../Vechile/StoreVechile';
-import { storeUseTable } from '../../Stores/StoreUseTable';
-
-// import UseTable from '../../Stores/StoreUseTable';
+// import { storeUseTable } from '../../Stores/StoreUseTable';
+import UseTableSort from '../../Stores/StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -55,9 +54,11 @@ class Producers {
       handleInputChange: action,
       afterSortingAndFiltering: observable,
       headCellProducers: computed,
-      // getListProducers: computed
+      storeUseTable:observable
     });
   }
+
+  storeUseTable = new UseTableSort();
 
   // Init value za formu
   producerFormValue = getInitProducerValue();
@@ -499,19 +500,18 @@ class Producers {
   //
   // return filtered and sorted data
   afterSortingAndFiltering() {
-    return storeUseTable
+    return this.storeUseTable
       .sortTable(this.filterFn.fn(this.listModelGet), this.listModelGet)
       .slice()
       .splice(
-        storeUseTable.page * storeUseTable.rowsPerPage,
-        storeUseTable.rowsPerPage,
+        this.storeUseTable.page * this.storeUseTable.rowsPerPage,
+        this.storeUseTable.rowsPerPage,
       );
   }
 
   get headCellProducers() {
-    return getCellHeaderProducers()
+    return getCellHeaderProducers();
   }
-
 }
 
 export const storeProducers = new Producers();

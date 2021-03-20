@@ -60,10 +60,12 @@ const useStyles = makeStyles((theme) => ({
 //
 function Vehicle() {
   const classes = useStyles();
+  // const storeUseTable = new UseTableSort()
 
   const { TblHeader, TblContainer, TblPagination } = UseTable(
     store.listVehicleGet,
     store.headCellVechileData,
+    store.storeUseTable
   );
 
   return (

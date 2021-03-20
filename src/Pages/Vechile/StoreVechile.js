@@ -1,14 +1,13 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import {
-  // listVehicleInit,
   getListVehicleInitData,
   getInitVehicleValue,
   getHeadCellVechileData,
 } from '../../Common/VehicleService';
 import { storeProducers } from '../Producers/StoreProducers';
 import { storeNotification } from '../../Stores/StoreNotification';
-import { storeUseTable } from '../../Stores/StoreUseTable';
-// import UseTable from '../../Stores/StoreUseTable';
+// import { storeUseTable } from '../../Stores/StoreUseTable';
+import UseTableSort from '../../Stores/StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -51,8 +50,11 @@ class Store {
       findProducerVehicle: action,
       afterSortingAndFiltering: observable,
       headCellVechileData: computed,
+      storeUseTable:observable
     });
   }
+
+  storeUseTable = new UseTableSort();
 
   // storeUseTable = new UseTable();
   // Init value
@@ -373,12 +375,12 @@ class Store {
 
   // return filtered and sorted data
   afterSortingAndFiltering() {
-    return storeUseTable
+    return this.storeUseTable
       .sortTable(this.filterFn.fn(this.listVehicleGet), this.listVehicleGet)
       .slice()
       .splice(
-        storeUseTable.page * storeUseTable.rowsPerPage,
-        storeUseTable.rowsPerPage,
+        this.storeUseTable.page * this.storeUseTable.rowsPerPage,
+        this.storeUseTable.rowsPerPage,
       );
   }
 

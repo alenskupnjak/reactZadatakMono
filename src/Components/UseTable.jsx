@@ -8,7 +8,6 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core';
-import { storeUseTable } from '../Stores/StoreUseTable';
 
 //
 // CSS
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 //
 //  MAIN
-function UseTable(record, headerCell) {
+function UseTable(record, headerCell,storeUseTable) {
   const classes = useStyles();
 
   // HEADER table
