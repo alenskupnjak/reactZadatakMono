@@ -22,8 +22,8 @@ import UseTable from '../../Components/UseTable';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
-import { store } from '../../Common/StoreVechile';
-import { storeNotification } from '../../Common/StoreNotification';
+import { store } from '../Vechile/StoreVechile';
+import { storeNotification } from '../../Stores/StoreNotification';
 
 //
 const useStyles = makeStyles((theme) => ({

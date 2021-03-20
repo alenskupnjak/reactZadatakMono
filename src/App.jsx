@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { Route, NavLink, Switch, Redirect,useRouteMatch, Link } from 'react-router-dom';
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 
 import Vehicle from './Pages/Vechile/Vehicle';
 import Producers from './Pages/Producers/Producers';
@@ -36,13 +36,7 @@ const theme = createMuiTheme({
 
 function App(props) {
   const classes = useStyles();
-
-  const { url } = useRouteMatch();
-  console.log(url);
-
-
   
-
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
@@ -50,12 +44,12 @@ function App(props) {
           <nav className="Navbar">
             <ul style={{ listStyle: 'none', margin: 'auto', padding: '0' }}>
               <li style={{ margin: '10px', display: 'inline-block' }}>
-                <Link to="/vehicle">Vehicles</Link>
+                <NavLink to="/vehicle">Vehicles</NavLink>
               </li>
               <li style={{ margin: '10px', display: 'inline-block' }}>
-                <Link style={{ color: '#28A746' }} to="/producers">
+                <NavLink style={{ color: '#28A746' }} to="/producers">
                   Models
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>

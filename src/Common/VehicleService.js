@@ -1,4 +1,5 @@
 // Init values and reset for form
+
 export const initVechileValue = {
   modelAuto: '',
   model: '',
@@ -65,6 +66,22 @@ export const headCellProducer = [
   { id: 'producer', label: 'Producer' },
   { id: 'action', label: 'Action', disabledSorting: true },
 ];
+
+const getheadCellProducerData = () => [
+  { id: 'model', label: 'Model' },
+  { id: 'producer', label: 'Producer' },
+  { id: 'action', label: 'Action', disabledSorting: true },
+];
+
+export const getcellHeaderProducers = () => {
+  const dataHead = getheadCellProducerData().map(data=>{
+    console.log(data);
+    return data
+  });
+  return dataHead
+};
+
+getcellHeaderProducers()
 
 //
 // init fake value u listVehicle

@@ -8,7 +8,7 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core';
-import { storeUseTable } from '../Common/StoreUseTable';
+import { storeUseTable } from '../Stores/StoreUseTable';
 
 //
 // CSS

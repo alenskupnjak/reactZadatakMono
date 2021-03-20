@@ -15,8 +15,8 @@ import InputSelect from '../../../Components/InputSelect';
 import InputCheckBox from '../../../Components/InputCheckBox';
 import DatePicker from '../../../Components/DatePicker';
 import CustomButton from '../../../Components/CustomButton';
-import { store } from '../../../Common/StoreVechile';
-import { storeProducers } from '../../../Common/StoreProducers';
+import { store } from '../StoreVechile';
+import { storeProducers } from '../../Producers/StoreProducers';
 
 //
 // Style CSS

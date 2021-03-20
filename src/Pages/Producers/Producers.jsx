@@ -16,16 +16,15 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-import { headCellProducer } from '../../Common/VehicleService';
 import ProducerForm from './Components/ProducerForm';
 import UseTable from '../../Components/UseTable';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 
-import { store } from '../../Common/StoreVechile';
-import { storeProducers } from '../../Common/StoreProducers';
-import { storeNotification } from '../../Common/StoreNotification';
+import { store } from '../Vechile/StoreVechile';
+import { storeProducers } from './StoreProducers';
+import { storeNotification } from '../../Stores/StoreNotification';
 
 // CSS
 const useStyles = makeStyles((theme) => ({
@@ -69,9 +68,13 @@ const useStyles = makeStyles((theme) => ({
 function Producers() {
   const classes = useStyles();
 
+
+  console.log(storeProducers.getheadCellProducer);
+  
+
   const { TblContainer, TblHeader, TblPagination } = UseTable(
     storeProducers.listModelGet,
-    headCellProducer,
+    storeProducers.getheadCellProducer,
   );
 
   return (

@@ -3,10 +3,11 @@ import {
   initProducerValue,
   listProducers,
   listModelVechile,
-} from './VehicleService';
-import { storeNotification } from './StoreNotification';
-import { store } from './StoreVechile';
-import { storeUseTable } from './StoreUseTable';
+  getcellHeaderProducers,
+} from '../../Common/VehicleService';
+import { storeNotification } from '../../Stores/StoreNotification';
+import { store } from '../Vechile/StoreVechile';
+import { storeUseTable } from '../../Stores/StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -50,6 +51,7 @@ class Producers {
       validationForm: action,
       handleInputChange: action,
       afterSortingAndFiltering: observable,
+      getheadCellProducer: computed,
     });
   }
 
@@ -494,12 +496,16 @@ class Producers {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return storeUseTable
-      .sortTable(this.filterFn.fn(this.listModelGet),this.listModelGet)
+      .sortTable(this.filterFn.fn(this.listModelGet), this.listModelGet)
       .slice()
       .splice(
         storeUseTable.page * storeUseTable.rowsPerPage,
         storeUseTable.rowsPerPage,
       );
+  }
+
+  get getheadCellProducer() {
+    return getcellHeaderProducers()
   }
 }
 
