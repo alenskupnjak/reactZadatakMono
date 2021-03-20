@@ -96,3 +96,4 @@ class UseTable {
 }
 
 export const storeUseTable = new UseTable();
+// export default UseTable();

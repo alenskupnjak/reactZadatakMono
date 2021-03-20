@@ -1,8 +1,14 @@
 import { makeObservable, observable, action, computed } from 'mobx';
-import { listVehicleInit, initVechileValue } from '../../Common/VehicleService';
+import {
+  // listVehicleInit,
+  getListVehicleInitData,
+  getInitVehicleValue,
+  getHeadCellVechileData,
+} from '../../Common/VehicleService';
 import { storeProducers } from '../Producers/StoreProducers';
 import { storeNotification } from '../../Stores/StoreNotification';
 import { storeUseTable } from '../../Stores/StoreUseTable';
+// import UseTable from '../../Stores/StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -44,12 +50,14 @@ class Store {
       resetForm: action,
       findProducerVehicle: action,
       afterSortingAndFiltering: observable,
+      headCellVechileData: computed,
     });
   }
 
+  // storeUseTable = new UseTable();
   // Init value
-  vechileFormValue = initVechileValue;
-  listVehicle = listVehicleInit;
+  vechileFormValue = getInitVehicleValue();
+  listVehicle = getListVehicleInitData();
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
 
@@ -97,7 +105,7 @@ class Store {
   listVehiclePut(data) {
     this.listVehicle.push(data);
     // after save reset form
-    this.vechileFormValue = initVechileValue;
+    this.vechileFormValue = getInitVehicleValue();
   }
 
   //
@@ -336,7 +344,7 @@ class Store {
   }
 
   resetForm(e) {
-    this.vechileFormValue = initVechileValue;
+    this.vechileFormValue = getInitVehicleValue();
     this.setDisableSubmitButton(true);
   }
 
@@ -366,13 +374,18 @@ class Store {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return storeUseTable
-      .sortTable(this.filterFn.fn(this.listVehicleGet),this.listVehicleGet)
+      .sortTable(this.filterFn.fn(this.listVehicleGet), this.listVehicleGet)
       .slice()
       .splice(
         storeUseTable.page * storeUseTable.rowsPerPage,
         storeUseTable.rowsPerPage,
       );
   }
+
+  get headCellVechileData() {
+    return getHeadCellVechileData();
+  }
+
 }
 
 export const store = new Store();

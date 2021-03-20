@@ -1,13 +1,16 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import {
-  initProducerValue,
-  listProducers,
-  listModelVechile,
-  getcellHeaderProducers,
+  getInitProducerValue,
+  // listModelVechile,
+  getListModelVechileData,
+  getCellHeaderProducers,
+  getListProducersData
 } from '../../Common/VehicleService';
 import { storeNotification } from '../../Stores/StoreNotification';
 import { store } from '../Vechile/StoreVechile';
 import { storeUseTable } from '../../Stores/StoreUseTable';
+
+// import UseTable from '../../Stores/StoreUseTable';
 
 //
 // MAIN MAIN MAIN
@@ -51,18 +54,19 @@ class Producers {
       validationForm: action,
       handleInputChange: action,
       afterSortingAndFiltering: observable,
-      getheadCellProducer: computed,
+      headCellProducers: computed,
+      // getListProducers: computed
     });
   }
 
   // Init value za formu
-  producerFormValue = initProducerValue;
+  producerFormValue = getInitProducerValue();
 
   // Init value for producer
-  listProducer = listProducers;
+  listProducer = getListProducersData();
 
   // Init value for models
-  listModel = listModelVechile;
+  listModel = getListModelVechileData();
 
   // open dialog
   openCustomDialog = false;
@@ -114,7 +118,7 @@ class Producers {
   listProducerPut(data) {
     this.listProducer.push(data);
     // after save reset form
-    // this.producerFormValue = initProducerValue;
+    this.producerFormValue = getInitProducerValue();
   }
 
   //
@@ -504,9 +508,10 @@ class Producers {
       );
   }
 
-  get getheadCellProducer() {
-    return getcellHeaderProducers()
+  get headCellProducers() {
+    return getCellHeaderProducers()
   }
+
 }
 
 export const storeProducers = new Producers();

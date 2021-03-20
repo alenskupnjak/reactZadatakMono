@@ -67,16 +67,12 @@ const useStyles = makeStyles((theme) => ({
 //
 function Producers() {
   const classes = useStyles();
-
-
-  console.log(storeProducers.getheadCellProducer);
-  
-
   const { TblContainer, TblHeader, TblPagination } = UseTable(
     storeProducers.listModelGet,
-    storeProducers.getheadCellProducer,
+    storeProducers.headCellProducers,
   );
 
+  
   return (
     <React.Fragment>
       <Paper className={classes.pageContent}>

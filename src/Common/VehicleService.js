@@ -1,24 +1,27 @@
-// Init values and reset for form
-
-export const initVechileValue = {
-  modelAuto: '',
-  model: '',
-  email: '',
-  mobile: '',
-  city: '',
-  motor: 'benzin',
-  producer: '',
-  sellDate: new Date(),
-  isLoan: false,
+// Init values and reset for vehicle form
+export const getInitVehicleValue = () => {
+  return {
+    modelAuto: '',
+    model: '',
+    email: '',
+    mobile: '',
+    city: '',
+    motor: 'benzin',
+    producer: '',
+    sellDate: new Date(),
+    isLoan: false,
+  };
 };
 
 //
 // Init valuues for form producers
-export const initProducerValue = [{ id: '', model: '', producerId: '' }];
+export const getInitProducerValue = () => [
+  { id: '', model: '', producerId: '' },
+];
 
 //
 // list of vehicle producers
-export const listProducers = [
+const listProducers = () => [
   { id: 'p1', producer: 'BMW' },
   { id: 'p2', producer: 'FORD' },
   { id: 'p3', producer: 'AUDI' },
@@ -28,10 +31,13 @@ export const listProducers = [
   { id: 'p7', producer: 'KIA' },
   { id: 'p8', producer: 'MAZDA' },
 ];
+export const getListProducersData = () => {
+  return listProducers();
+};
 
 //
 // list of vehicle models
-export const listModelVechile = [
+const listModelVechile = () => [
   { id: 'm01', model: 'BMW 1', producerId: 'p1' },
   { id: 'm02', model: 'FORD 1', producerId: 'p2' },
   { id: 'm03', model: 'AUDI 1', producerId: 'p3' },
@@ -46,10 +52,13 @@ export const listModelVechile = [
   { id: 'm12', model: 'TOYOTA 2', producerId: 'p6' },
   { id: 'm13', model: 'TOYOTA 3', producerId: 'p6' },
 ];
+export const getListModelVechileData = () => {
+  return listModelVechile();
+};
 
 //
-// value for TABLE header
-export const headCellVechile = [
+// value for Vechile TABLE header
+const headCellVehicle = () => [
   { id: 'model', label: 'Model' },
   { id: 'email', label: 'Email', disabledSorting: true },
   { id: 'mobile', label: 'Mobile' },
@@ -58,34 +67,27 @@ export const headCellVechile = [
   { id: 'producer', label: 'Producer' },
   { id: 'action', label: 'Action', disabledSorting: true },
 ];
-
-//
-// value for TABLE header
-export const headCellProducer = [
-  { id: 'model', label: 'Model' },
-  { id: 'producer', label: 'Producer' },
-  { id: 'action', label: 'Action', disabledSorting: true },
-];
-
-const getheadCellProducerData = () => [
-  { id: 'model', label: 'Model' },
-  { id: 'producer', label: 'Producer' },
-  { id: 'action', label: 'Action', disabledSorting: true },
-];
-
-export const getcellHeaderProducers = () => {
-  const dataHead = getheadCellProducerData().map(data=>{
-    console.log(data);
-    return data
-  });
-  return dataHead
+export const getHeadCellVechileData = () => {
+  return headCellVehicle();
 };
 
-getcellHeaderProducers()
+const headCellProducer = () => [
+  { id: 'model', label: 'Model' },
+  { id: 'producer', label: 'Producer' },
+  { id: 'action', label: 'Action', disabledSorting: true },
+];
+
+export const getCellHeaderProducers = () => {
+  return headCellProducer();
+};
 
 //
-// init fake value u listVehicle
-export const listVehicleInit = [
+// init fake value listVehicle
+export const getListVehicleInitData = () => {
+  return listVehicleInit();
+};
+
+const listVehicleInit = () => [
   {
     id: 'idx001',
     modelAuto: 'm07',
