@@ -31,9 +31,20 @@ const useStyles = makeStyles((theme) => ({
     width: '80%',
     margin: '0 auto',
   },
-  newButton: {
+  addButton: {
     position: 'absolute',
     right: '10px',
+    // border:'none',
+    '&.MuiButtonBase-root': {
+      // color:'red',
+      // border:'3px solid white',
+      borderStyle:'outset',
+      cursor: 'default'
+    },
+    '&:hover': {
+      backgroundColor: '#00000080',
+      color:'#2543C5'
+    },
   },
   searchInput: {
     width: '60%',
@@ -91,7 +102,7 @@ function Vehicle() {
           ></TextField>
 
           <Button
-            className={classes.newButton}
+            className={classes.addButton}
             variant="contained"
             size="large"
             color="primary"
