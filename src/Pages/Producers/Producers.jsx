@@ -23,8 +23,8 @@ import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 
-import { store } from '../Vechile/StoreVechile';
-import { storeProducers } from './StoreProducers';
+import { storeVehicle } from '../Vechile/VehicleStore';
+import { storeProducers } from './ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
 
 // CSS
@@ -172,9 +172,9 @@ function Producers() {
                             msg: 'Delete Model',
                             type: 'error',
                           });
-                          store.listVehicleGet.forEach((dataVechile) => {
+                          storeVehicle.listVehicleGet.forEach((dataVechile) => {
                             if (data.id === dataVechile.modelAuto) {
-                              store.listVehicleDelete(dataVechile.id);
+                              storeVehicle.listVehicleDelete(dataVechile.id);
                             }
                           });
                           storeProducers.listModelDelete(data.id);

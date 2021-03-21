@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 import CustomButton from '../../../Components/CustomButton';
-import { storeProducers } from '../StoreProducers';
+import { storeProducers } from '../ProducersStore';
 
 //
 // Style CSS

@@ -4,7 +4,7 @@ import {
   getInitVehicleValue,
   getHeadCellVechileData,
 } from '../../Common/VehicleService';
-import { storeProducers } from '../Producers/StoreProducers';
+import { storeProducers } from '../Producers/ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
 import UseTableSort from '../../Stores/StoreUseTable';
 
@@ -13,6 +13,7 @@ import UseTableSort from '../../Stores/StoreUseTable';
 class Store {
   constructor() {
     makeObservable(this, {
+      storeUseTable: observable,
       vechileFormValue: observable,
       setVechileValue: action,
       listVehicle: observable,
@@ -52,14 +53,12 @@ class Store {
       findProducerVehicle: action,
       afterSortingAndFiltering: observable,
       headCellVechileData: computed,
-      storeUseTable: observable,
       resetFormValue: action,
     });
   }
 
   storeUseTable = new UseTableSort();
 
-  // storeUseTable = new UseTable();
   // Init value
   vechileFormValue = getInitVehicleValue();
   listVehicle = getListVehicleInitData();
@@ -263,11 +262,11 @@ class Store {
     // SET error
     const tempError = {};
     tempError.modelAuto =
-      store.vechileFormValue.modelAuto !== '' ? '' : 'Invalid model ';
-    tempError.email = /@/.test(store.vechileFormValue.email)
+      storeVehicle.vechileFormValue.modelAuto !== '' ? '' : 'Invalid model ';
+    tempError.email = /@/.test(storeVehicle.vechileFormValue.email)
       ? ''
       : 'Invalid emali';
-    tempError.mobile = regexPhone.test(store.vechileFormValue.mobile)
+    tempError.mobile = regexPhone.test(storeVehicle.vechileFormValue.mobile)
       ? ''
       : 'Invalid character';
 
@@ -295,10 +294,10 @@ class Store {
 
     //  IF FORM is valid  => save data in mobX
     if (this.validationForm()) {
-      if (store.addOrUpdate === 'addFormValueToList') {
+      if (storeVehicle.addOrUpdate === 'addFormValueToList') {
         // ADD ADD ADD
         // Generate fake ID
-        store.vechileFormValue.id = this.generateId();
+        storeVehicle.vechileFormValue.id = this.generateId();
 
         // const modelSave = storeProducers.listModelGet.find((data) => {
         //   return data.id === store.vechileFormValue.modelAuto;
@@ -308,7 +307,7 @@ class Store {
         // this.vechileFormValue.model = modelSave.model;
 
         // save record to listVehicle
-        this.listVehiclePut(store.vechileFormValue);
+        this.listVehiclePut(storeVehicle.vechileFormValue);
 
         // Display info on screen
         storeNotification.setNotify({
@@ -320,20 +319,20 @@ class Store {
         // UPDATE
         // find model producer to store in model record
         const modelVeh = storeProducers.listModelGet.find((data) => {
-          return data.id === store.vechileFormValue.modelAuto;
+          return data.id === storeVehicle.vechileFormValue.modelAuto;
         });
 
         const dataVehicle = {
-          id: store.vechileFormValue.id,
-          modelAuto: store.vechileFormValue.modelAuto,
+          id: storeVehicle.vechileFormValue.id,
+          modelAuto: storeVehicle.vechileFormValue.modelAuto,
           model: modelVeh.model,
-          producer: store.vechileFormValue.producer,
-          email: store.vechileFormValue.email,
-          mobile: store.vechileFormValue.mobile.toString(),
-          city: store.vechileFormValue.city,
-          motor: store.vechileFormValue.motor,
-          sellDate: store.vechileFormValue.sellDate,
-          isLoan: store.vechileFormValue.isLoan,
+          producer: storeVehicle.vechileFormValue.producer,
+          email: storeVehicle.vechileFormValue.email,
+          mobile: storeVehicle.vechileFormValue.mobile.toString(),
+          city: storeVehicle.vechileFormValue.city,
+          motor: storeVehicle.vechileFormValue.motor,
+          sellDate: storeVehicle.vechileFormValue.sellDate,
+          isLoan: storeVehicle.vechileFormValue.isLoan,
         };
         this.listVehicleUpdate(dataVehicle);
         // Display info on screen
@@ -364,7 +363,7 @@ class Store {
   findProducerVehicle(dataModelAuto) {
     // console.log('list.modelget-',storeProducers.listModelGet);
     // console.log('list.istProducerGet-',storeProducers.listProducerGet);
-    console.log('store.listVehicleGet-', store.listVehicleGet);
+    console.log('storeVehicle.listVehicleGet-', storeVehicle.listVehicleGet);
     // console.log('store.listVehicleGet-',data);
     const model = storeProducers.listModelGet.find((data) => {
       // console.log(dataModelAuto, data.id);
@@ -384,7 +383,7 @@ class Store {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return this.storeUseTable
-      .sortTable(this.filterFn.fn(this.listVehicleGet),this.filterRecordLength)
+      .sortTable(this.filterFn.fn(this.listVehicleGet), this.filterRecordLength)
       .slice()
       .splice(
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,
@@ -402,4 +401,4 @@ class Store {
   }
 }
 
-export const store = new Store();
+export const storeVehicle = new Store();

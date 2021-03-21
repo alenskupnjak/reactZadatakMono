@@ -75,11 +75,6 @@ class UseTableSort {
       return recordData;
     }
 
-    // // some filtering data set to first page
-    // if (recordData.length !== lengthRecord.length) {
-    //   this.setPage(0);
-    // }
-
     // stabilization
     const stabilizedThis = recordData.map((el, index) => [el, index]);
     const sortDirection = this.orderSort === 'asc' ? 1 : -1;

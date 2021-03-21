@@ -22,7 +22,7 @@ import UseTable from '../../Components/UseTable';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
-import { store } from '../Vechile/StoreVechile';
+import { storeVehicle } from './VehicleStore';
 import { storeNotification } from '../../Stores/StoreNotification';
 
 //
@@ -62,9 +62,9 @@ function Vehicle() {
   const classes = useStyles();
 
   const { TblHeader, TblContainer, TblPagination } = UseTable(
-    store.listVehicleGet,
-    store.headCellVechileData,
-    store
+    storeVehicle.listVehicleGet,
+    storeVehicle.headCellVechileData,
+    storeVehicle
   );
 
   return (
@@ -75,14 +75,14 @@ function Vehicle() {
             className={classes.searchInput}
             label="Filter Model"
             name="filter"
-            value={store.filterInputValue}
+            value={storeVehicle.filterInputValue}
             onChange={(e) => {
-              store.handleSearch(e);
+              storeVehicle.handleSearch(e);
             }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Badge badgeContent={store.filterRecordLength} color="secondary">
+                  <Badge badgeContent={storeVehicle.filterRecordLength} color="secondary">
                     <Search />
                   </Badge>
                 </InputAdornment>
@@ -96,8 +96,8 @@ function Vehicle() {
             size="large"
             color="primary"
             onClick={() => {
-              store.resetFormValue();
-              store.setOpenCustomDialog(true);
+              storeVehicle.resetFormValue();
+              storeVehicle.setOpenCustomDialog(true);
             }}
             startIcon={<AddIcon></AddIcon>}
           >
@@ -107,7 +107,7 @@ function Vehicle() {
         <TblContainer>
           <TblHeader></TblHeader>
           <TableBody>
-            {store.afterSortingAndFiltering().map((data) => (
+            {storeVehicle.afterSortingAndFiltering().map((data) => (
               <TableRow key={data.id}>
                 <TableCell> {data.model} </TableCell>
                 <TableCell> {data.email} </TableCell>
@@ -126,15 +126,15 @@ function Vehicle() {
                       marginRight: '5px',
                     }}
                     onClick={() => {
-                      store.setOpenCustomDialog(true);
-                      store.setAddOrUpdate('updateFormValue');
+                      storeVehicle.setOpenCustomDialog(true);
+                      storeVehicle.setAddOrUpdate('updateFormValue');
                       storeNotification.setNotify({
                         isOpen: true,
                         msg: 'Edit Vehicle',
                         type: 'info',
                       });
-                      store.vechileFormValue = data;
-                      store.setDisableSubmitButton(false);
+                      storeVehicle.vechileFormValue = data;
+                      storeVehicle.setDisableSubmitButton(false);
                     }}
                     startIcon={<ListIcon></ListIcon>}
                   ></Button>
@@ -148,18 +148,18 @@ function Vehicle() {
                       marginRight: '0px',
                     }}
                     onClick={() => {
-                      store.setConfirmDialog({
+                      storeVehicle.setConfirmDialog({
                         isOpen: true,
                         title: 'Are you sure to delete this Vehicle?',
                         subTitle: "You can't undo this operation.",
                         onConfirm: () => {
-                          store.setConfirmDialog({ isOpen: false });
+                          storeVehicle.setConfirmDialog({ isOpen: false });
                           storeNotification.setNotify({
                             isOpen: true,
                             msg: 'Delete Vehicle',
                             type: 'error',
                           });
-                          store.listVehicleDelete(data.id);
+                          storeVehicle.listVehicleDelete(data.id);
                         },
                       });
                     }}
@@ -175,19 +175,19 @@ function Vehicle() {
         <TblPagination></TblPagination>
       </Paper>
       <CustomOpenDialog
-        openCustomDialog={store.openCustomDialog}
-        store={store}
+        openCustomDialog={storeVehicle.openCustomDialog}
+        store={storeVehicle}
         title="Vehicle"
       >
-        <VehicleForm store={store}></VehicleForm>
+        <VehicleForm store={storeVehicle}></VehicleForm>
       </CustomOpenDialog>
       <Notification
         notify={storeNotification.notify.isOpen}
         store={storeNotification}
       ></Notification>
       <ConfirmDialog
-        dataDialog={store.confirmDialog.isOpen}
-        store={store}
+        dataDialog={storeVehicle.confirmDialog.isOpen}
+        store={storeVehicle}
       ></ConfirmDialog>
     </React.Fragment>
   );

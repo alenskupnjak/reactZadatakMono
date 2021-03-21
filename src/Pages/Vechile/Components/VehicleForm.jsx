@@ -15,8 +15,8 @@ import InputSelect from '../../../Components/InputSelect';
 import InputCheckBox from '../../../Components/InputCheckBox';
 import DatePicker from '../../../Components/DatePicker';
 import CustomButton from '../../../Components/CustomButton';
-import { store } from '../StoreVechile';
-import { storeProducers } from '../../Producers/StoreProducers';
+import { storeVehicle } from '../VehicleStore';
+import { storeProducers } from '../../Producers/ProducersStore';
 
 //
 // Style CSS
@@ -50,10 +50,10 @@ function VehicleForm(props) {
         <InputSelect
           label="Model"
           name="modelAuto"
-          value={store.vechileFormValue.modelAuto}
-          onChange={(e) => store.handleInputChange(e)}
+          value={storeVehicle.vechileFormValue.modelAuto}
+          onChange={(e) => storeVehicle.handleInputChange(e)}
           dataOptions={storeProducers.listModelGet}
-          error={store.errors.modelAuto}
+          error={storeVehicle.errors.modelAuto}
         ></InputSelect>
 
         <TextField
@@ -61,10 +61,10 @@ function VehicleForm(props) {
           variant="outlined"
           label="Email"
           name="email"
-          value={store.vechileFormValue.email}
-          onChange={(e) => store.handleInputChange(e)}
-          error={store.errors.email ? true : false}
-          helperText={store.errors.email ? 'Invalid Email' : ''}
+          value={storeVehicle.vechileFormValue.email}
+          onChange={(e) => storeVehicle.handleInputChange(e)}
+          error={storeVehicle.errors.email ? true : false}
+          helperText={storeVehicle.errors.email ? 'Invalid Email' : ''}
         ></TextField>
 
         <TextField
@@ -72,10 +72,10 @@ function VehicleForm(props) {
           variant="outlined"
           label="Mobile"
           name="mobile"
-          value={store.vechileFormValue.mobile}
-          onChange={(e) => store.handleInputChange(e)}
-          error={store.errors.mobile ? true : false}
-          helperText={store.errors.mobile ? 'Invalid phone number' : ''}
+          value={storeVehicle.vechileFormValue.mobile}
+          onChange={(e) => storeVehicle.handleInputChange(e)}
+          error={storeVehicle.errors.mobile ? true : false}
+          helperText={storeVehicle.errors.mobile ? 'Invalid phone number' : ''}
         ></TextField>
 
         <TextField
@@ -83,8 +83,8 @@ function VehicleForm(props) {
           variant="outlined"
           label="City"
           name="city"
-          value={store.vechileFormValue.city}
-          onChange={(e) => store.handleInputChange(e)}
+          value={storeVehicle.vechileFormValue.city}
+          onChange={(e) => storeVehicle.handleInputChange(e)}
         ></TextField>
       </Grid>
       <Grid item xs={6}>
@@ -92,9 +92,9 @@ function VehicleForm(props) {
           <FormLabel>Motor</FormLabel>
           <RadioGroup
             row
-            value={store.vechileFormValue.motor}
+            value={storeVehicle.vechileFormValue.motor}
             name="motor"
-            onChange={(e) => store.handleInputChange(e)}
+            onChange={(e) => storeVehicle.handleInputChange(e)}
           >
             <FormControlLabel
               value="diesel"
@@ -119,38 +119,38 @@ function VehicleForm(props) {
           variant="outlined"
           label="Producer"
           name="producer"
-          value={store.vechileFormValue.producer}
+          value={storeVehicle.vechileFormValue.producer}
           disabled
         ></TextField>
 
         <InputCheckBox
           label="Loan for vechile"
           name="isLoan"
-          onChange={(e) => store.handleInputChange(e)}
-          value={store.vechileFormValue.isLoan}
+          onChange={(e) => storeVehicle.handleInputChange(e)}
+          value={storeVehicle.vechileFormValue.isLoan}
         ></InputCheckBox>
 
         <DatePicker
           label="Sell"
           name="sellDate"
-          onChange={(e) => store.handleInputChange(e)}
-          value={store.vechileFormValue.sellDate}
+          onChange={(e) => storeVehicle.handleInputChange(e)}
+          value={storeVehicle.vechileFormValue.sellDate}
         ></DatePicker>
 
         <div>
           <CustomButton
-            onClick={(e) => store.handleSubmit(e)}
+            onClick={(e) => storeVehicle.handleSubmit(e)}
             // text="SUBMIT"
             text={
-              store.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'
+              storeVehicle.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'
             }
-            disabled={store.disableSubmitButton}
+            disabled={storeVehicle.disableSubmitButton}
           ></CustomButton>
           <CustomButton
             pokus="pokus"
             text="RESET"
             color="default"
-            onClick={(e) => store.resetForm(e)}
+            onClick={(e) => storeVehicle.resetForm(e)}
           ></CustomButton>
         </div>
 
