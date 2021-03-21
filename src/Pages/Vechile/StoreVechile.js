@@ -6,7 +6,6 @@ import {
 } from '../../Common/VehicleService';
 import { storeProducers } from '../Producers/StoreProducers';
 import { storeNotification } from '../../Stores/StoreNotification';
-// import { storeUseTable } from '../../Stores/StoreUseTable';
 import UseTableSort from '../../Stores/StoreUseTable';
 
 //
@@ -29,7 +28,10 @@ class Store {
       setAddOrUpdate: action,
 
       filterFn: observable,
-      // setFilterFn: action,
+      setFilterFn: observable,
+      filterInputValue: observable,
+      filterRecordLength: observable,
+      setFilterRecordLength: action,
 
       handleSearch: action,
 
@@ -50,7 +52,7 @@ class Store {
       findProducerVehicle: action,
       afterSortingAndFiltering: observable,
       headCellVechileData: computed,
-      storeUseTable:observable,
+      storeUseTable: observable,
       resetFormValue: action,
     });
   }
@@ -66,6 +68,11 @@ class Store {
 
   disableSubmitButton = true;
 
+  // filter search init value
+  filterInputValue = '';
+
+  filterRecordLength = 0;
+
   confirmDialog = {
     isOpen: false,
     title: '',
@@ -79,6 +86,7 @@ class Store {
     },
   };
 
+  // errors for form input value
   errors = {};
 
   // Change value in form
@@ -88,19 +96,6 @@ class Store {
       ...this.vechileFormValue,
       [name]: value,
     };
-
-    // for conosle.table() !
-    // const stateValueFormEdit = {
-    //   id: this.vechileFormValue.id,
-    //   modelAuto: this.vechileFormValue.modelAuto,
-    //   email: this.vechileFormValue.email,
-    //   mobile: this.vechileFormValue.mobile,
-    //   city: this.vechileFormValue.city,
-    //   motor: this.vechileFormValue.motor,
-    //   sellDate: this.vechileFormValue.sellDate,
-    //   isLoan: this.vechileFormValue.isLoan,
-    // };
-    // console.table(stateValueFormEdit);
   }
 
   //
@@ -175,25 +170,39 @@ class Store {
     this.addOrUpdate = data;
   }
 
-  setFilterFn() {
+  setFilterFn(e) {
     this.filterFn = {
       fn: (items) => {
+        this.setFilterRecordLength(0);
         return items;
       },
     };
   }
 
+  setFilterRecordLength(length) {
+    this.filterRecordLength = length;
+  }
+
   //
   handleSearch(e) {
+    // new input filter value
+    this.filterInputValue = e.target.value;
+
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
+          this.setFilterRecordLength(0);
           return items;
         },
       };
     } else {
       this.filterFn = {
         fn: (items) => {
+          this.setFilterRecordLength(
+            items.filter((data) =>
+              data.model.toLowerCase().includes(e.target.value.toLowerCase()),
+            ).length,
+          );
           return items.filter((data) =>
             data.model.toLowerCase().includes(e.target.value.toLowerCase()),
           );
@@ -363,8 +372,6 @@ class Store {
       return data.id === dataModelAuto;
     });
 
-    console.log('model', model);
-
     const prod = storeProducers.listProducerGet.find((data) => {
       return data.id === model.producerId;
     });
@@ -377,7 +384,7 @@ class Store {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return this.storeUseTable
-      .sortTable(this.filterFn.fn(this.listVehicleGet), this.listVehicleGet)
+      .sortTable(this.filterFn.fn(this.listVehicleGet),this.filterRecordLength)
       .slice()
       .splice(
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,
@@ -389,13 +396,10 @@ class Store {
     return getHeadCellVechileData();
   }
 
-
-  
   //  reset vehicle form
-  resetFormValue() {    
-    return getInitVehicleValue()
+  resetFormValue() {
+    return getInitVehicleValue();
   }
-
 }
 
 export const store = new Store();

@@ -136,6 +136,7 @@ function VehicleForm(props) {
           onChange={(e) => store.handleInputChange(e)}
           value={store.vechileFormValue.sellDate}
         ></DatePicker>
+
         <div>
           <CustomButton
             onClick={(e) => store.handleSubmit(e)}
@@ -146,11 +147,13 @@ function VehicleForm(props) {
             disabled={store.disableSubmitButton}
           ></CustomButton>
           <CustomButton
+            pokus="pokus"
             text="RESET"
             color="default"
             onClick={(e) => store.resetForm(e)}
           ></CustomButton>
         </div>
+
       </Grid>
     </Grid>
   );

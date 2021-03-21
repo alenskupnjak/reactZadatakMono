@@ -69,16 +69,16 @@ class UseTableSort {
     return 0;
   }
 
-  sortTable(recordData, lengthRecord) {    
+  sortTable(recordData) {   
     // init setup sort
     if (!this.orderSort) {
       return recordData;
     }
 
-    // some filtering data set to first page
-    if (recordData.length !== lengthRecord.length) {
-      this.setPage(0);
-    }
+    // // some filtering data set to first page
+    // if (recordData.length !== lengthRecord.length) {
+    //   this.setPage(0);
+    // }
 
     // stabilization
     const stabilizedThis = recordData.map((el, index) => [el, index]);

@@ -6,7 +6,6 @@ import {
   getListProducersData,
 } from '../../Common/VehicleService';
 import { storeNotification } from '../../Stores/StoreNotification';
-// import { store } from '../Vechile/StoreVechile';
 import UseTableSort from '../../Stores/StoreUseTable';
 
 //
@@ -14,6 +13,7 @@ import UseTableSort from '../../Stores/StoreUseTable';
 class Producers {
   constructor() {
     makeObservable(this, {
+      storeUseTable: observable,
       producerFormValue: observable,
       setProducerValue: action,
       resetFormValue: action,
@@ -35,6 +35,10 @@ class Producers {
 
       filterFn: observable,
       setFilterFn: action,
+      filterInputValue: observable,
+      setFilterInputValue: action,
+      filterRecordLength: observable,
+      setFilterRecordLength: action,
 
       confirmDialog: observable,
       setConfirmDialog: action,
@@ -52,7 +56,6 @@ class Producers {
       handleInputChange: action,
       afterSortingAndFiltering: observable,
       headCellProducers: computed,
-      storeUseTable: observable,
     });
   }
 
@@ -72,6 +75,11 @@ class Producers {
 
   disableSubmitButton = true;
 
+  // set filter init value
+  filterInputValue = '';
+
+  filterRecordLength = 0;
+
   confirmDialog = {
     isOpen: false,
     title: '',
@@ -85,6 +93,15 @@ class Producers {
     },
   };
 
+  setFilterRecordLength(length) {
+    this.filterRecordLength = length;
+  }
+
+  setFilterInputValue(eTargetValue) {
+    this.filterInputValue = eTargetValue;
+  }
+
+  // errors for form input value
   errors = {};
 
   //
@@ -222,27 +239,27 @@ class Producers {
   }
 
   //
-  // init set filter function
-  setFilterFn() {
-    this.filterFn = {
-      fn: (items) => {
-        return items;
-      },
-    };
-  }
-
-  //
   // define filter search function
-  handleSearch(e) {
+  setFilterFn(e) {
+    // new input filter value
+    this.setFilterInputValue(e.target.value);
+
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
+          this.setFilterRecordLength(0);
           return items;
         },
       };
     } else {
       this.filterFn = {
         fn: (items) => {
+          this.setFilterRecordLength(
+            items.filter((data) =>
+              data.model.toLowerCase().includes(e.target.value.toLowerCase()),
+            ).length,
+          );
+
           return items.filter((data) =>
             data.model.toLowerCase().includes(e.target.value.toLowerCase()),
           );
@@ -387,7 +404,6 @@ class Producers {
         return data.producer === producer;
       });
       console.log(producerData);
-      
 
       const dataModel = {
         id: this.generateModelId(),
@@ -464,7 +480,6 @@ class Producers {
       };
       this.listModelUpdate(dataVehicle);
 
-
       console.table(this.listModelGet);
       console.table(this.listProducerGet);
 
@@ -486,7 +501,7 @@ class Producers {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return this.storeUseTable
-      .sortTable(this.filterFn.fn(this.listModelGet), this.listModelGet)
+      .sortTable(this.filterFn.fn(this.listModelGet),this.filterRecordLength)
       .slice()
       .splice(
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,

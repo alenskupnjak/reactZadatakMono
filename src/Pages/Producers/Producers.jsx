@@ -10,6 +10,7 @@ import {
   InputAdornment,
   Button,
   TextField,
+  Badge
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
@@ -67,11 +68,11 @@ const useStyles = makeStyles((theme) => ({
 //
 function Producers() {
   const classes = useStyles();
-  
+
   const { TblContainer, TblHeader, TblPagination } = UseTable(
     storeProducers.listModelGet,
     storeProducers.headCellProducers,
-    storeProducers.storeUseTable,
+    storeProducers
   );
 
   return (
@@ -81,13 +82,20 @@ function Producers() {
           <TextField
             className={classes.searchInput}
             label="Filter Model"
+            name="filter"
+            value={storeProducers.filterInputValue}
             onChange={(e) => {
-              storeProducers.handleSearch(e);
+              storeProducers.setFilterFn(e);
             }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Search />
+                  <Badge
+                    badgeContent={storeProducers.filterRecordLength}
+                    color="secondary"
+                  >
+                    <Search />
+                  </Badge>
                 </InputAdornment>
               ),
             }}
@@ -170,7 +178,7 @@ function Producers() {
                             }
                           });
                           storeProducers.listModelDelete(data.id);
-                          storeProducers.listProducerDelete(data.producer);
+                          // storeProducers.listProducerDelete(data.producer);
                         },
                       });
                     }}
@@ -185,6 +193,7 @@ function Producers() {
         <TblPagination></TblPagination>
       </Paper>
 
+      {/* Produce FORM */}
       <CustomOpenDialog
         store={storeProducers}
         openCustomDialog={storeProducers.openCustomDialog}
@@ -193,11 +202,13 @@ function Producers() {
         <ProducerForm></ProducerForm>
       </CustomOpenDialog>
 
+      {/* Notification */}
       <Notification
         notify={storeNotification.notify.isOpen}
         store={storeNotification}
       ></Notification>
 
+      {/* CONFIRM DIALOG*/}
       <ConfirmDialog
         dataDialog={storeProducers.confirmDialog.isOpen}
         store={storeProducers}

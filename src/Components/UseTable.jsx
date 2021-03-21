@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 //
 //  MAIN
-function UseTable(record, headerCell,storeUseTable) {
+function UseTable(record, headerCell, storeTemp) {
   const classes = useStyles();
 
   // HEADER table
@@ -44,11 +44,11 @@ function UseTable(record, headerCell,storeUseTable) {
                 data.label
               ) : (
                 <TableSortLabel
-                  active={data.id === storeUseTable.orderSort}
-                  direction={storeUseTable.orderSort}
+                  active={data.id === storeTemp.storeUseTable.orderSort}
+                  direction={storeTemp.storeUseTable.orderSort}
                   onClick={() => {
-                    storeUseTable.setOrderSortBy(data.id);
-                    storeUseTable.setOrderSort();
+                    storeTemp.storeUseTable.setOrderSortBy(data.id);
+                    storeTemp.storeUseTable.setOrderSort();
                   }}
                 >
                   {data.label}
@@ -69,15 +69,19 @@ function UseTable(record, headerCell,storeUseTable) {
   // PAGINATION table
   const TblPagination = () => (
     <TablePagination
-      rowsPerPageOptions={storeUseTable.pages}
+      rowsPerPageOptions={storeTemp.storeUseTable.pages}
       component="div"
-      count={record.length}
-      rowsPerPage={storeUseTable.rowsPerPage}
-      page={storeUseTable.page}
+      count={
+        storeTemp.filterRecordLength === 0
+          ? record.length
+          : storeTemp.filterRecordLength
+      }
+      rowsPerPage={storeTemp.storeUseTable.rowsPerPage}
+      page={storeTemp.storeUseTable.page}
       onChangePage={(e, newPage) => {
-        storeUseTable.setPage(newPage);
+        storeTemp.storeUseTable.setPage(newPage);
       }}
-      onChangeRowsPerPage={(e) => storeUseTable.handleChangeRowsPerPage(e)}
+      onChangeRowsPerPage={(e) => storeTemp.storeUseTable.handleChangeRowsPerPage(e)}
     ></TablePagination>
   );
 

@@ -10,13 +10,13 @@ import {
   InputAdornment,
   Button,
   TextField,
+  Badge,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import ListIcon from '@material-ui/icons/List';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
-// import { headCellVechile, getInitVehicleValue } from '../../Common/VehicleService';
 import VehicleForm from './Components/VehicleForm';
 import UseTable from '../../Components/UseTable';
 import ConfirmDialog from '../../Components/ConfirmDialog';
@@ -60,12 +60,11 @@ const useStyles = makeStyles((theme) => ({
 //
 function Vehicle() {
   const classes = useStyles();
-  // const storeUseTable = new UseTableSort()
 
   const { TblHeader, TblContainer, TblPagination } = UseTable(
     store.listVehicleGet,
     store.headCellVechileData,
-    store.storeUseTable
+    store
   );
 
   return (
@@ -75,13 +74,17 @@ function Vehicle() {
           <TextField
             className={classes.searchInput}
             label="Filter Model"
+            name="filter"
+            value={store.filterInputValue}
             onChange={(e) => {
               store.handleSearch(e);
             }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Search />
+                  <Badge badgeContent={store.filterRecordLength} color="secondary">
+                    <Search />
+                  </Badge>
                 </InputAdornment>
               ),
             }}
@@ -92,7 +95,7 @@ function Vehicle() {
             variant="contained"
             size="large"
             color="primary"
-            onClick={() => {            
+            onClick={() => {
               store.resetFormValue();
               store.setOpenCustomDialog(true);
             }}

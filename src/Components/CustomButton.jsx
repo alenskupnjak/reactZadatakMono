@@ -10,14 +10,14 @@ const useStyles = makeStyles((theme) => ({
 //
 function CustomButton(props) {
   const classes = useStyles();
-  const { text, size, color, variant, onclick, disabled, ...other } = props;
+  const { text, size, color, variant, onClick, disabled, ...other } = props;
 
   return (
     <Button
       variant={variant || 'contained'}
       size={size || 'large'}
       color={color || 'primary'}
-      onClick={onclick}
+      onClick={onClick}
       disabled={disabled ? true : false}
       className={classes.root}
       {...other}
