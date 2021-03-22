@@ -8,6 +8,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  FormHelperText,
 } from '@material-ui/core';
 
 import CustomButton from '../../../Components/CustomButton';
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function ProducerForm(props) {
   const classes = useStyles();
 
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -60,7 +62,7 @@ function ProducerForm(props) {
             name="producer"
             value={storeProducers.producerFormValue.producer}
             onChange={(e) => storeProducers.handleInputChange(e)}
-            // error={error ? true : false}
+            error={storeProducers.errors.producer ? true : false}
           >
             <MenuItem value="">None</MenuItem>
             {storeProducers.listProducerGet.map((data) => (
@@ -73,7 +75,9 @@ function ProducerForm(props) {
               </MenuItem>
             ))}
           </Select>
-          {/* {error && <FormHelperText>{error}</FormHelperText>} */}
+          {storeProducers.errors.producer && (
+            <FormHelperText>{storeProducers.errors.producer}</FormHelperText>
+          )}
         </FormControl>
 
         <div>

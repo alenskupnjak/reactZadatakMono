@@ -340,11 +340,12 @@ class Producers {
 
     tempError.model =
       this.producerFormValue.model.length > 2 ? '' : 'Minimum 3 character';
-    // tempError.producer =
-    //   this.producerFormValue.producer.length > 0 ? '' : 'Minimum 1 character';
+    tempError.producer =
+      this.producerFormValue.producer.length > 0  ? '' : 'Select producer';
 
     // define error
     this.setErrors({ ...tempError });
+
 
     // if validation all fields is TRUE, make enable button SUBMIT
     if (Object.values(tempError).every((x) => x === '')) {
@@ -370,8 +371,6 @@ class Producers {
   handleSubmit(e) {
     e.preventDefault();
     const { model, producer } = this.producerFormValue;
-
-    console.log(model, producer);
 
     //
     //  ADD ADD ADD ADD ADD
@@ -405,7 +404,6 @@ class Producers {
         // console.log(data.producer, this.producerFormValue.producer);
         return data.producer === producer;
       });
-      console.log(producerData);
 
       const dataModel = {
         id: this.generateModelId(),
