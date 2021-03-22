@@ -105,7 +105,7 @@ function UseTable(record, headerCell, storeTemp) {
         }}
       >
         {storeTemp.filterRecordLength === 0 && storeTemp.filterInputValue !== ''
-          ? 'No find filter records!'
+          ? 'No filter data!'
           : 'Page'}
         <Pagination
           className={classes.pagination}
