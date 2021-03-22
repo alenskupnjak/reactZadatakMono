@@ -78,11 +78,11 @@ function UseTable(record, headerCell, storeTemp) {
   const TblPagination = () => (
     <div>
       <TablePagination
-        backIconButtonText="ajmoo"
         rowsPerPageOptions={storeTemp.storeUseTable.pages}
         component="div"
         count={
-          storeTemp.filterRecordLength === 0
+          storeTemp.filterRecordLength === 0 &&
+          storeTemp.filterInputValue === ''
             ? record.length
             : storeTemp.filterRecordLength
         }
@@ -103,7 +103,9 @@ function UseTable(record, headerCell, storeTemp) {
           textAlign: 'center',
         }}
       >
-        Page
+        {storeTemp.filterRecordLength === 0
+          ? ''
+          : 'Page'}
         <Pagination
           className={classes.pagination}
           color="primary"
@@ -111,7 +113,8 @@ function UseTable(record, headerCell, storeTemp) {
           hidePrevButton={true}
           page={storeTemp.storeUseTable.page + 1}
           count={
-            storeTemp.filterRecordLength === 0
+            storeTemp.filterRecordLength === 0 &&
+            storeTemp.filterInputValue === ''
               ? Math.ceil(record.length / storeTemp.storeUseTable.rowsPerPage)
               : Math.ceil(
                   storeTemp.filterRecordLength /
