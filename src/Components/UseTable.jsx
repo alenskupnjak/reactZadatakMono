@@ -101,10 +101,11 @@ function UseTable(record, headerCell, storeTemp) {
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',
+          color: storeTemp.filterRecordLength === 0 && storeTemp.filterInputValue !== '' ? 'red' :'black'
         }}
       >
         {storeTemp.filterRecordLength === 0 && storeTemp.filterInputValue !== ''
-          ? 'No records in filter!'
+          ? 'No find filter records!'
           : 'Page'}
         <Pagination
           className={classes.pagination}
