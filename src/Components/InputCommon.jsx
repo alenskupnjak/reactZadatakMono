@@ -12,8 +12,8 @@ function InputCommon(props) {
       value={value}
       onChange={onChange}
       error={error}
-      {...other}
       helperText={helperText}
+      {...other}
     ></TextField>
   );
 }

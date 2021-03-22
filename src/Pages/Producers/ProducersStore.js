@@ -243,6 +243,8 @@ class Producers {
   setFilterFn(e) {
     // new input filter value
     this.setFilterInputValue(e.target.value);
+    // set page ro first
+    this.storeUseTable.setPage(0);
 
     if (e.target.value === '') {
       this.filterFn = {
@@ -501,7 +503,7 @@ class Producers {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return this.storeUseTable
-      .sortTable(this.filterFn.fn(this.listModelGet),this.filterRecordLength)
+      .sortTable(this.filterFn.fn(this.listModelGet), this.filterRecordLength)
       .slice()
       .splice(
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,

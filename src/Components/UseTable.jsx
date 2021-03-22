@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
 
 //
 // CSS
@@ -24,6 +25,13 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiButton-root ': {
       minWidth: '25px',
       backgroundColor: '#faebd7',
+    },
+  },
+  pagination: {
+    // backgroundColor: 'red',
+    '& .MuiPaginationItem-textPrimary.Mui-selected': {
+      backgroundColor: '#0000001a',
+      color: 'black',
     },
   },
 }));
@@ -68,21 +76,51 @@ function UseTable(record, headerCell, storeTemp) {
 
   // PAGINATION table
   const TblPagination = () => (
-    <TablePagination
-      rowsPerPageOptions={storeTemp.storeUseTable.pages}
-      component="div"
-      count={
-        storeTemp.filterRecordLength === 0
-          ? record.length
-          : storeTemp.filterRecordLength
-      }
-      rowsPerPage={storeTemp.storeUseTable.rowsPerPage}
-      page={storeTemp.storeUseTable.page}
-      onChangePage={(e, newPage) => {
-        storeTemp.storeUseTable.setPage(newPage);
-      }}
-      onChangeRowsPerPage={(e) => storeTemp.storeUseTable.handleChangeRowsPerPage(e)}
-    ></TablePagination>
+    <div>
+      <TablePagination
+        backIconButtonText="ajmoo"
+        rowsPerPageOptions={storeTemp.storeUseTable.pages}
+        component="div"
+        count={
+          storeTemp.filterRecordLength === 0
+            ? record.length
+            : storeTemp.filterRecordLength
+        }
+        rowsPerPage={storeTemp.storeUseTable.rowsPerPage}
+        page={storeTemp.storeUseTable.page}
+        onChangePage={(e, newPage) => {
+          storeTemp.storeUseTable.setPage(newPage);
+        }}
+        onChangeRowsPerPage={(e) =>
+          storeTemp.storeUseTable.handleChangeRowsPerPage(e)
+        }
+      ></TablePagination>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+        }}
+      >
+        Page
+        <Pagination
+          className={classes.pagination}
+          color="primary"
+          hideNextButton={true}
+          hidePrevButton={true}
+          page={storeTemp.storeUseTable.page + 1}
+          count={
+            storeTemp.filterRecordLength === 0
+              ? Math.ceil(record.length / storeTemp.storeUseTable.rowsPerPage)
+              : Math.ceil(
+                  storeTemp.filterRecordLength /
+                    storeTemp.storeUseTable.rowsPerPage,
+                )
+          }
+        ></Pagination>
+      </div>
+    </div>
   );
 
   return {

@@ -29,6 +29,7 @@ import { storeNotification } from '../../Stores/StoreNotification';
 const useStyles = makeStyles((theme) => ({
   pageContent: {
     width: '80%',
+    // height:'100vh',
     margin: '0 auto',
   },
   addButton: {
@@ -38,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
     '&.MuiButtonBase-root': {
       // color:'red',
       // border:'3px solid white',
-      borderStyle:'outset',
-      cursor: 'default'
+      borderStyle: 'outset',
+      cursor: 'default',
     },
     '&:hover': {
       backgroundColor: '#00000080',
-      color:'#2543C5'
+      color: '#fff',
     },
   },
   searchInput: {
@@ -75,7 +76,7 @@ function Vehicle() {
   const { TblHeader, TblContainer, TblPagination } = UseTable(
     storeVehicle.listVehicleGet,
     storeVehicle.headCellVechileData,
-    storeVehicle
+    storeVehicle,
   );
 
   return (
@@ -93,7 +94,14 @@ function Vehicle() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Badge badgeContent={storeVehicle.filterRecordLength} color="secondary">
+                  <Badge
+                    color="secondary"
+                    badgeContent={
+                      storeVehicle.filterInputValue === ''
+                        ? 0
+                        : storeVehicle.filterRecordLength.toString()
+                    }
+                  >
                     <Search />
                   </Badge>
                 </InputAdornment>
@@ -106,11 +114,11 @@ function Vehicle() {
             variant="contained"
             size="large"
             color="primary"
+            startIcon={<AddIcon></AddIcon>}
             onClick={() => {
               storeVehicle.resetFormValue();
               storeVehicle.setOpenCustomDialog(true);
             }}
-            startIcon={<AddIcon></AddIcon>}
           >
             ADD VEHICLE
           </Button>
@@ -144,7 +152,7 @@ function Vehicle() {
                         msg: 'Edit Vehicle',
                         type: 'info',
                       });
-                      storeVehicle.vechileFormValue = data;
+                      storeVehicle.vehicleFormValue = data;
                       storeVehicle.setDisableSubmitButton(false);
                     }}
                     startIcon={<ListIcon></ListIcon>}

@@ -14,8 +14,8 @@ class Store {
   constructor() {
     makeObservable(this, {
       storeUseTable: observable,
-      vechileFormValue: observable,
-      setVechileValue: action,
+      vehicleFormValue: observable,
+      setVehicleValue: action,
       listVehicle: observable,
       listVehiclePut: action,
       listVehicleGet: computed,
@@ -60,7 +60,7 @@ class Store {
   storeUseTable = new UseTableSort();
 
   // Init value
-  vechileFormValue = getInitVehicleValue();
+  vehicleFormValue = getInitVehicleValue();
   listVehicle = getListVehicleInitData();
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
@@ -89,10 +89,10 @@ class Store {
   errors = {};
 
   // Change value in form
-  setVechileValue(name, value) {
+  setVehicleValue(name, value) {
     //set value form
-    this.vechileFormValue = {
-      ...this.vechileFormValue,
+    this.vehicleFormValue = {
+      ...this.vehicleFormValue,
       [name]: value,
     };
   }
@@ -102,7 +102,7 @@ class Store {
   listVehiclePut(data) {
     this.listVehicle.push(data);
     // after save reset form
-    this.vechileFormValue = getInitVehicleValue();
+    this.vehicleFormValue = getInitVehicleValue();
   }
 
   //
@@ -186,6 +186,7 @@ class Store {
   handleSearch(e) {
     // new input filter value
     this.filterInputValue = e.target.value;
+    this.storeUseTable.setPage(0);
 
     if (e.target.value === '') {
       this.filterFn = {
@@ -242,11 +243,11 @@ class Store {
         },
       );
 
-      this.setVechileValue('producer', dataVechileProducer.producer);
-      this.setVechileValue('modelAuto', modelData.id);
+      this.setVehicleValue('producer', dataVechileProducer.producer);
+      this.setVehicleValue('modelAuto', modelData.id);
     } else {
       // save record to store validation
-      this.setVechileValue(name, value);
+      this.setVehicleValue(name, value);
     }
 
     // validate form
@@ -262,11 +263,11 @@ class Store {
     // SET error
     const tempError = {};
     tempError.modelAuto =
-      storeVehicle.vechileFormValue.modelAuto !== '' ? '' : 'Invalid model ';
-    tempError.email = /@/.test(storeVehicle.vechileFormValue.email)
+      storeVehicle.vehicleFormValue.modelAuto !== '' ? '' : 'Invalid model ';
+    tempError.email = /@/.test(storeVehicle.vehicleFormValue.email)
       ? ''
       : 'Invalid emali';
-    tempError.mobile = regexPhone.test(storeVehicle.vechileFormValue.mobile)
+    tempError.mobile = regexPhone.test(storeVehicle.vehicleFormValue.mobile)
       ? ''
       : 'Invalid character';
 
@@ -297,17 +298,17 @@ class Store {
       if (storeVehicle.addOrUpdate === 'addFormValueToList') {
         // ADD ADD ADD
         // Generate fake ID
-        storeVehicle.vechileFormValue.id = this.generateId();
+        storeVehicle.vehicleFormValue.id = this.generateId();
 
         // const modelSave = storeProducers.listModelGet.find((data) => {
-        //   return data.id === store.vechileFormValue.modelAuto;
+        //   return data.id === store.vehicleFormValue.modelAuto;
         // });
 
         // prepare field for sorting
-        // this.vechileFormValue.model = modelSave.model;
+        // this.vehicleFormValue.model = modelSave.model;
 
         // save record to listVehicle
-        this.listVehiclePut(storeVehicle.vechileFormValue);
+        this.listVehiclePut(storeVehicle.vehicleFormValue);
 
         // Display info on screen
         storeNotification.setNotify({
@@ -319,20 +320,20 @@ class Store {
         // UPDATE
         // find model producer to store in model record
         const modelVeh = storeProducers.listModelGet.find((data) => {
-          return data.id === storeVehicle.vechileFormValue.modelAuto;
+          return data.id === storeVehicle.vehicleFormValue.modelAuto;
         });
 
         const dataVehicle = {
-          id: storeVehicle.vechileFormValue.id,
-          modelAuto: storeVehicle.vechileFormValue.modelAuto,
+          id: storeVehicle.vehicleFormValue.id,
+          modelAuto: storeVehicle.vehicleFormValue.modelAuto,
           model: modelVeh.model,
-          producer: storeVehicle.vechileFormValue.producer,
-          email: storeVehicle.vechileFormValue.email,
-          mobile: storeVehicle.vechileFormValue.mobile.toString(),
-          city: storeVehicle.vechileFormValue.city,
-          motor: storeVehicle.vechileFormValue.motor,
-          sellDate: storeVehicle.vechileFormValue.sellDate,
-          isLoan: storeVehicle.vechileFormValue.isLoan,
+          producer: storeVehicle.vehicleFormValue.producer,
+          email: storeVehicle.vehicleFormValue.email,
+          mobile: storeVehicle.vehicleFormValue.mobile.toString(),
+          city: storeVehicle.vehicleFormValue.city,
+          motor: storeVehicle.vehicleFormValue.motor,
+          sellDate: storeVehicle.vehicleFormValue.sellDate,
+          isLoan: storeVehicle.vehicleFormValue.isLoan,
         };
         this.listVehicleUpdate(dataVehicle);
         // Display info on screen
@@ -347,6 +348,7 @@ class Store {
     }
 
     this.setOpenCustomDialog(false);
+    this.resetFormValue();
   }
 
   // Generate fake ID
@@ -355,7 +357,7 @@ class Store {
   }
 
   resetForm(e) {
-    this.vechileFormValue = getInitVehicleValue();
+    this.vehicleFormValue = getInitVehicleValue();
     this.setDisableSubmitButton(true);
   }
 
@@ -397,7 +399,7 @@ class Store {
 
   //  reset vehicle form
   resetFormValue() {
-    return getInitVehicleValue();
+    this.vehicleFormValue = getInitVehicleValue();
   }
 }
 

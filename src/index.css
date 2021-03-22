@@ -13,7 +13,9 @@ code {
 }
 
 .colorsSearch {
-  color:#00000080
+  color:#00000080;
+  height: auto;
+  
 }
 
 

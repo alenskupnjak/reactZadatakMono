@@ -50,7 +50,7 @@ function VehicleForm(props) {
         <InputSelect
           label="Model"
           name="modelAuto"
-          value={storeVehicle.vechileFormValue.modelAuto}
+          value={storeVehicle.vehicleFormValue.modelAuto}
           onChange={(e) => storeVehicle.handleInputChange(e)}
           dataOptions={storeProducers.listModelGet}
           error={storeVehicle.errors.modelAuto}
@@ -61,7 +61,7 @@ function VehicleForm(props) {
           variant="outlined"
           label="Email"
           name="email"
-          value={storeVehicle.vechileFormValue.email}
+          value={storeVehicle.vehicleFormValue.email}
           onChange={(e) => storeVehicle.handleInputChange(e)}
           error={storeVehicle.errors.email ? true : false}
           helperText={storeVehicle.errors.email ? 'Invalid Email' : ''}
@@ -72,7 +72,7 @@ function VehicleForm(props) {
           variant="outlined"
           label="Mobile"
           name="mobile"
-          value={storeVehicle.vechileFormValue.mobile}
+          value={storeVehicle.vehicleFormValue.mobile}
           onChange={(e) => storeVehicle.handleInputChange(e)}
           error={storeVehicle.errors.mobile ? true : false}
           helperText={storeVehicle.errors.mobile ? 'Invalid phone number' : ''}
@@ -83,7 +83,7 @@ function VehicleForm(props) {
           variant="outlined"
           label="City"
           name="city"
-          value={storeVehicle.vechileFormValue.city}
+          value={storeVehicle.vehicleFormValue.city}
           onChange={(e) => storeVehicle.handleInputChange(e)}
         ></TextField>
       </Grid>
@@ -92,7 +92,7 @@ function VehicleForm(props) {
           <FormLabel>Motor</FormLabel>
           <RadioGroup
             row
-            value={storeVehicle.vechileFormValue.motor}
+            value={storeVehicle.vehicleFormValue.motor}
             name="motor"
             onChange={(e) => storeVehicle.handleInputChange(e)}
           >
@@ -119,7 +119,7 @@ function VehicleForm(props) {
           variant="outlined"
           label="Producer"
           name="producer"
-          value={storeVehicle.vechileFormValue.producer}
+          value={storeVehicle.vehicleFormValue.producer}
           disabled
         ></TextField>
 
@@ -127,22 +127,23 @@ function VehicleForm(props) {
           label="Loan for vechile"
           name="isLoan"
           onChange={(e) => storeVehicle.handleInputChange(e)}
-          value={storeVehicle.vechileFormValue.isLoan}
+          value={storeVehicle.vehicleFormValue.isLoan}
         ></InputCheckBox>
 
         <DatePicker
           label="Sell"
           name="sellDate"
           onChange={(e) => storeVehicle.handleInputChange(e)}
-          value={storeVehicle.vechileFormValue.sellDate}
+          value={storeVehicle.vehicleFormValue.sellDate}
         ></DatePicker>
 
         <div>
           <CustomButton
             onClick={(e) => storeVehicle.handleSubmit(e)}
-            // text="SUBMIT"
             text={
-              storeVehicle.addOrUpdate === 'addFormValueToList' ? 'SUBMIT' : 'UPDATE'
+              storeVehicle.addOrUpdate === 'addFormValueToList'
+                ? 'SUBMIT'
+                : 'UPDATE'
             }
             disabled={storeVehicle.disableSubmitButton}
           ></CustomButton>
@@ -153,7 +154,6 @@ function VehicleForm(props) {
             onClick={(e) => storeVehicle.resetForm(e)}
           ></CustomButton>
         </div>
-
       </Grid>
     </Grid>
   );

@@ -10,7 +10,7 @@ import {
   InputAdornment,
   Button,
   TextField,
-  Badge
+  Badge,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
@@ -72,7 +72,7 @@ function Producers() {
   const { TblContainer, TblHeader, TblPagination } = UseTable(
     storeProducers.listModelGet,
     storeProducers.headCellProducers,
-    storeProducers
+    storeProducers,
   );
 
   return (
@@ -91,8 +91,12 @@ function Producers() {
               startAdornment: (
                 <InputAdornment position="start">
                   <Badge
-                    badgeContent={storeProducers.filterRecordLength}
                     color="secondary"
+                    badgeContent={
+                      storeProducers.filterInputValue === ''
+                        ? 0
+                        : storeProducers.filterRecordLength.toString()
+                    }
                   >
                     <Search />
                   </Badge>
@@ -111,12 +115,12 @@ function Producers() {
               color: '#fff',
             }}
             variant="contained"
+            startIcon={<AddIcon></AddIcon>}
             size="large"
             onClick={() => {
               storeProducers.resetFormValue();
               storeProducers.setOpenCustomDialog(true);
             }}
-            startIcon={<AddIcon></AddIcon>}
           >
             ADD MODEL
           </Button>
