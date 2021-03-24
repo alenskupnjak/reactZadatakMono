@@ -53,26 +53,44 @@ const listModelVechile = () => [
   { id: 'm13', model: 'TOYOTA 3', producerId: 'p6' },
 ];
 
-// FAKE BACKEND
+// INIT FAKE MODEL BACKEND, only first load!
 let listModelLikeBackend = [];
 const getlistModelLikeBackendData = () => {
   listModelLikeBackend = listModelVechile();
-  console.log(listModelLikeBackend);
 };
 getlistModelLikeBackendData();
 
+// 
+// GET MODEL list
 export const getListModelFromService = () => {
   return listModelLikeBackend;
 };
 
+// UPDATE MODEL
+export const updateListModelFromService = (updateData) => {
+  const index = listModelLikeBackend.findIndex((data) => {
+    return data.id === updateData.id;
+  });
+  listModelLikeBackend.splice(index, 1, updateData);
+  console.log('UPDATE vehicle in service', listModelLikeBackend);
+};
+
 //
-// DELETE
+// CREATE MODEL
+export const createListModelFromService = (data) => {
+  listModelLikeBackend.push(data);
+  console.log('CREATE vehicle in service', listModelLikeBackend);
+};
+
+//
+// DELETE MODEL
 export const deleteListModelFromService = (id) => {
   const index = listModelLikeBackend.findIndex((data) => {
     return data.id === id;
   });
   listModelLikeBackend.splice(index, 1);
-  console.table('Delete MODEL from service', listModelLikeBackend);
+  console.log('Delete MODEL from service');
+  console.table(listModelLikeBackend);
 };
 
 //
@@ -264,16 +282,12 @@ const listVehicleInit = () => [
   },
 ];
 
-// FAKE BACKEND
+// INIT FAKE VEHICLE BACKEND, only first load!
 let listVechileLikeBackend = [];
 const getListVehicleInitBackendData = () => {
   listVechileLikeBackend = listVehicleInit();
-  console.log(listVechileLikeBackend);
 };
 getListVehicleInitBackendData();
-
-//
-// init FAKE backend
 
 // GET
 export const getListVehicleFromService = () => {

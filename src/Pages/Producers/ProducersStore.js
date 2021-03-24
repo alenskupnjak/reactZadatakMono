@@ -4,6 +4,8 @@ import {
   getListModelFromService,
   getCellHeaderProducers,
   getListProducersData,
+  createListModelFromService,
+  updateListModelFromService,
 } from '../../Common/VehicleService';
 import { storeNotification } from '../../Stores/StoreNotification';
 import UseTableSort from '../../Stores/StoreUseTable';
@@ -25,7 +27,7 @@ class Producers {
 
       listModel: observable,
       listModelGet: computed,
-      listModelPut: action,
+      // listModelPut: action,
 
       openCustomDialog: observable,
       setOpenCustomDialog: action,
@@ -200,31 +202,31 @@ class Producers {
     return listModel;
   }
 
-  //
-  // PUT - add value to ModelVehicle list
-  listModelPut(data) {
-    this.listModel.push(data);
-  }
+  // //
+  // // PUT - add value to ModelVehicle list
+  // listModelPut(data) {
+  //   this.listModel.push(data);
+  // }
 
   //
-  // DELETE - delete one record from Vehicle list
-  listModelDelete(id) {
-    const index = this.listModel.findIndex((data) => {
-      return data.id === id;
-    });
-    // delete record from list
-    this.listModel.splice(index, 1);
-  }
+  // // DELETE - delete one record from Vehicle list
+  // listModelDelete(id) {
+  //   const index = this.listModel.findIndex((data) => {
+  //     return data.id === id;
+  //   });
+  //   // delete record from list
+  //   this.listModel.splice(index, 1);
+  // }
 
   //
-  // UPDATE - change one record in Model list
-  listModelUpdate(updateData) {
-    const index = this.listModel.findIndex((data) => {
-      return data.id === updateData.id;
-    });
+  // // UPDATE - change one record in Model list
+  // listModelUpdate(updateData) {
+  //   const index = this.listModel.findIndex((data) => {
+  //     return data.id === updateData.id;
+  //   });
 
-    this.listModel.splice(index, 1, updateData);
-  }
+  //   this.listModel.splice(index, 1, updateData);
+  // }
 
   //
   // Open /close dialog
@@ -341,11 +343,10 @@ class Producers {
     tempError.model =
       this.producerFormValue.model.length > 2 ? '' : 'Minimum 3 character';
     tempError.producer =
-      this.producerFormValue.producer.length > 0  ? '' : 'Select producer';
+      this.producerFormValue.producer.length > 0 ? '' : 'Select producer';
 
     // define error
     this.setErrors({ ...tempError });
-
 
     // if validation all fields is TRUE, make enable button SUBMIT
     if (Object.values(tempError).every((x) => x === '')) {
@@ -412,12 +413,17 @@ class Producers {
       };
 
       // save record to lists
-      this.listModelPut(dataModel);
+      // this.listModelPut(dataModel);
+
+      // ADD Model =>server
+      createListModelFromService(dataModel);
+      this.listModel = getListModelFromService();
 
       // }
 
+      // console.table(this.listModel);
       console.table(this.listModelGet);
-      console.table(this.listProducerGet);
+      // console.table(this.listProducerGet);
 
       storeNotification.setNotify({
         isOpen: true,
@@ -478,7 +484,12 @@ class Producers {
         model: this.producerFormValue.model,
         producerId: producerNew.id,
       };
-      this.listModelUpdate(dataVehicle);
+
+      // this.listModelUpdate(dataVehicle);
+
+      // UPDATE from server
+      updateListModelFromService(dataVehicle);
+      this.listModel = getListModelFromService();
 
       console.table(this.listModelGet);
       console.table(this.listProducerGet);
