@@ -63,6 +63,7 @@ getlistModelLikeBackendData();
 // 
 // GET MODEL list
 export const getListModelFromService = () => {
+  console.log('GET MODEL list from service');
   return listModelLikeBackend;
 };
 
@@ -72,14 +73,14 @@ export const updateListModelFromService = (updateData) => {
     return data.id === updateData.id;
   });
   listModelLikeBackend.splice(index, 1, updateData);
-  console.log('UPDATE vehicle in service', listModelLikeBackend);
+  console.log('UPDATE MODEL in service', listModelLikeBackend);
 };
 
 //
 // CREATE MODEL
 export const createListModelFromService = (data) => {
   listModelLikeBackend.push(data);
-  console.log('CREATE vehicle in service', listModelLikeBackend);
+  console.log('CREATE MODEL in service', listModelLikeBackend);
 };
 
 //
@@ -89,7 +90,7 @@ export const deleteListModelFromService = (id) => {
     return data.id === id;
   });
   listModelLikeBackend.splice(index, 1);
-  console.log('Delete MODEL from service');
+  console.log('DELETE MODEL from service');
   console.table(listModelLikeBackend);
 };
 
@@ -291,7 +292,7 @@ getListVehicleInitBackendData();
 
 // GET
 export const getListVehicleFromService = () => {
-  console.table('GET data from service');
+  console.table('GET Vehicle list from service');
   console.table(listVechileLikeBackend);
 
   return listVechileLikeBackend;
@@ -314,6 +315,7 @@ export const createListVehicleFromService = (data) => {
   console.log('CREATE vehicle in service', listVechileLikeBackend);
 };
 
+
 //
 // DELETE
 export const deleteListVehicleFromService = (id) => {
@@ -321,5 +323,5 @@ export const deleteListVehicleFromService = (id) => {
     return data.id === id;
   });
   listVechileLikeBackend.splice(index, 1);
-  console.table('Delete from service', listVechileLikeBackend);
+  console.table('DELETE vehicle from service', listVechileLikeBackend);
 };

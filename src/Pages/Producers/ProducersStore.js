@@ -502,7 +502,6 @@ class Producers {
       });
       this.setAddOrUpdate('addFormValueToList');
     }
-
     this.setOpenCustomDialog(false);
     this.resetFormValue();
     this.setErrors({});
