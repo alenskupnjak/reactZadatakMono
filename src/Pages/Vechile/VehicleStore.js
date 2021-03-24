@@ -1,8 +1,10 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import {
-  getListVehicleInitData,
+  getListVehicleFromService,
   getInitVehicleValue,
   getHeadCellVechileData,
+  createListVehicleFromService,
+  updateListVehicleFromService,
 } from '../../Common/VehicleService';
 import { storeProducers } from '../Producers/ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
@@ -17,10 +19,10 @@ class Store {
       vehicleFormValue: observable,
       setVehicleValue: action,
       listVehicle: observable,
-      listVehiclePut: action,
+      // listVehiclePut: action,
       listVehicleGet: computed,
-      listVehicleDelete: action,
-      listVehicleUpdate: action,
+      // listVehicleDelete: action,
+      // listVehicleUpdate: action,
 
       openCustomDialog: observable,
       setOpenCustomDialog: action,
@@ -61,7 +63,7 @@ class Store {
 
   // Init value
   vehicleFormValue = getInitVehicleValue();
-  listVehicle = getListVehicleInitData();
+  listVehicle = getListVehicleFromService();
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
 
@@ -98,12 +100,12 @@ class Store {
   }
 
   //
-  // PUT - add value to Vehicle list
-  listVehiclePut(data) {
-    this.listVehicle.push(data);
-    // after save reset form
-    this.vehicleFormValue = getInitVehicleValue();
-  }
+  // // PUT - add value to Vehicle list
+  // listVehiclePut(data) {
+  //   this.listVehicle.push(data);
+  //   // after save reset form
+  //   this.vehicleFormValue = getInitVehicleValue();
+  // }
 
   //
   // GET - pull data from Vehicle list
@@ -118,7 +120,6 @@ class Store {
       const prod = storeProducers.listProducerGet.find((dataProd) => {
         return dataProd.id === model.producerId;
       });
-      // console.log({prod, model});
 
       const dataVehicle = {
         id: data.id,
@@ -138,26 +139,26 @@ class Store {
   }
 
   //
-  // DELETE - delete one record from Vehicle list
-  listVehicleDelete(id) {
-    const index = this.listVehicle.findIndex((data) => {
-      return data.id === id;
-    });
-    // delete record from list
-    this.listVehicle.splice(index, 1);
-    console.table(this.listVehicleGet);
-  }
+  // // DELETE - delete one record from Vehicle list
+  // listVehicleDelete(id) {
+  //   const index = this.listVehicle.findIndex((data) => {
+  //     return data.id === id;
+  //   });
+  //   // delete record from list
+  //   this.listVehicle.splice(index, 1);
+  //   console.table(this.listVehicleGet);
+  // }
 
   //
   // UPDATE - change one record in Vehicle list
-  listVehicleUpdate(updateData) {
-    const index = this.listVehicle.findIndex((data) => {
-      return data.id === updateData.id;
-    });
+  // listVehicleUpdate(updateData) {
+  //   const index = this.listVehicle.findIndex((data) => {
+  //     return data.id === updateData.id;
+  //   });
 
-    //  replace (UPDATE) value
-    this.listVehicle.splice(index, 1, updateData);
-  }
+  //   //  replace (UPDATE) value
+  //   this.listVehicle.splice(index, 1, updateData);
+  // }
 
   //  Open/Close dialog
   setOpenCustomDialog(data) {
@@ -307,8 +308,24 @@ class Store {
         // prepare field for sorting
         // this.vehicleFormValue.model = modelSave.model;
 
-        // save record to listVehicle
-        this.listVehiclePut(storeVehicle.vehicleFormValue);
+        // save record to BACKEND
+        const prepareDataForBackend = {
+          id: storeVehicle.vehicleFormValue.id,
+          modelAuto: storeVehicle.vehicleFormValue.modelAuto,
+          email: storeVehicle.vehicleFormValue.email,
+          mobile: storeVehicle.vehicleFormValue.mobile,
+          city: storeVehicle.vehicleFormValue.city,
+          motor: storeVehicle.vehicleFormValue.motor,
+          sellDate: storeVehicle.vehicleFormValue.sellDate,
+          isLoan: storeVehicle.vehicleFormValue.isLoan,
+        };
+
+        //  FROM Backend  SERVICE
+        createListVehicleFromService(prepareDataForBackend);
+        this.listVehicle = getListVehicleFromService();
+
+        // // save record to listVehicle
+        // this.listVehiclePut(storeVehicle.vehicleFormValue);
 
         // Display info on screen
         storeNotification.setNotify({
@@ -318,16 +335,17 @@ class Store {
         });
       } else {
         // UPDATE
-        // find model producer to store in model record
-        const modelVeh = storeProducers.listModelGet.find((data) => {
-          return data.id === storeVehicle.vehicleFormValue.modelAuto;
-        });
+        // // find model producer to store in model record
+        // const modelVeh = storeProducers.listModelGet.find((data) => {
+        //   return data.id === storeVehicle.vehicleFormValue.modelAuto;
+        // });
+        console.log(storeVehicle.vehicleFormValue.sellDate);
 
         const dataVehicle = {
           id: storeVehicle.vehicleFormValue.id,
           modelAuto: storeVehicle.vehicleFormValue.modelAuto,
-          model: modelVeh.model,
-          producer: storeVehicle.vehicleFormValue.producer,
+          // model: modelVeh.model,
+          // producer: storeVehicle.vehicleFormValue.producer,
           email: storeVehicle.vehicleFormValue.email,
           mobile: storeVehicle.vehicleFormValue.mobile.toString(),
           city: storeVehicle.vehicleFormValue.city,
@@ -335,7 +353,13 @@ class Store {
           sellDate: storeVehicle.vehicleFormValue.sellDate,
           isLoan: storeVehicle.vehicleFormValue.isLoan,
         };
-        this.listVehicleUpdate(dataVehicle);
+
+        //  FROM Backend  SERVICE
+        updateListVehicleFromService(dataVehicle);
+        this.listVehicle = getListVehicleFromService();
+
+        // this.listVehicleUpdate(dataVehicle);
+
         // Display info on screen
         storeNotification.setNotify({
           isOpen: true,

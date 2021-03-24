@@ -24,6 +24,7 @@ import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 import { storeVehicle } from './VehicleStore';
 import { storeNotification } from '../../Stores/StoreNotification';
+import { deleteListVehicleFromService, getListVehicleFromService } from '../../Common/VehicleService';
 
 //
 const useStyles = makeStyles((theme) => ({
@@ -178,7 +179,11 @@ function Vehicle() {
                             msg: 'Delete Vehicle',
                             type: 'error',
                           });
-                          storeVehicle.listVehicleDelete(data.id);
+                          // storeVehicle.listVehicleDelete(data.id);
+
+                          //  FROM Backend  SERVICE
+                          deleteListVehicleFromService(data.id)
+                          storeVehicle.listVehicle = getListVehicleFromService()
                         },
                       });
                     }}

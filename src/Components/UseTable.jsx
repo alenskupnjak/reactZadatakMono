@@ -8,7 +8,6 @@ import {
   TablePagination,
   TableSortLabel,
 } from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
 
 //
 // CSS
@@ -95,35 +94,6 @@ function UseTable(record, headerCell, storeTemp) {
           storeTemp.storeUseTable.handleChangeRowsPerPage(e)
         }
       ></TablePagination>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-          color: storeTemp.filterRecordLength === 0 && storeTemp.filterInputValue !== '' ? 'red' :'black'
-        }}
-      >
-        {storeTemp.filterRecordLength === 0 && storeTemp.filterInputValue !== ''
-          ? 'No filter data!'
-          : 'Page'}
-        <Pagination
-          className={classes.pagination}
-          color="primary"
-          hideNextButton={true}
-          hidePrevButton={true}
-          page={storeTemp.storeUseTable.page + 1}
-          count={
-            storeTemp.filterRecordLength === 0 &&
-            storeTemp.filterInputValue === ''
-              ? Math.ceil(record.length / storeTemp.storeUseTable.rowsPerPage)
-              : Math.ceil(
-                  storeTemp.filterRecordLength /
-                    storeTemp.storeUseTable.rowsPerPage,
-                )
-          }
-        ></Pagination>
-      </div>
     </div>
   );
 
