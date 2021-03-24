@@ -1,7 +1,7 @@
 import { makeObservable, observable, action } from 'mobx';
 
 class UseTableSort {
-  constructor() {
+  constructor(dataObject) {
     makeObservable(this, {
       pages: observable,
       page: observable,
@@ -19,9 +19,14 @@ class UseTableSort {
       handleChangeRowsPerPage: action,
       descendingComparator: action,
       sortTable: observable,
+
+      dataExample: observable,
     });
+
+    this.dataObject = dataObject;
   }
 
+  dataExample = this.dataObject;
   pages = [5, 10, 25];
   // Start page for sorting and filtering
   page = 0;
@@ -42,15 +47,21 @@ class UseTableSort {
 
   // set order sort
   setOrderSort() {
+    console.log('setOrderSort');
+
     if (this.orderSort === 'asc') {
       this.orderSort = 'desc';
     } else {
       this.orderSort = 'asc';
     }
+
+    console.log(this.orderSort);
   }
 
   //  define column to sort
   setOrderSortBy(sortColumn) {
+    console.log('xxxvvvv');
+
     this.orderSortBy = sortColumn;
   }
 
@@ -69,7 +80,10 @@ class UseTableSort {
     return 0;
   }
 
-  sortTable(recordData) {   
+  sortTable(recordData) {
+    console.log(recordData);
+    console.log('pokus', this.dataExample);
+
     // init setup sort
     if (!this.orderSort) {
       return recordData;

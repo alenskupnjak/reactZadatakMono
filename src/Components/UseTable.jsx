@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
 function UseTable(record, headerCell, storeTemp) {
   const classes = useStyles();
 
+  console.log(headerCell);
+  
+
   // HEADER table
   const TblHeader = (props) => {
     return (

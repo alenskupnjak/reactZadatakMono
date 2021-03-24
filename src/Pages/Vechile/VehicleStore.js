@@ -59,7 +59,7 @@ class Store {
     });
   }
 
-  storeUseTable = new UseTableSort();
+  storeUseTable = new UseTableSort({ data: 'this.listVehicle' });
 
   // Init value
   vehicleFormValue = getInitVehicleValue();
@@ -112,14 +112,14 @@ class Store {
   get listVehicleGet() {
     const listVehicle = this.listVehicle.map((data) => {
       // console.log(storeProducers.listModelGet);
-      
+
       const model = storeProducers.listModelGet.find((dataModel) => {
         // console.log(dataModel.id, data.modelAuto);
         return dataModel.id === data.modelAuto;
       });
       // console.log('model', model);
       // console.log(storeProducers.listProducerGet);
-      
+
       const prod = storeProducers.listProducerGet.find((dataProd) => {
         return dataProd.id === model.producerId;
       });
