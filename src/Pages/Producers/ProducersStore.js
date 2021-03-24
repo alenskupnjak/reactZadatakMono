@@ -80,7 +80,7 @@ class Producers {
   // set filter init value
   filterInputValue = '';
 
-  filterRecordLength = 0;
+  filterRecordLength = getListModelFromService().length;
 
   confirmDialog = {
     isOpen: false,
@@ -202,32 +202,6 @@ class Producers {
     return listModel;
   }
 
-  // //
-  // // PUT - add value to ModelVehicle list
-  // listModelPut(data) {
-  //   this.listModel.push(data);
-  // }
-
-  //
-  // // DELETE - delete one record from Vehicle list
-  // listModelDelete(id) {
-  //   const index = this.listModel.findIndex((data) => {
-  //     return data.id === id;
-  //   });
-  //   // delete record from list
-  //   this.listModel.splice(index, 1);
-  // }
-
-  //
-  // // UPDATE - change one record in Model list
-  // listModelUpdate(updateData) {
-  //   const index = this.listModel.findIndex((data) => {
-  //     return data.id === updateData.id;
-  //   });
-
-  //   this.listModel.splice(index, 1, updateData);
-  // }
-
   //
   // Open /close dialog
   setOpenCustomDialog(data) {
@@ -251,7 +225,7 @@ class Producers {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(0);
+          this.setFilterRecordLength(items.length)
           return items;
         },
       };

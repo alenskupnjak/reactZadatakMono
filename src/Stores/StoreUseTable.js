@@ -47,21 +47,15 @@ class UseTableSort {
 
   // set order sort
   setOrderSort() {
-    console.log('setOrderSort');
-
     if (this.orderSort === 'asc') {
       this.orderSort = 'desc';
     } else {
       this.orderSort = 'asc';
     }
-
-    console.log(this.orderSort);
   }
 
   //  define column to sort
   setOrderSortBy(sortColumn) {
-    console.log('xxxvvvv');
-
     this.orderSortBy = sortColumn;
   }
 
@@ -81,7 +75,7 @@ class UseTableSort {
   }
 
   sortTable(recordData) {
-    console.log(recordData);
+    // console.log(recordData);
     console.log('pokus', this.dataExample);
 
     // init setup sort

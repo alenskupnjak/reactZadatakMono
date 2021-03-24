@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#0000001a',
       cursor: 'pointer',
     },
-    '& .MuiButton-root ': {
-      minWidth: '25px',
+    '& .MuiButton-root': {
+      minWidth: '5px',
       backgroundColor: '#faebd7',
     },
   },
@@ -49,20 +49,34 @@ const useStyles = makeStyles((theme) => ({
       color: '#fff',
     },
   },
+  custom: {
+    justifyContent:'center',
+    alignItems:'center',
+    textAlign:'center',
+    color:'#fff',
+    // margin:'auto',
+    // paddingLeft:'5px',
+    // '&.MuiButton-startIcon': {
+    //   marginRight: '0px',
+    //   marginLeft: '0px',
+    //   color: '#fff',
+    // },
+    '&.MuiButton-root': {
+      minWidth: '5px',
+      // backgroundColor: '#faebd7',
+    },
+    '& .MuiSvgIcon-root': {
+      // color:'green',
+      marginLeft: '10px',
+    },
+  },
 }));
 
 //
 //  MAIN
 function UseTableNew(props) {
   const classes = useStyles();
-  console.log(props);
-
-  // const { storeUseTable, headCellVechileData } = props.store;
   const { store } = props;
-  console.log(store);
-  console.log(store.headCellVechileData);
-  console.log(store.storeUseTable);
-  console.log(store.storeUseTable.orderSort);
 
   return (
     <React.Fragment>
@@ -78,8 +92,6 @@ function UseTableNew(props) {
                     active={data.id === store.storeUseTable.orderSort}
                     direction={store.storeUseTable.orderSort}
                     onClick={() => {
-                      console.log('New');
-
                       props.store.storeUseTable.setOrderSortBy(data.id);
                       props.store.storeUseTable.setOrderSort();
                     }}
@@ -108,8 +120,9 @@ function UseTableNew(props) {
                   variant="contained"
                   style={{
                     backgroundColor: '#2543C5',
-                    padding: '10px',
-                    marginRight: '5px',
+                    padding: '7px',
+                    marginRight: '15px',
+                    alignItems:'center'
                   }}
                   onClick={() => {
                     props.store.setOpenCustomDialog(true);
@@ -130,8 +143,8 @@ function UseTableNew(props) {
                   variant="outlined"
                   style={{
                     backgroundColor: '#f83245',
-                    padding: '10px',
-                    marginRight: '0px',
+                    padding: '7px',
+                    marginRight: '10px',
                   }}
                   onClick={() => {
                     props.store.setConfirmDialog({
@@ -148,6 +161,7 @@ function UseTableNew(props) {
                         //  FROM Backend  SERVICE
                         deleteListVehicleFromService(data.id);
                         props.store.listVehicle = getListVehicleFromService();
+                        props.store.filterRecordLength = getListVehicleFromService().length;
                       },
                     });
                   }}
@@ -165,12 +179,7 @@ function UseTableNew(props) {
         <TablePagination
           rowsPerPageOptions={props.store.storeUseTable.pages}
           component="div"
-          count={
-            props.store.filterRecordLength === 0 &&
-            props.store.filterInputValue === ''
-              ? props.store.listVehicleGet.length
-              : props.store.filterRecordLength
-          }
+          count={props.store.filterRecordLength}
           rowsPerPage={props.store.storeUseTable.rowsPerPage}
           page={props.store.storeUseTable.page}
           onChangePage={(e, newPage) => {

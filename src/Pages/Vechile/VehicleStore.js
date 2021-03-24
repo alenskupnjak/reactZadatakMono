@@ -72,7 +72,7 @@ class Store {
   // filter search init value
   filterInputValue = '';
 
-  filterRecordLength = 0;
+  filterRecordLength = getListVehicleFromService().length;
 
   confirmDialog = {
     isOpen: false,
@@ -98,14 +98,6 @@ class Store {
       [name]: value,
     };
   }
-
-  //
-  // // PUT - add value to Vehicle list
-  // listVehiclePut(data) {
-  //   this.listVehicle.push(data);
-  //   // after save reset form
-  //   this.vehicleFormValue = getInitVehicleValue();
-  // }
 
   //
   // GET - pull data from Vehicle list
@@ -141,28 +133,6 @@ class Store {
     return listVehicle;
   }
 
-  //
-  // // DELETE - delete one record from Vehicle list
-  // listVehicleDelete(id) {
-  //   const index = this.listVehicle.findIndex((data) => {
-  //     return data.id === id;
-  //   });
-  //   // delete record from list
-  //   this.listVehicle.splice(index, 1);
-  //   console.table(this.listVehicleGet);
-  // }
-
-  //
-  // UPDATE - change one record in Vehicle list
-  // listVehicleUpdate(updateData) {
-  //   const index = this.listVehicle.findIndex((data) => {
-  //     return data.id === updateData.id;
-  //   });
-
-  //   //  replace (UPDATE) value
-  //   this.listVehicle.splice(index, 1, updateData);
-  // }
-
   //  Open/Close dialog
   setOpenCustomDialog(data) {
     this.openCustomDialog = data;
@@ -176,7 +146,6 @@ class Store {
   setFilterFn(e) {
     this.filterFn = {
       fn: (items) => {
-        this.setFilterRecordLength(0);
         return items;
       },
     };
@@ -195,7 +164,7 @@ class Store {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(0);
+          this.setFilterRecordLength(items.length)
           return items;
         },
       };

@@ -40,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
 function UseTable(record, headerCell, storeTemp) {
   const classes = useStyles();
 
-  console.log(headerCell);
-  
-
   // HEADER table
   const TblHeader = (props) => {
     return (
@@ -82,12 +79,7 @@ function UseTable(record, headerCell, storeTemp) {
       <TablePagination
         rowsPerPageOptions={storeTemp.storeUseTable.pages}
         component="div"
-        count={
-          storeTemp.filterRecordLength === 0 &&
-          storeTemp.filterInputValue === ''
-            ? record.length
-            : storeTemp.filterRecordLength
-        }
+        count={storeTemp.filterRecordLength}
         rowsPerPage={storeTemp.storeUseTable.rowsPerPage}
         page={storeTemp.storeUseTable.page}
         onChangePage={(e, newPage) => {

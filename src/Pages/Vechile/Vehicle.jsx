@@ -88,7 +88,7 @@ function Vehicle() {
                     badgeContent={
                       storeVehicle.filterInputValue === ''
                         ? 0
-                        : storeVehicle.filterRecordLength.toString()
+                        : storeVehicle.filterRecordLength
                     }
                   >
                     <Search />
@@ -114,8 +114,6 @@ function Vehicle() {
         </Toolbar>
 
         <UseTableNew store={storeVehicle}></UseTableNew>
-
-        
       </Paper>
       <CustomOpenDialog
         openCustomDialog={storeVehicle.openCustomDialog}

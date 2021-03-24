@@ -132,8 +132,6 @@ function Producers() {
           </Button>
         </Toolbar>
 
-        {/* <UseTableNew store={storeProducers}></UseTableNew> */}
-
         <TblContainer>
           <TblHeader css={classes.tablehead}></TblHeader>
           <TableBody>
@@ -197,6 +195,7 @@ function Producers() {
                           // storeProducers.listModelDelete(data.id);
                           deleteListModelFromService(data.id);
                           storeProducers.listModel = getListModelFromService();
+                          storeProducers.filterRecordLength = getListModelFromService().length;
                           // storeProducers.listProducerDelete(data.producer);
                         },
                       });
