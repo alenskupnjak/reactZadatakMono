@@ -111,12 +111,15 @@ class Store {
   // GET - pull data from Vehicle list
   get listVehicleGet() {
     const listVehicle = this.listVehicle.map((data) => {
+      // console.log(storeProducers.listModelGet);
+      
       const model = storeProducers.listModelGet.find((dataModel) => {
-        // console.log(dataModelAuto, data.id);
+        // console.log(dataModel.id, data.modelAuto);
         return dataModel.id === data.modelAuto;
       });
       // console.log('model', model);
-
+      // console.log(storeProducers.listProducerGet);
+      
       const prod = storeProducers.listProducerGet.find((dataProd) => {
         return dataProd.id === model.producerId;
       });

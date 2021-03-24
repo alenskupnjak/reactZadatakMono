@@ -26,6 +26,13 @@ import Notification from '../../Components/Notification';
 import { storeVehicle } from '../Vechile/VehicleStore';
 import { storeProducers } from './ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
+import {
+  deleteListVehicleFromService,
+  deleteListModelFromService,
+  getListModelFromService,
+  getListVehicleFromService,
+
+} from '../../Common/VehicleService';
 
 // CSS
 const useStyles = makeStyles((theme) => ({
@@ -177,11 +184,17 @@ function Producers() {
                             type: 'error',
                           });
                           storeVehicle.listVehicleGet.forEach((dataVechile) => {
+                            // console.log(data.id, dataVechile.modelAuto);
+
                             if (data.id === dataVechile.modelAuto) {
-                              storeVehicle.listVehicleDelete(dataVechile.id);
+                              // storeVehicle.listVehicleDelete(dataVechile.id);
+                              deleteListVehicleFromService(dataVechile.id);
+                              storeVehicle.listVehicle = getListVehicleFromService();
                             }
                           });
-                          storeProducers.listModelDelete(data.id);
+                          // storeProducers.listModelDelete(data.id);
+                          deleteListModelFromService(data.id);
+                          storeProducers.listModel = getListModelFromService();
                           // storeProducers.listProducerDelete(data.producer);
                         },
                       });

@@ -53,8 +53,26 @@ const listModelVechile = () => [
   { id: 'm13', model: 'TOYOTA 3', producerId: 'p6' },
 ];
 
-export const getListModelVechileData = () => {
-  return listModelVechile();
+// FAKE BACKEND
+let listModelLikeBackend = [];
+const getlistModelLikeBackendData = () => {
+  listModelLikeBackend = listModelVechile();
+  console.log(listModelLikeBackend);
+};
+getlistModelLikeBackendData();
+
+export const getListModelFromService = () => {
+  return listModelLikeBackend;
+};
+
+//
+// DELETE
+export const deleteListModelFromService = (id) => {
+  const index = listModelLikeBackend.findIndex((data) => {
+    return data.id === id;
+  });
+  listModelLikeBackend.splice(index, 1);
+  console.table('Delete MODEL from service', listModelLikeBackend);
 };
 
 //
@@ -82,8 +100,6 @@ export const getCellHeaderProducers = () => {
   return headCellProducer();
 };
 
-
-
 const listVehicleInit = () => [
   {
     id: 'idx001',
@@ -92,7 +108,8 @@ const listVehicleInit = () => [
     mobile: '111111',
     city: 'Sesvete',
     motor: 'diesel',
-    sellDate: 'Mon Feb 01 2020 11:51:00 GMT+0100 (Central European Standard Time)',
+    sellDate:
+      'Mon Feb 01 2020 11:51:00 GMT+0100 (Central European Standard Time)',
     isLoan: true,
   },
   {
@@ -247,8 +264,6 @@ const listVehicleInit = () => [
   },
 ];
 
-
-
 // FAKE BACKEND
 let listVechileLikeBackend = [];
 const getListVehicleInitBackendData = () => {
@@ -257,42 +272,40 @@ const getListVehicleInitBackendData = () => {
 };
 getListVehicleInitBackendData();
 
-
 //
-// init FAKE backend 
+// init FAKE backend
 
 // GET
 export const getListVehicleFromService = () => {
   console.table('GET data from service');
   console.table(listVechileLikeBackend);
-  
+
   return listVechileLikeBackend;
 };
 
-
-// 
+//
 // UPDATE
 export const updateListVehicleFromService = (updateData) => {
   const index = listVechileLikeBackend.findIndex((data) => {
     return data.id === updateData.id;
   });
   listVechileLikeBackend.splice(index, 1, updateData);
-  console.log('UPDATE vehicle in service',listVechileLikeBackend);
+  console.log('UPDATE vehicle in service', listVechileLikeBackend);
 };
 
-// 
+//
 // CREATE
 export const createListVehicleFromService = (data) => {
-  listVechileLikeBackend.push(data)
-  console.log('CREATE vehicle in service',listVechileLikeBackend);
+  listVechileLikeBackend.push(data);
+  console.log('CREATE vehicle in service', listVechileLikeBackend);
 };
 
-// 
+//
 // DELETE
 export const deleteListVehicleFromService = (id) => {
   const index = listVechileLikeBackend.findIndex((data) => {
     return data.id === id;
-  });  
+  });
   listVechileLikeBackend.splice(index, 1);
-  console.table('Delete from service',listVechileLikeBackend);
+  console.table('Delete from service', listVechileLikeBackend);
 };

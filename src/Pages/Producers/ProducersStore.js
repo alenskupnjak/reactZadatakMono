@@ -1,7 +1,7 @@
 import { makeObservable, observable, action, computed } from 'mobx';
 import {
   getInitProducerValue,
-  getListModelVechileData,
+  getListModelFromService,
   getCellHeaderProducers,
   getListProducersData,
 } from '../../Common/VehicleService';
@@ -68,7 +68,7 @@ class Producers {
   listProducer = getListProducersData();
 
   // Init value for models
-  listModel = getListModelVechileData();
+  listModel = getListModelFromService();
 
   // open dialog
   openCustomDialog = false;
