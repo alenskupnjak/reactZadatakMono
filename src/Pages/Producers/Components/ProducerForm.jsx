@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 function ProducerForm(props) {
   const classes = useStyles();
 
-
   return (
     <Grid container>
       <Grid item xs={12}>

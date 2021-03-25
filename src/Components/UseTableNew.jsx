@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 import {
   makeStyles,
   Table,
@@ -13,11 +14,6 @@ import {
 import ListIcon from '@material-ui/icons/List';
 import { storeNotification } from '../Stores/StoreNotification';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-// import {
-//   deleteListVehicleFromService,
-//   getListVehicleFromService,
-// } from '../Common/VehicleService';
-import { observer } from 'mobx-react';
 
 //
 // CSS
@@ -56,10 +52,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     '&.MuiButton-root': {
       minWidth: '5px',
-      // backgroundColor: '#faebd7',
     },
     '& .MuiSvgIcon-root': {
-      // color:'green',
       marginLeft: '10px',
     },
   },
@@ -70,9 +64,6 @@ const useStyles = makeStyles((theme) => ({
 function UseTableNew(props) {
   const classes = useStyles();
   const { store } = props;
-  console.log(store);
-  console.log(store.css);
-  console.log(props.css);
 
   return (
     <React.Fragment>
@@ -114,12 +105,6 @@ function UseTableNew(props) {
                 }
                 return null
               })}
-              {/* <TableCell> {data.model} </TableCell>
-              <TableCell> {data.email} </TableCell>
-              <TableCell> {data.mobile} </TableCell>
-              <TableCell> {data.city} </TableCell>
-              <TableCell> {data.motor} </TableCell>
-              <TableCell> {data.producer} </TableCell> */}
               <TableCell>
                 <Button
                   id={data.id}
@@ -139,7 +124,7 @@ function UseTableNew(props) {
                       msg: 'Edit Vehicle',
                       type: 'info',
                     });
-                    props.store.vehicleFormValue = data;
+                    props.store.onUpdate(data)
                     props.store.setDisableSubmitButton(false);
                   }}
                   startIcon={<ListIcon></ListIcon>}
@@ -167,9 +152,6 @@ function UseTableNew(props) {
                         });
                         //  FROM Backend  SERVICE
                         props.store.onDelete(data.id)
-                        // deleteListVehicleFromService(data.id);
-                        // props.store.listVehicle = getListVehicleFromService();
-                        // props.store.filterRecordLength = getListVehicleFromService().length;
                       },
                     });
                   }}

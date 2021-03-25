@@ -94,30 +94,6 @@ export const deleteListModelFromService = (id) => {
   console.table(listModelLikeBackend);
 };
 
-//
-// value for Vechile TABLE header
-const headCellVehicle = () => [
-  { id: 'model', label: 'Model' },
-  { id: 'email', label: 'Email', disabledSorting: true },
-  { id: 'mobile', label: 'Mobile' },
-  { id: 'city', label: 'City' },
-  { id: 'motor', label: 'Motor' },
-  { id: 'producer', label: 'Producer' },
-  { id: 'action', label: 'Action', disabledSorting: true },
-];
-export const getHeadCellVechileData = () => {
-  return headCellVehicle();
-};
-
-const headCellProducer = () => [
-  { id: 'model', label: 'Model' },
-  { id: 'producer', label: 'Producer' },
-  { id: 'action', label: 'Action', disabledSorting: true },
-];
-
-export const getCellHeaderProducers = () => {
-  return headCellProducer();
-};
 
 const listVehicleInit = () => [
   {

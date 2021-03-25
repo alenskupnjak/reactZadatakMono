@@ -1,7 +1,6 @@
 import { makeObservable, observable, action } from 'mobx';
 
 class UseTableSort {
-
   constructor(data) {
     makeObservable(this, {
       pages: observable,
@@ -75,7 +74,8 @@ class UseTableSort {
 
   sortTable(recordData) {
     // console.log(recordData);
-    console.log('pokus', this.data);
+    // console.log('pokus', this.data);
+    // console.log(this.data.filterRecordLength);
 
     // init setup sort
     if (!this.orderSort) {

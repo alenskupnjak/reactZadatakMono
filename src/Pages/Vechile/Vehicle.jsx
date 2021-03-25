@@ -30,10 +30,7 @@ const useStyles = makeStyles((theme) => ({
   addButton: {
     position: 'absolute',
     right: '10px',
-    // border:'none',
     '&.MuiButtonBase-root': {
-      // color:'red',
-      // border:'3px solid white',
       borderStyle: 'outset',
       cursor: 'default',
     },
@@ -82,7 +79,7 @@ function Vehicle() {
             className={classes.searchInput}
             label="Filter Model"
             name="filter"
-            value={storeVehicle.filterInputValue}
+            value={storeVehicle.filterInputValue.toString()}
             onChange={(e) => {
               storeVehicle.handleSearch(e);
             }}
@@ -120,9 +117,9 @@ function Vehicle() {
         </Toolbar>
 
         <UseTableNew store={storeVehicle} css={classes.tablehead}></UseTableNew>
-
-        
       </Paper>
+
+      {/* Produce FORM */}
       <CustomOpenDialog
         openCustomDialog={storeVehicle.openCustomDialog}
         store={storeVehicle}
@@ -130,10 +127,14 @@ function Vehicle() {
       >
         <VehicleForm store={storeVehicle}></VehicleForm>
       </CustomOpenDialog>
+
+      {/* Notification */}
       <Notification
         notify={storeNotification.notify.isOpen}
         store={storeNotification}
       ></Notification>
+
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         dataDialog={storeVehicle.confirmDialog.isOpen}
         store={storeVehicle}

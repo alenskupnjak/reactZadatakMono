@@ -2,7 +2,6 @@ import { makeObservable, observable, action, computed } from 'mobx';
 import {
   getListVehicleFromService,
   getInitVehicleValue,
-  getHeadCellVechileData,
   createListVehicleFromService,
   updateListVehicleFromService,
   deleteListVehicleFromService,
@@ -20,10 +19,7 @@ class Store {
       vehicleFormValue: observable,
       setVehicleValue: action,
       listVehicle: observable,
-      // listVehiclePut: action,
       listVehicleGet: computed,
-      // listVehicleDelete: action,
-      // listVehicleUpdate: action,
 
       openCustomDialog: observable,
       setOpenCustomDialog: action,
@@ -58,15 +54,29 @@ class Store {
       headCellData: computed,
       resetFormValue: action,
       onDelete: action,
+      onUpdate: action,
     });
   }
+
+  // value for Vechile TABLE header
+  headCellVehicle = () => [
+    { id: 'model', label: 'Model' },
+    { id: 'email', label: 'Email', disabledSorting: true },
+    { id: 'mobile', label: 'Mobile' },
+    { id: 'city', label: 'City' },
+    { id: 'motor', label: 'Motor' },
+    { id: 'producer', label: 'Producer' },
+    { id: 'action', label: 'Action', disabledSorting: true },
+  ];
 
   // Init value
   vehicleFormValue = getInitVehicleValue();
   listVehicle = getListVehicleFromService();
+  filterRecordLength = getListVehicleFromService().length;
+
   storeUseTable = new UseTableSort({
     data: this.listVehicle,
-    pokus: 'Ajmosss',
+    filterRecordLength: this.filterRecordLength,
   });
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
@@ -76,7 +86,7 @@ class Store {
   // filter search init value
   filterInputValue = '';
 
-  filterRecordLength = getListVehicleFromService().length;
+ 
 
   confirmDialog = {
     isOpen: false,
@@ -150,6 +160,7 @@ class Store {
   setFilterFn(e) {
     this.filterFn = {
       fn: (items) => {
+        this.setFilterRecordLength(items.length);
         return items;
       },
     };
@@ -190,7 +201,6 @@ class Store {
 
   //
   setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
-    // console.log(isOpen, title, subTitle, onConfirm);
     this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle };
   }
 
@@ -277,10 +287,6 @@ class Store {
         // Generate fake ID
         storeVehicle.vehicleFormValue.id = this.generateId();
 
-
-
-
-
         // save record to BACKEND
         const prepareDataForBackend = {
           id: storeVehicle.vehicleFormValue.id,
@@ -296,8 +302,6 @@ class Store {
         //  FROM Backend  SERVICE
         createListVehicleFromService(prepareDataForBackend);
         this.listVehicle = getListVehicleFromService();
-
-
 
         // Display info on screen
         storeNotification.setNotify({
@@ -375,7 +379,7 @@ class Store {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return this.storeUseTable
-      .sortTable(this.filterFn.fn(this.listVehicleGet), this.filterRecordLength)
+      .sortTable(this.filterFn.fn(this.listVehicleGet))
       .slice()
       .splice(
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,
@@ -384,7 +388,7 @@ class Store {
   }
 
   get headCellData() {
-    return getHeadCellVechileData();
+    return this.headCellVehicle();
   }
 
   //  reset vehicle form
@@ -396,6 +400,9 @@ class Store {
     deleteListVehicleFromService(id);
     this.listVehicle = getListVehicleFromService();
     this.setFilterRecordLength(this.listVehicle.length);
+  }
+  onUpdate(data) {
+    this.vehicleFormValue = data;
   }
 }
 

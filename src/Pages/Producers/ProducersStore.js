@@ -2,7 +2,6 @@ import { makeObservable, observable, action, computed } from 'mobx';
 import {
   getInitProducerValue,
   getListModelFromService,
-  getCellHeaderProducers,
   getListProducersData,
   createListModelFromService,
   updateListModelFromService,
@@ -40,7 +39,7 @@ class Producers {
       setAddOrUpdate: action,
 
       filterFn: observable,
-      setFilterFn: action,
+      setFilterFn: observable,
       filterInputValue: observable,
       setFilterInputValue: action,
       filterRecordLength: observable,
@@ -63,8 +62,16 @@ class Producers {
       afterSortingAndFiltering: observable,
       headCellData: computed,
       onDelete: action,
+      onUpdate: action,
     });
   }
+
+  // value for MODELS table header
+  headCellProducer = () => [
+    { id: 'model', label: 'Model' },
+    { id: 'producer', label: 'Producer' },
+    { id: 'action', label: 'Action', disabledSorting: true },
+  ];
 
   storeUseTable = new UseTableSort();
 
@@ -101,7 +108,7 @@ class Producers {
   };
 
   setFilterRecordLength(length) {
-    this.filterRecordLength = length;
+    return (this.filterRecordLength = length);
   }
 
   setFilterInputValue(eTargetValue) {
@@ -219,9 +226,18 @@ class Producers {
     this.addOrUpdate = data;
   }
 
+  setFilterFn(e) {
+    this.filterFn = {
+      fn: (items) => {
+        this.setFilterRecordLength(items.length);
+        return items;
+      },
+    };
+  }
+
   //
   // define filter search function
-  setFilterFn(e) {
+  handleSearch(e) {
     // new input filter value
     this.setFilterInputValue(e.target.value);
     // set page ro first
@@ -464,8 +480,6 @@ class Producers {
         producerId: producerNew.id,
       };
 
-      // this.listModelUpdate(dataVehicle);
-
       // UPDATE from server
       updateListModelFromService(dataVehicle);
       this.listModel = getListModelFromService();
@@ -490,7 +504,7 @@ class Producers {
   // return filtered and sorted data
   afterSortingAndFiltering() {
     return this.storeUseTable
-      .sortTable(this.filterFn.fn(this.listModelGet), this.filterRecordLength)
+      .sortTable(this.filterFn.fn(this.listModelGet))
       .slice()
       .splice(
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,
@@ -499,16 +513,14 @@ class Producers {
   }
 
   get headCellData() {
-    return getCellHeaderProducers();
+    return this.headCellProducer();
   }
 
   onDelete(id) {
     storeVehicle.listVehicleGet.forEach((dataVechile) => {
-      console.log(id, dataVechile.modelAuto);
+      // console.log(id, dataVechile.modelAuto);
 
       if (id === dataVechile.modelAuto) {
-        console.log('%c brisem', 'color: red');
-        // storeVehicle.listVehicleDelete(dataVechile.id);
         deleteListVehicleFromService(dataVechile.id);
         storeVehicle.listVehicle = getListVehicleFromService();
       }
@@ -517,6 +529,10 @@ class Producers {
     deleteListModelFromService(id);
     storeProducers.listModel = getListModelFromService();
     this.setFilterRecordLength(storeProducers.listModel.length);
+  }
+
+  onUpdate(data) {
+    this.producerFormValue = data;
   }
 }
 

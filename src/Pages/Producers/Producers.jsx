@@ -3,9 +3,6 @@ import { observer } from 'mobx-react';
 import {
   makeStyles,
   Paper,
-  // TableBody,
-  // TableRow,
-  // TableCell,
   Toolbar,
   InputAdornment,
   Button,
@@ -14,25 +11,14 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-// import EditIcon from '@material-ui/icons/Edit';
-// import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import ProducerForm from './Components/ProducerForm';
-// import UseTable from '../../Components/UseTable';
 import UseTableNew from '../../Components/UseTableNew';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
-
-// import { storeVehicle } from '../Vechile/VehicleStore';
 import { storeProducers } from './ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
-// import {
-//   deleteListVehicleFromService,
-//   deleteListModelFromService,
-//   getListModelFromService,
-//   getListVehicleFromService,
-// } from '../../Common/VehicleService';
 
 // CSS
 const useStyles = makeStyles((theme) => ({
@@ -84,9 +70,9 @@ function Producers() {
             className={classes.searchInput}
             label="Filter Model"
             name="filter"
-            value={storeProducers.filterInputValue}
+            value={storeProducers.filterInputValue.toString()}
             onChange={(e) => {
-              storeProducers.setFilterFn(e);
+              storeProducers.handleSearch(e);
             }}
             InputProps={{
               startAdornment: (
@@ -126,11 +112,12 @@ function Producers() {
             ADD MODEL
           </Button>
         </Toolbar>
-
-        <UseTableNew
-          store={storeProducers}
-          css={classes.tablehead}
-        ></UseTableNew>
+        
+          <UseTableNew
+            store={storeProducers}
+            css={classes.tablehead}
+          ></UseTableNew>
+        
       </Paper>
 
       {/* Produce FORM */}
@@ -148,7 +135,7 @@ function Producers() {
         store={storeNotification}
       ></Notification>
 
-      {/* CONFIRM DIALOG*/}
+      {/* CONFIRM DIALOG */}
       <ConfirmDialog
         dataDialog={storeProducers.confirmDialog.isOpen}
         store={storeProducers}
