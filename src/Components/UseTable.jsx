@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 //
 //  MAIN
-function UseTable(record, headerCell, storeTemp) {
+function UseTable(record, headCellData, storeTemp) {
   const classes = useStyles();
 
   // HEADER table
@@ -45,7 +45,7 @@ function UseTable(record, headerCell, storeTemp) {
     return (
       <TableHead className={props.css}>
         <TableRow>
-          {headerCell.map((data) => (
+          {headCellData.map((data) => (
             <TableCell key={data.id}>
               {data.disabledSorting ? (
                 data.label

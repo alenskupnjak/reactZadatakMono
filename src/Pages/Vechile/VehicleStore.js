@@ -5,10 +5,13 @@ import {
   getHeadCellVechileData,
   createListVehicleFromService,
   updateListVehicleFromService,
+  deleteListVehicleFromService,
+ 
 } from '../../Common/VehicleService';
 import { storeProducers } from '../Producers/ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
 import UseTableSort from '../../Stores/StoreUseTable';
+
 
 //
 // MAIN MAIN MAIN
@@ -54,16 +57,17 @@ class Store {
       resetForm: action,
       findProducerVehicle: action,
       afterSortingAndFiltering: observable,
-      headCellVechileData: computed,
+      headCellData: computed,
       resetFormValue: action,
+      onDelete:action
     });
   }
 
-  storeUseTable = new UseTableSort({ data: 'this.listVehicle' });
-
+  
   // Init value
   vehicleFormValue = getInitVehicleValue();
   listVehicle = getListVehicleFromService();
+  storeUseTable = new UseTableSort({ data: this.listVehicle, pokus: 'Ajmosss' });
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
 
@@ -307,12 +311,6 @@ class Store {
         });
       } else {
         // UPDATE
-        // // find model producer to store in model record
-        // const modelVeh = storeProducers.listModelGet.find((data) => {
-        //   return data.id === storeVehicle.vehicleFormValue.modelAuto;
-        // });
-        console.log(storeVehicle.vehicleFormValue.sellDate);
-
         const dataVehicle = {
           id: storeVehicle.vehicleFormValue.id,
           modelAuto: storeVehicle.vehicleFormValue.modelAuto,
@@ -389,13 +387,21 @@ class Store {
       );
   }
 
-  get headCellVechileData() {
+  get headCellData() {
     return getHeadCellVechileData();
   }
 
   //  reset vehicle form
   resetFormValue() {
     this.vehicleFormValue = getInitVehicleValue();
+  }
+
+
+  onDelete(id) {
+    console.log('da obriso sam');    
+    deleteListVehicleFromService(id);
+    this.listVehicle = getListVehicleFromService();
+    this.filterRecordLength = getListVehicleFromService().length;
   }
 }
 

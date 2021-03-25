@@ -23,15 +23,15 @@ import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
 
-import { storeVehicle } from '../Vechile/VehicleStore';
+// import { storeVehicle } from '../Vechile/VehicleStore';
 import { storeProducers } from './ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
-import {
-  deleteListVehicleFromService,
-  deleteListModelFromService,
-  getListModelFromService,
-  getListVehicleFromService,
-} from '../../Common/VehicleService';
+// import {
+//   deleteListVehicleFromService,
+//   deleteListModelFromService,
+//   getListModelFromService,
+//   getListVehicleFromService,
+// } from '../../Common/VehicleService';
 
 // CSS
 const useStyles = makeStyles((theme) => ({
@@ -77,7 +77,7 @@ function Producers() {
 
   const { TblContainer, TblHeader, TblPagination } = UseTable(
     storeProducers.listModelGet,
-    storeProducers.headCellProducers,
+    storeProducers.headCellData,
     storeProducers,
   );
 
@@ -132,6 +132,8 @@ function Producers() {
           </Button>
         </Toolbar>
 
+
+
         <TblContainer>
           <TblHeader css={classes.tablehead}></TblHeader>
           <TableBody>
@@ -183,20 +185,21 @@ function Producers() {
                             msg: 'Delete Model',
                             type: 'error',
                           });
-                          storeVehicle.listVehicleGet.forEach((dataVechile) => {
-                            // console.log(data.id, dataVechile.modelAuto);
+                          storeProducers.onDelete(data.id)
 
-                            if (data.id === dataVechile.modelAuto) {
-                              // storeVehicle.listVehicleDelete(dataVechile.id);
-                              deleteListVehicleFromService(dataVechile.id);
-                              storeVehicle.listVehicle = getListVehicleFromService();
-                            }
-                          });
-                          // storeProducers.listModelDelete(data.id);
-                          deleteListModelFromService(data.id);
-                          storeProducers.listModel = getListModelFromService();
-                          storeProducers.filterRecordLength = getListModelFromService().length;
-                          // storeProducers.listProducerDelete(data.producer);
+                          // storeVehicle.listVehicleGet.forEach((dataVechile) => {
+                          //   // console.log(data.id, dataVechile.modelAuto);
+
+                          //   if (data.id === dataVechile.modelAuto) {
+                          //     // storeVehicle.listVehicleDelete(dataVechile.id);
+                          //     deleteListVehicleFromService(dataVechile.id);
+                          //     storeVehicle.listVehicle = getListVehicleFromService();
+                          //   }
+                          // });
+                          // // storeProducers.listModelDelete(data.id);
+                          // deleteListModelFromService(data.id);
+                          // storeProducers.listModel = getListModelFromService();
+                          // storeProducers.filterRecordLength = getListModelFromService().length;
                         },
                       });
                     }}
@@ -209,6 +212,11 @@ function Producers() {
         </TblContainer>
 
         <TblPagination></TblPagination>
+
+
+
+
+
       </Paper>
 
       {/* Produce FORM */}

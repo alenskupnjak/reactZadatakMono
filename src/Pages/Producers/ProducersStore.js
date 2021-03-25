@@ -6,9 +6,13 @@ import {
   getListProducersData,
   createListModelFromService,
   updateListModelFromService,
+  deleteListVehicleFromService,
+  getListVehicleFromService,
+  deleteListModelFromService,
 } from '../../Common/VehicleService';
 import { storeNotification } from '../../Stores/StoreNotification';
 import UseTableSort from '../../Stores/StoreUseTable';
+import { storeVehicle } from '../../Pages/Vechile/VehicleStore';
 
 //
 // MAIN MAIN MAIN
@@ -40,7 +44,7 @@ class Producers {
       filterInputValue: observable,
       setFilterInputValue: action,
       filterRecordLength: observable,
-      setFilterRecordLength: action,
+      setFilterRecordLength: observable,
 
       confirmDialog: observable,
       setConfirmDialog: action,
@@ -57,7 +61,8 @@ class Producers {
       validationForm: action,
       handleInputChange: action,
       afterSortingAndFiltering: observable,
-      headCellProducers: computed,
+      headCellData: computed,
+      onDelete: action,
     });
   }
 
@@ -225,7 +230,7 @@ class Producers {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(items.length)
+          this.setFilterRecordLength(items.length);
           return items;
         },
       };
@@ -493,8 +498,25 @@ class Producers {
       );
   }
 
-  get headCellProducers() {
+  get headCellData() {
     return getCellHeaderProducers();
+  }
+
+  onDelete(id) {
+    storeVehicle.listVehicleGet.forEach((dataVechile) => {
+      console.log(id, dataVechile.modelAuto);
+
+      if (id === dataVechile.modelAuto) {
+        console.log('%c brisem', 'color: red');
+        // storeVehicle.listVehicleDelete(dataVechile.id);
+        deleteListVehicleFromService(dataVechile.id);
+        storeVehicle.listVehicle = getListVehicleFromService();
+      }
+    });
+    storeVehicle.setFilterRecordLength(getListVehicleFromService().length);
+    deleteListModelFromService(id);
+    storeProducers.listModel = getListModelFromService();
+    this.setFilterRecordLength(storeProducers.listModel.length);
   }
 }
 

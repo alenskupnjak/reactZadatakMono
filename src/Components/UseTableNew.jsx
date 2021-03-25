@@ -13,10 +13,10 @@ import {
 import ListIcon from '@material-ui/icons/List';
 import { storeNotification } from '../Stores/StoreNotification';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-import {
-  deleteListVehicleFromService,
-  getListVehicleFromService,
-} from '../Common/VehicleService';
+// import {
+//   deleteListVehicleFromService,
+//   getListVehicleFromService,
+// } from '../Common/VehicleService';
 import { observer } from 'mobx-react';
 
 //
@@ -50,17 +50,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   custom: {
-    justifyContent:'center',
-    alignItems:'center',
-    textAlign:'center',
-    color:'#fff',
-    // margin:'auto',
-    // paddingLeft:'5px',
-    // '&.MuiButton-startIcon': {
-    //   marginRight: '0px',
-    //   marginLeft: '0px',
-    //   color: '#fff',
-    // },
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#fff',
     '&.MuiButton-root': {
       minWidth: '5px',
       // backgroundColor: '#faebd7',
@@ -77,13 +70,14 @@ const useStyles = makeStyles((theme) => ({
 function UseTableNew(props) {
   const classes = useStyles();
   const { store } = props;
+  console.log(store.headCellData);
 
   return (
     <React.Fragment>
       <Table>
         <TableHead className={classes.tablehead}>
           <TableRow>
-            {store.headCellVechileData.map((data) => (
+            {store.headCellData.map((data) => (
               <TableCell key={data.id}>
                 {data.disabledSorting ? (
                   data.label
@@ -107,12 +101,23 @@ function UseTableNew(props) {
         <TableBody>
           {props.store.afterSortingAndFiltering().map((data) => (
             <TableRow key={data.id}>
-              <TableCell> {data.model} </TableCell>
+              {store.headCellData.map((datacell, index) => {
+                if (datacell.label.toLowerCase() !== 'action') {
+                  return (
+                    <TableCell key={index}>
+                      {' '}
+                      {data[datacell.label.toLowerCase()]}{' '}
+                    </TableCell>
+                  );
+                }
+                return null
+              })}
+              {/* <TableCell> {data.model} </TableCell>
               <TableCell> {data.email} </TableCell>
               <TableCell> {data.mobile} </TableCell>
               <TableCell> {data.city} </TableCell>
               <TableCell> {data.motor} </TableCell>
-              <TableCell> {data.producer} </TableCell>
+              <TableCell> {data.producer} </TableCell> */}
               <TableCell>
                 <Button
                   id={data.id}
@@ -122,7 +127,7 @@ function UseTableNew(props) {
                     backgroundColor: '#2543C5',
                     padding: '7px',
                     marginRight: '15px',
-                    alignItems:'center'
+                    alignItems: 'center',
                   }}
                   onClick={() => {
                     props.store.setOpenCustomDialog(true);
@@ -159,9 +164,10 @@ function UseTableNew(props) {
                           type: 'error',
                         });
                         //  FROM Backend  SERVICE
-                        deleteListVehicleFromService(data.id);
-                        props.store.listVehicle = getListVehicleFromService();
-                        props.store.filterRecordLength = getListVehicleFromService().length;
+                        props.store.onDelete(data.id)
+                        // deleteListVehicleFromService(data.id);
+                        // props.store.listVehicle = getListVehicleFromService();
+                        // props.store.filterRecordLength = getListVehicleFromService().length;
                       },
                     });
                   }}
