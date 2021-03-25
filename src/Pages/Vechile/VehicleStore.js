@@ -397,11 +397,21 @@ class Store {
   }
 
   onDelete(id) {
+    storeNotification.setNotify({
+      isOpen: true,
+      msg: 'Delete Vehicle',
+      type: 'error',
+    });
     deleteListVehicleFromService(id);
     this.listVehicle = getListVehicleFromService();
     this.setFilterRecordLength(this.listVehicle.length);
   }
   onUpdate(data) {
+    storeNotification.setNotify({
+      isOpen: true,
+      msg: 'Edit Vehicle',
+      type: 'info',
+    });
     this.vehicleFormValue = data;
   }
 }

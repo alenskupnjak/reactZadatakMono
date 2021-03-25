@@ -119,11 +119,6 @@ function UseTableNew(props) {
                   onClick={() => {
                     props.store.setOpenCustomDialog(true);
                     props.store.setAddOrUpdate('updateFormValue');
-                    storeNotification.setNotify({
-                      isOpen: true,
-                      msg: 'Edit Vehicle',
-                      type: 'info',
-                    });
                     props.store.onUpdate(data)
                     props.store.setDisableSubmitButton(false);
                   }}
@@ -141,15 +136,10 @@ function UseTableNew(props) {
                   onClick={() => {
                     props.store.setConfirmDialog({
                       isOpen: true,
-                      title: 'Are you sure to delete this Vehicle?',
+                      title: 'Are you sure to delete record?',
                       subTitle: "You can't undo this operation.",
                       onConfirm: () => {
                         props.store.setConfirmDialog({ isOpen: false });
-                        storeNotification.setNotify({
-                          isOpen: true,
-                          msg: 'Delete Vehicle',
-                          type: 'error',
-                        });
                         //  FROM Backend  SERVICE
                         props.store.onDelete(data.id)
                       },

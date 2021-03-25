@@ -517,6 +517,12 @@ class Producers {
   }
 
   onDelete(id) {
+    storeNotification.setNotify({
+      isOpen: true,
+      msg: 'Delete Model',
+      type: 'error',
+    });
+
     storeVehicle.listVehicleGet.forEach((dataVechile) => {
       // console.log(id, dataVechile.modelAuto);
 
@@ -532,6 +538,11 @@ class Producers {
   }
 
   onUpdate(data) {
+    storeNotification.setNotify({
+      isOpen: true,
+      msg: 'Edit Model',
+      type: 'info',
+    });
     this.producerFormValue = data;
   }
 }
