@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import {
   makeStyles,
   Paper,
-  TableBody,
-  TableRow,
-  TableCell,
+  // TableBody,
+  // TableRow,
+  // TableCell,
   Toolbar,
   InputAdornment,
   Button,
@@ -14,11 +14,12 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+// import EditIcon from '@material-ui/icons/Edit';
+// import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import ProducerForm from './Components/ProducerForm';
-import UseTable from '../../Components/UseTable';
+// import UseTable from '../../Components/UseTable';
+import UseTableNew from '../../Components/UseTableNew';
 import ConfirmDialog from '../../Components/ConfirmDialog';
 import CustomOpenDialog from '../../Components/CustomOpenDialog';
 import Notification from '../../Components/Notification';
@@ -75,12 +76,6 @@ const useStyles = makeStyles((theme) => ({
 function Producers() {
   const classes = useStyles();
 
-  const { TblContainer, TblHeader, TblPagination } = UseTable(
-    storeProducers.listModelGet,
-    storeProducers.headCellData,
-    storeProducers,
-  );
-
   return (
     <React.Fragment>
       <Paper className={classes.pageContent}>
@@ -101,7 +96,7 @@ function Producers() {
                     badgeContent={
                       storeProducers.filterInputValue === ''
                         ? 0
-                        : storeProducers.filterRecordLength.toString()
+                        : storeProducers.filterRecordLength
                     }
                   >
                     <Search />
@@ -132,91 +127,10 @@ function Producers() {
           </Button>
         </Toolbar>
 
-
-
-        <TblContainer>
-          <TblHeader css={classes.tablehead}></TblHeader>
-          <TableBody>
-            {storeProducers.afterSortingAndFiltering().map((data) => (
-              <TableRow key={data.id}>
-                <TableCell>{data.model}</TableCell>
-                <TableCell>{data.producer}</TableCell>
-                <TableCell>
-                  <Button
-                    id={data.id}
-                    className={classes.custom}
-                    variant="contained"
-                    style={{
-                      backgroundColor: 'orange',
-                      padding: '10px',
-                      marginRight: '5px',
-                    }}
-                    onClick={() => {
-                      storeProducers.setOpenCustomDialog(true);
-                      storeProducers.setAddOrUpdate('updateFormValue');
-                      storeNotification.setNotify({
-                        isOpen: true,
-                        msg: 'Edit Model',
-                        type: 'info',
-                      });
-                      storeProducers.producerFormValue = data;
-                      storeProducers.setDisableSubmitButton(false);
-                    }}
-                    startIcon={<EditIcon></EditIcon>}
-                  ></Button>
-                  <Button
-                    id={data.id}
-                    className={classes.custom}
-                    variant="outlined"
-                    style={{
-                      backgroundColor: '#f83245',
-                      padding: '10px',
-                      marginRight: '0px',
-                    }}
-                    onClick={() => {
-                      storeProducers.setConfirmDialog({
-                        isOpen: true,
-                        title: 'Are you sure to delete this Model?',
-                        subTitle: "You can't undo this operation.",
-                        onConfirm: () => {
-                          storeProducers.setConfirmDialog({ isOpen: false });
-                          storeNotification.setNotify({
-                            isOpen: true,
-                            msg: 'Delete Model',
-                            type: 'error',
-                          });
-                          storeProducers.onDelete(data.id)
-
-                          // storeVehicle.listVehicleGet.forEach((dataVechile) => {
-                          //   // console.log(data.id, dataVechile.modelAuto);
-
-                          //   if (data.id === dataVechile.modelAuto) {
-                          //     // storeVehicle.listVehicleDelete(dataVechile.id);
-                          //     deleteListVehicleFromService(dataVechile.id);
-                          //     storeVehicle.listVehicle = getListVehicleFromService();
-                          //   }
-                          // });
-                          // // storeProducers.listModelDelete(data.id);
-                          // deleteListModelFromService(data.id);
-                          // storeProducers.listModel = getListModelFromService();
-                          // storeProducers.filterRecordLength = getListModelFromService().length;
-                        },
-                      });
-                    }}
-                    startIcon={<DeleteOutlineIcon></DeleteOutlineIcon>}
-                  ></Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </TblContainer>
-
-        <TblPagination></TblPagination>
-
-
-
-
-
+        <UseTableNew
+          store={storeProducers}
+          css={classes.tablehead}
+        ></UseTableNew>
       </Paper>
 
       {/* Produce FORM */}

@@ -62,6 +62,12 @@ const useStyles = makeStyles((theme) => ({
       color: '#fff',
     },
   },
+  tablehead: {
+    '& .MuiTableCell-head': {
+      backgroundColor: '#2543C5',
+      color: '#fff',
+    },
+  },
 }));
 
 //
@@ -113,7 +119,9 @@ function Vehicle() {
           </Button>
         </Toolbar>
 
-        <UseTableNew store={storeVehicle}></UseTableNew>
+        <UseTableNew store={storeVehicle} css={classes.tablehead}></UseTableNew>
+
+        
       </Paper>
       <CustomOpenDialog
         openCustomDialog={storeVehicle.openCustomDialog}

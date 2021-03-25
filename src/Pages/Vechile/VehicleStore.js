@@ -6,12 +6,10 @@ import {
   createListVehicleFromService,
   updateListVehicleFromService,
   deleteListVehicleFromService,
- 
 } from '../../Common/VehicleService';
 import { storeProducers } from '../Producers/ProducersStore';
 import { storeNotification } from '../../Stores/StoreNotification';
 import UseTableSort from '../../Stores/StoreUseTable';
-
 
 //
 // MAIN MAIN MAIN
@@ -59,15 +57,17 @@ class Store {
       afterSortingAndFiltering: observable,
       headCellData: computed,
       resetFormValue: action,
-      onDelete:action
+      onDelete: action,
     });
   }
 
-  
   // Init value
   vehicleFormValue = getInitVehicleValue();
   listVehicle = getListVehicleFromService();
-  storeUseTable = new UseTableSort({ data: this.listVehicle, pokus: 'Ajmosss' });
+  storeUseTable = new UseTableSort({
+    data: this.listVehicle,
+    pokus: 'Ajmosss',
+  });
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
 
@@ -168,7 +168,7 @@ class Store {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(items.length)
+          this.setFilterRecordLength(items.length);
           return items;
         },
       };
@@ -277,12 +277,9 @@ class Store {
         // Generate fake ID
         storeVehicle.vehicleFormValue.id = this.generateId();
 
-        // const modelSave = storeProducers.listModelGet.find((data) => {
-        //   return data.id === store.vehicleFormValue.modelAuto;
-        // });
 
-        // prepare field for sorting
-        // this.vehicleFormValue.model = modelSave.model;
+
+
 
         // save record to BACKEND
         const prepareDataForBackend = {
@@ -300,8 +297,7 @@ class Store {
         createListVehicleFromService(prepareDataForBackend);
         this.listVehicle = getListVehicleFromService();
 
-        // // save record to listVehicle
-        // this.listVehiclePut(storeVehicle.vehicleFormValue);
+
 
         // Display info on screen
         storeNotification.setNotify({
@@ -396,12 +392,10 @@ class Store {
     this.vehicleFormValue = getInitVehicleValue();
   }
 
-
   onDelete(id) {
-    console.log('da obriso sam');    
     deleteListVehicleFromService(id);
     this.listVehicle = getListVehicleFromService();
-    this.filterRecordLength = getListVehicleFromService().length;
+    this.setFilterRecordLength(this.listVehicle.length);
   }
 }
 

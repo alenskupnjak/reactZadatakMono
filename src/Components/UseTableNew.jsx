@@ -70,12 +70,14 @@ const useStyles = makeStyles((theme) => ({
 function UseTableNew(props) {
   const classes = useStyles();
   const { store } = props;
-  console.log(store.headCellData);
+  console.log(store);
+  console.log(store.css);
+  console.log(props.css);
 
   return (
     <React.Fragment>
       <Table>
-        <TableHead className={classes.tablehead}>
+        <TableHead className={props.css} >
           <TableRow>
             {store.headCellData.map((data) => (
               <TableCell key={data.id}>
