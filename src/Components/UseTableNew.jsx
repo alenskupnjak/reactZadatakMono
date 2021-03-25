@@ -12,7 +12,6 @@ import {
   Button,
 } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
-import { storeNotification } from '../Stores/StoreNotification';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 //
@@ -68,9 +67,9 @@ function UseTableNew(props) {
   return (
     <React.Fragment>
       <Table>
-        <TableHead className={props.css} >
+        <TableHead className={props.css}>
           <TableRow>
-            {store.headCellData.map((data) => (
+            {store.storeUseTable.fn.headCellData.map((data) => (
               <TableCell key={data.id}>
                 {data.disabledSorting ? (
                   data.label
@@ -79,8 +78,8 @@ function UseTableNew(props) {
                     active={data.id === store.storeUseTable.orderSort}
                     direction={store.storeUseTable.orderSort}
                     onClick={() => {
-                      props.store.storeUseTable.setOrderSortBy(data.id);
-                      props.store.storeUseTable.setOrderSort();
+                      store.storeUseTable.setOrderSortBy(data.id);
+                      store.storeUseTable.setOrderSort();
                     }}
                   >
                     {data.label}
@@ -92,9 +91,9 @@ function UseTableNew(props) {
         </TableHead>
 
         <TableBody>
-          {props.store.afterSortingAndFiltering().map((data) => (
+          {store.storeUseTable.fn.afterSortingAndFiltering().map((data) => (
             <TableRow key={data.id}>
-              {store.headCellData.map((datacell, index) => {
+              {store.storeUseTable.fn.headCellData.map((datacell, index) => {
                 if (datacell.label.toLowerCase() !== 'action') {
                   return (
                     <TableCell key={index}>
@@ -103,7 +102,7 @@ function UseTableNew(props) {
                     </TableCell>
                   );
                 }
-                return null
+                return null;
               })}
               <TableCell>
                 <Button
@@ -117,10 +116,10 @@ function UseTableNew(props) {
                     alignItems: 'center',
                   }}
                   onClick={() => {
-                    props.store.setOpenCustomDialog(true);
-                    props.store.setAddOrUpdate('updateFormValue');
-                    props.store.onUpdate(data)
-                    props.store.setDisableSubmitButton(false);
+                    store.storeUseTable.fn.setOpenCustomDialog(true);
+                    store.storeUseTable.fn.setAddOrUpdate('updateFormValue');
+                    store.storeUseTable.fn.onUpdate(data);
+                    store.storeUseTable.fn.setDisableSubmitButton(false);
                   }}
                   startIcon={<ListIcon></ListIcon>}
                 ></Button>
@@ -134,14 +133,14 @@ function UseTableNew(props) {
                     marginRight: '10px',
                   }}
                   onClick={() => {
-                    props.store.setConfirmDialog({
+                    store.storeUseTable.fn.setConfirmDialog({
                       isOpen: true,
-                      title: 'Are you sure to delete this record?',
-                      subTitle: "You can't undo this operation.",
+                      // subTitle: "You can't undo this operation.",
                       onConfirm: () => {
-                        props.store.setConfirmDialog({ isOpen: false });
-                        //  FROM Backend  SERVICE
-                        props.store.onDelete(data.id)
+                        store.storeUseTable.fn.setConfirmDialog({
+                          isOpen: false,
+                        });
+                        store.storeUseTable.fn.onDelete(data.id);
                       },
                     });
                   }}
@@ -157,16 +156,16 @@ function UseTableNew(props) {
 
       <div>
         <TablePagination
-          rowsPerPageOptions={props.store.storeUseTable.pages}
+          rowsPerPageOptions={store.storeUseTable.pages}
           component="div"
-          count={props.store.filterRecordLength}
-          rowsPerPage={props.store.storeUseTable.rowsPerPage}
-          page={props.store.storeUseTable.page}
+          count={store.filterRecordLength}
+          rowsPerPage={store.storeUseTable.rowsPerPage}
+          page={store.storeUseTable.page}
           onChangePage={(e, newPage) => {
-            props.store.storeUseTable.setPage(newPage);
+            store.storeUseTable.setPage(newPage);
           }}
           onChangeRowsPerPage={(e) =>
-            props.store.storeUseTable.handleChangeRowsPerPage(e)
+            store.storeUseTable.handleChangeRowsPerPage(e)
           }
         ></TablePagination>
       </div>

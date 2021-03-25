@@ -29,8 +29,8 @@ const ConfirmDialog = (props) => {
     >
       <DialogTitle></DialogTitle>
       <DialogContent>
-        <Typography variant="h6">{dataDialog.title}</Typography>
-        <Typography variant="caption">{dataDialog.subTitle}</Typography>
+        <Typography variant="h6">{store.confirmDialog.title}</Typography>
+        <Typography variant="caption">{store.confirmDialog.subTitle}</Typography>
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
         <Button

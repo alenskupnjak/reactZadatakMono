@@ -1,7 +1,7 @@
 import { makeObservable, observable, action } from 'mobx';
 
 class UseTableSort {
-  constructor(data) {
+  constructor(fn) {
     makeObservable(this, {
       pages: observable,
       page: observable,
@@ -21,7 +21,8 @@ class UseTableSort {
       sortTable: observable,
     });
 
-    this.data = data;
+    // All function data for Use Table
+    this.fn = fn;
   }
 
   // dataExample = this.data;

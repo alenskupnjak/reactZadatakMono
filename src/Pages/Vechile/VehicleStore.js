@@ -74,10 +74,6 @@ class Store {
   listVehicle = getListVehicleFromService();
   filterRecordLength = getListVehicleFromService().length;
 
-  storeUseTable = new UseTableSort({
-    data: this.listVehicle,
-    filterRecordLength: this.filterRecordLength,
-  });
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
 
@@ -85,8 +81,6 @@ class Store {
 
   // filter search init value
   filterInputValue = '';
-
- 
 
   confirmDialog = {
     isOpen: false,
@@ -148,14 +142,14 @@ class Store {
   }
 
   //  Open/Close dialog
-  setOpenCustomDialog(data) {
+  setOpenCustomDialog = (data) => {
     this.openCustomDialog = data;
-  }
+  };
 
   //  Open/Close dialog
-  setAddOrUpdate(data) {
+  setAddOrUpdate = (data) => {
     this.addOrUpdate = data;
-  }
+  };
 
   setFilterFn(e) {
     this.filterFn = {
@@ -200,14 +194,18 @@ class Store {
   }
 
   //
-  setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
-    this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle };
-  }
+  setConfirmDialog = (isOpen, subTitle = null, onConfirm = null) => {
+    this.confirmDialog = {
+      isOpen: isOpen,
+      title: 'Are you sure to delete this Vehicle?',
+      subTitle: "You can't undo this operation."
+    };
+  };
 
   //
-  setDisableSubmitButton(data) {
+  setDisableSubmitButton = (data) => {
     this.disableSubmitButton = data;
-  }
+  };
 
   //
   setErrors(data) {
@@ -341,6 +339,7 @@ class Store {
       }
     }
 
+    this.setFilterRecordLength(this.listVehicle.length);
     this.setOpenCustomDialog(false);
     this.resetFormValue();
   }
@@ -377,7 +376,7 @@ class Store {
   }
 
   // return filtered and sorted data
-  afterSortingAndFiltering() {
+  afterSortingAndFiltering = () => {
     return this.storeUseTable
       .sortTable(this.filterFn.fn(this.listVehicleGet))
       .slice()
@@ -385,7 +384,7 @@ class Store {
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,
         this.storeUseTable.rowsPerPage,
       );
-  }
+  };
 
   get headCellData() {
     return this.headCellVehicle();
@@ -396,7 +395,7 @@ class Store {
     this.vehicleFormValue = getInitVehicleValue();
   }
 
-  onDelete(id) {
+  onDelete = (id) => {
     storeNotification.setNotify({
       isOpen: true,
       msg: 'Delete Vehicle',
@@ -405,15 +404,26 @@ class Store {
     deleteListVehicleFromService(id);
     this.listVehicle = getListVehicleFromService();
     this.setFilterRecordLength(this.listVehicle.length);
-  }
-  onUpdate(data) {
+  };
+  onUpdate = (data) => {
     storeNotification.setNotify({
       isOpen: true,
       msg: 'Edit Vehicle',
       type: 'info',
     });
     this.vehicleFormValue = data;
-  }
+  };
+
+  storeUseTable = new UseTableSort({
+    setOpenCustomDialog: this.setOpenCustomDialog,
+    onUpdate: this.onUpdate,
+    setAddOrUpdate: this.setAddOrUpdate,
+    setDisableSubmitButton: this.setDisableSubmitButton,
+    headCellData: this.headCellData,
+    afterSortingAndFiltering: this.afterSortingAndFiltering,
+    setConfirmDialog: this.setConfirmDialog,
+    onDelete: this.onDelete,
+  });
 }
 
 export const storeVehicle = new Store();

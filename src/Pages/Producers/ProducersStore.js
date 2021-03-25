@@ -73,8 +73,6 @@ class Producers {
     { id: 'action', label: 'Action', disabledSorting: true },
   ];
 
-  storeUseTable = new UseTableSort();
-
   // Init value za formu
   producerFormValue = getInitProducerValue();
 
@@ -108,7 +106,7 @@ class Producers {
   };
 
   setFilterRecordLength(length) {
-    return (this.filterRecordLength = length);
+    this.filterRecordLength = length;
   }
 
   setFilterInputValue(eTargetValue) {
@@ -216,15 +214,15 @@ class Producers {
 
   //
   // Open /close dialog
-  setOpenCustomDialog(data) {
+  setOpenCustomDialog = (data) => {
     this.openCustomDialog = data;
-  }
+  };
 
   //
   // ADD or UPDATE vehicle
-  setAddOrUpdate(data) {
+  setAddOrUpdate = (data) => {
     this.addOrUpdate = data;
-  }
+  };
 
   setFilterFn(e) {
     this.filterFn = {
@@ -268,14 +266,18 @@ class Producers {
   }
 
   //
-  setConfirmDialog(isOpen, title = null, subTitle = null, onConfirm = null) {
-    this.confirmDialog = { isOpen: isOpen, title: title, subTitle: subTitle };
-  }
+  setConfirmDialog = (isOpen, subTitle = null, onConfirm = null) => {
+    this.confirmDialog = {
+      isOpen: isOpen,
+      title: 'Are you sure to delete this Model?',
+      subTitle: "You can't undo this operation.",
+    };
+  };
 
   //
-  setDisableSubmitButton(data) {
+  setDisableSubmitButton = (data) => {
     this.disableSubmitButton = data;
-  }
+  };
 
   //
   setErrors(data) {
@@ -376,26 +378,6 @@ class Producers {
         return;
       }
 
-      // //
-      // if (!this.findDuplicateData(this.listProducerGet, 'producer')) {
-      //   // add NEW producer
-      //   const dataProducer = {
-      //     id: this.generateProducerId(),
-      //     producer: producer.toUpperCase(),
-      //   };
-      //   this.listProducerPut(dataProducer);
-
-      //   const dataModel = {
-      //     id: this.generateModelId(),
-      //     model: model,
-      //     producerId: dataProducer.id,
-      //   };
-
-      //   // save record to lists
-      //   this.listModelPut(dataModel);
-      // } else {
-      // producer already exist
-
       const producerData = this.listProducerGet.find((data) => {
         // console.log(data.producer, this.producerFormValue.producer);
         return data.producer === producer;
@@ -407,16 +389,11 @@ class Producers {
         producerId: producerData.id,
       };
 
-      // save record to lists
-      // this.listModelPut(dataModel);
-
       // ADD Model =>server
       createListModelFromService(dataModel);
       this.listModel = getListModelFromService();
+      this.setFilterRecordLength(this.listModel.length);
 
-      // }
-
-      // console.table(this.listModel);
       console.table(this.listModelGet);
       // console.table(this.listProducerGet);
 
@@ -440,21 +417,6 @@ class Producers {
         }
       }
 
-      // const duplicateProducer = this.findDuplicateData(
-      //   this.listProducerGet,
-      //   'producer',
-      // );
-      // console.log(duplicateProducer,duplicateProducer.id, this.producerFormValue.producerId);
-
-      // if (
-      //   duplicateProducer &&
-      //   duplicateProducer.id !== this.producerFormValue.producerId
-      // ) {
-      //   if (this.findDuplicateData(this.listProducerGet, 'producer')) {
-      //     return;
-      //   }
-      // }
-
       // find old model to store ID in model record
       const modelProdOld = this.listModelGet.find((data) => {
         return data.id === this.producerFormValue.id;
@@ -464,15 +426,6 @@ class Producers {
       const producerNew = this.listProducerGet.find((data) => {
         return data.producer === producer;
       });
-
-      // console.log(producerNew, this.producerFormValue.producer, this.producerFormValue.producerId);
-
-      // const dataProducer = {
-      //   id: producerOld.id,
-      //   producer: this.producerFormValue.producer.toUpperCase(),
-      // };
-
-      // this.listProducerUpdate(dataProducer);
 
       const dataVehicle = {
         id: modelProdOld.id,
@@ -495,6 +448,7 @@ class Producers {
       });
       this.setAddOrUpdate('addFormValueToList');
     }
+
     this.setOpenCustomDialog(false);
     this.resetFormValue();
     this.setErrors({});
@@ -502,7 +456,7 @@ class Producers {
 
   //
   // return filtered and sorted data
-  afterSortingAndFiltering() {
+  afterSortingAndFiltering = () => {
     return this.storeUseTable
       .sortTable(this.filterFn.fn(this.listModelGet))
       .slice()
@@ -510,13 +464,13 @@ class Producers {
         this.storeUseTable.page * this.storeUseTable.rowsPerPage,
         this.storeUseTable.rowsPerPage,
       );
-  }
+  };
 
   get headCellData() {
     return this.headCellProducer();
   }
 
-  onDelete(id) {
+  onDelete = (id) => {
     storeNotification.setNotify({
       isOpen: true,
       msg: 'Delete Model',
@@ -535,16 +489,27 @@ class Producers {
     deleteListModelFromService(id);
     storeProducers.listModel = getListModelFromService();
     this.setFilterRecordLength(storeProducers.listModel.length);
-  }
+  };
 
-  onUpdate(data) {
+  onUpdate = (data) => {
     storeNotification.setNotify({
       isOpen: true,
       msg: 'Edit Model',
       type: 'info',
     });
     this.producerFormValue = data;
-  }
+  };
+
+  storeUseTable = new UseTableSort({
+    setOpenCustomDialog: this.setOpenCustomDialog,
+    onUpdate: this.onUpdate,
+    setAddOrUpdate: this.setAddOrUpdate,
+    setDisableSubmitButton: this.setDisableSubmitButton,
+    headCellData: this.headCellData,
+    afterSortingAndFiltering: this.afterSortingAndFiltering,
+    setConfirmDialog: this.setConfirmDialog,
+    onDelete: this.onDelete,
+  });
 }
 
 export const storeProducers = new Producers();
