@@ -136,7 +136,7 @@ function UseTableNew(props) {
                   onClick={() => {
                     props.store.setConfirmDialog({
                       isOpen: true,
-                      title: 'Are you sure to delete record?',
+                      title: 'Are you sure to delete this record?',
                       subTitle: "You can't undo this operation.",
                       onConfirm: () => {
                         props.store.setConfirmDialog({ isOpen: false });
