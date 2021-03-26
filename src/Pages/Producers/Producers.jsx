@@ -112,12 +112,11 @@ function Producers() {
             ADD MODEL
           </Button>
         </Toolbar>
-        
-          <UseTableNew
-            store={storeProducers}
-            css={classes.tablehead}
-          ></UseTableNew>
-        
+
+        <UseTableNew
+          store={storeProducers}
+          css={classes.tablehead}
+        ></UseTableNew>
       </Paper>
 
       {/* Produce FORM */}

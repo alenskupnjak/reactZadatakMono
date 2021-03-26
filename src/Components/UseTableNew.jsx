@@ -10,6 +10,7 @@ import {
   TableSortLabel,
   TableBody,
   Button,
+  Typography,
 } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
@@ -63,6 +64,8 @@ const useStyles = makeStyles((theme) => ({
 function UseTableNew(props) {
   const classes = useStyles();
   const { store } = props;
+
+  // console.log(store);
 
   return (
     <React.Fragment>
@@ -135,7 +138,6 @@ function UseTableNew(props) {
                   onClick={() => {
                     store.storeUseTable.fn.setConfirmDialog({
                       isOpen: true,
-                      // subTitle: "You can't undo this operation.",
                       onConfirm: () => {
                         store.storeUseTable.fn.setConfirmDialog({
                           isOpen: false,
@@ -154,6 +156,23 @@ function UseTableNew(props) {
         </TableBody>
       </Table>
 
+      {/* NO filter data */}
+      {store.storeUseTable.fn.afterSortingAndFiltering().length === 0 ? (
+        <Typography
+          variant="h6"
+          style={{
+            justifyContent: 'center',
+            textAlign: 'center',
+            color: 'red',
+          }}
+        >
+          No filter data.
+        </Typography>
+      ) : (
+        ''
+      )}
+
+      {/* PAGINATION  */}
       <div>
         <TablePagination
           rowsPerPageOptions={store.storeUseTable.pages}
