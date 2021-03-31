@@ -42,8 +42,8 @@ class Producers {
       setFilterFn: observable,
       filterInputValue: observable,
       setFilterInputValue: action,
-      filterRecordLength: observable,
-      setFilterRecordLength: observable,
+      // filterRecordLength: observable,
+      // setFilterRecordLength: observable,
 
       confirmDialog: observable,
       setConfirmDialog: action,
@@ -90,7 +90,7 @@ class Producers {
   // set filter init value
   filterInputValue = '';
 
-  filterRecordLength = getListModelFromService().length;
+  // filterRecordLength = getListModelFromService().length;
 
   confirmDialog = {
     isOpen: false,
@@ -105,9 +105,9 @@ class Producers {
     },
   };
 
-  setFilterRecordLength(length) {
-    this.filterRecordLength = length;
-  }
+  // setFilterRecordLength(length) {
+  //   this.filterRecordLength = length;
+  // }
 
   setFilterInputValue(eTargetValue) {
     this.filterInputValue = eTargetValue;
@@ -227,7 +227,7 @@ class Producers {
   setFilterFn(e) {
     this.filterFn = {
       fn: (items) => {
-        this.setFilterRecordLength(items.length);
+        // this.setFilterRecordLength(items.length);
         return items;
       },
     };
@@ -244,18 +244,18 @@ class Producers {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(items.length);
+          // this.setFilterRecordLength(items.length);
           return items;
         },
       };
     } else {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(
-            items.filter((data) =>
-              data.model.toLowerCase().includes(e.target.value.toLowerCase()),
-            ).length,
-          );
+          // this.setFilterRecordLength(
+          //   items.filter((data) =>
+          //     data.model.toLowerCase().includes(e.target.value.toLowerCase()),
+          //   ).length,
+          // );
 
           return items.filter((data) =>
             data.model.toLowerCase().includes(e.target.value.toLowerCase()),
@@ -392,10 +392,9 @@ class Producers {
       // ADD Model =>server
       createListModelFromService(dataModel);
       this.listModel = getListModelFromService();
-      this.setFilterRecordLength(this.listModel.length);
+      // this.setFilterRecordLength(this.listModel.length);
 
       console.table(this.listModelGet);
-      // console.table(this.listProducerGet);
 
       storeNotification.setNotify({
         isOpen: true,
@@ -485,10 +484,10 @@ class Producers {
         storeVehicle.listVehicle = getListVehicleFromService();
       }
     });
-    storeVehicle.setFilterRecordLength(getListVehicleFromService().length);
+    // storeVehicle.setFilterRecordLength(getListVehicleFromService().length);
     deleteListModelFromService(id);
     storeProducers.listModel = getListModelFromService();
-    this.setFilterRecordLength(storeProducers.listModel.length);
+    // this.setFilterRecordLength(storeProducers.listModel.length);
   };
 
   onUpdate = (data) => {

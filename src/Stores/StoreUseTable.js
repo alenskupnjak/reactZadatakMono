@@ -19,6 +19,9 @@ class UseTableSort {
       handleChangeRowsPerPage: action,
       descendingComparator: action,
       sortTable: observable,
+
+      filterRecordLength: observable,
+      setFilterRecordLength: action,
     });
 
     // All function data for Use Table
@@ -35,6 +38,12 @@ class UseTableSort {
   orderSort = 'asc';
 
   orderSortBy = 'model';
+
+  filterRecordLength = 0;
+
+  setFilterRecordLength(length) {
+    this.filterRecordLength = length;
+  }
 
   setPage(page) {
     this.page = page;
@@ -76,8 +85,10 @@ class UseTableSort {
   sortTable(recordData) {
     // console.log(recordData);
     // console.log('pokus', this.data);
-    // console.log(this.data.filterRecordLength);
 
+    
+    this.setFilterRecordLength(recordData.length);
+    
     // init setup sort
     if (!this.orderSort) {
       return recordData;

@@ -65,24 +65,24 @@ function UseTableNew(props) {
   const classes = useStyles();
   const { store } = props;
 
-  // console.log(store);
-
+  console.log(store);
+  
   return (
     <React.Fragment>
       <Table>
         <TableHead className={props.css}>
           <TableRow>
-            {store.storeUseTable.fn.headCellData.map((data) => (
+            {store.fn.headCellData.map((data) => (
               <TableCell key={data.id}>
                 {data.disabledSorting ? (
                   data.label
                 ) : (
                   <TableSortLabel
-                    active={data.id === store.storeUseTable.orderSort}
-                    direction={store.storeUseTable.orderSort}
+                    active={data.id === store.orderSort}
+                    direction={store.orderSort}
                     onClick={() => {
-                      store.storeUseTable.setOrderSortBy(data.id);
-                      store.storeUseTable.setOrderSort();
+                      store.setOrderSortBy(data.id);
+                      store.setOrderSort();
                     }}
                   >
                     {data.label}
@@ -94,9 +94,9 @@ function UseTableNew(props) {
         </TableHead>
 
         <TableBody>
-          {store.storeUseTable.fn.afterSortingAndFiltering().map((data) => (
+          {store.fn.afterSortingAndFiltering().map((data) => (
             <TableRow key={data.id}>
-              {store.storeUseTable.fn.headCellData.map((datacell, index) => {
+              {store.fn.headCellData.map((datacell, index) => {
                 if (datacell.label.toLowerCase() !== 'action') {
                   return (
                     <TableCell key={index}>
@@ -119,10 +119,10 @@ function UseTableNew(props) {
                     alignItems: 'center',
                   }}
                   onClick={() => {
-                    store.storeUseTable.fn.setOpenCustomDialog(true);
-                    store.storeUseTable.fn.setAddOrUpdate('updateFormValue');
-                    store.storeUseTable.fn.onUpdate(data);
-                    store.storeUseTable.fn.setDisableSubmitButton(false);
+                    store.fn.setOpenCustomDialog(true);
+                    store.fn.setAddOrUpdate('updateFormValue');
+                    store.fn.onUpdate(data);
+                    store.fn.setDisableSubmitButton(false);
                   }}
                   startIcon={<ListIcon></ListIcon>}
                 ></Button>
@@ -136,13 +136,13 @@ function UseTableNew(props) {
                     marginRight: '10px',
                   }}
                   onClick={() => {
-                    store.storeUseTable.fn.setConfirmDialog({
+                    store.fn.setConfirmDialog({
                       isOpen: true,
                       onConfirm: () => {
                         store.storeUseTable.fn.setConfirmDialog({
                           isOpen: false,
                         });
-                        store.storeUseTable.fn.onDelete(data.id);
+                        store.fn.onDelete(data.id);
                       },
                     });
                   }}
@@ -157,7 +157,7 @@ function UseTableNew(props) {
       </Table>
 
       {/* NO filter data */}
-      {store.storeUseTable.fn.afterSortingAndFiltering().length === 0 ? (
+      {store.fn.afterSortingAndFiltering().length === 0 ? (
         <Typography
           variant="h6"
           style={{
@@ -175,16 +175,16 @@ function UseTableNew(props) {
       {/* PAGINATION  */}
       <div>
         <TablePagination
-          rowsPerPageOptions={store.storeUseTable.pages}
+          rowsPerPageOptions={store.pages}
           component="div"
           count={store.filterRecordLength}
-          rowsPerPage={store.storeUseTable.rowsPerPage}
-          page={store.storeUseTable.page}
+          rowsPerPage={store.rowsPerPage}
+          page={store.page}
           onChangePage={(e, newPage) => {
-            store.storeUseTable.setPage(newPage);
+            store.setPage(newPage);
           }}
           onChangeRowsPerPage={(e) =>
-            store.storeUseTable.handleChangeRowsPerPage(e)
+            store.handleChangeRowsPerPage(e)
           }
         ></TablePagination>
       </div>

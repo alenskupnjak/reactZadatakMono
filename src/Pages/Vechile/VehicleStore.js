@@ -30,8 +30,8 @@ class Store {
       filterFn: observable,
       setFilterFn: observable,
       filterInputValue: observable,
-      filterRecordLength: observable,
-      setFilterRecordLength: action,
+      // filterRecordLength: observable,
+      // setFilterRecordLength: action,
 
       handleSearch: action,
 
@@ -72,7 +72,7 @@ class Store {
   // Init value
   vehicleFormValue = getInitVehicleValue();
   listVehicle = getListVehicleFromService();
-  filterRecordLength = getListVehicleFromService().length;
+  // filterRecordLength = getListVehicleFromService().length;
 
   openCustomDialog = false;
   addOrUpdate = 'addFormValueToList';
@@ -154,15 +154,15 @@ class Store {
   setFilterFn(e) {
     this.filterFn = {
       fn: (items) => {
-        this.setFilterRecordLength(items.length);
+        // this.setFilterRecordLength(items.length);
         return items;
       },
     };
   }
 
-  setFilterRecordLength(length) {
-    this.filterRecordLength = length;
-  }
+  // setFilterRecordLength(length) {
+  //   this.filterRecordLength = length;
+  // }
 
   //
   handleSearch(e) {
@@ -173,18 +173,18 @@ class Store {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(items.length);
+          // this.setFilterRecordLength(items.length);
           return items;
         },
       };
     } else {
       this.filterFn = {
         fn: (items) => {
-          this.setFilterRecordLength(
-            items.filter((data) =>
-              data.model.toLowerCase().includes(e.target.value.toLowerCase()),
-            ).length,
-          );
+          // this.setFilterRecordLength(
+          //   items.filter((data) =>
+          //     data.model.toLowerCase().includes(e.target.value.toLowerCase()),
+          //   ).length,
+          // );
           return items.filter((data) =>
             data.model.toLowerCase().includes(e.target.value.toLowerCase()),
           );
@@ -339,7 +339,7 @@ class Store {
       }
     }
 
-    this.setFilterRecordLength(this.listVehicle.length);
+    // this.setFilterRecordLength(this.listVehicle.length);
     this.setOpenCustomDialog(false);
     this.resetFormValue();
   }
@@ -361,7 +361,6 @@ class Store {
     console.log('storeVehicle.listVehicleGet-', storeVehicle.listVehicleGet);
     // console.log('store.listVehicleGet-',data);
     const model = storeProducers.listModelGet.find((data) => {
-      // console.log(dataModelAuto, data.id);
 
       return data.id === dataModelAuto;
     });
@@ -403,7 +402,7 @@ class Store {
     });
     deleteListVehicleFromService(id);
     this.listVehicle = getListVehicleFromService();
-    this.setFilterRecordLength(this.listVehicle.length);
+    // this.setFilterRecordLength(this.listVehicle.length);
   };
   onUpdate = (data) => {
     storeNotification.setNotify({

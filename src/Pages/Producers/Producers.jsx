@@ -114,7 +114,7 @@ function Producers() {
         </Toolbar>
 
         <UseTableNew
-          store={storeProducers}
+          store={storeProducers.storeUseTable}
           css={classes.tablehead}
         ></UseTableNew>
       </Paper>

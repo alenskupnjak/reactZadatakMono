@@ -116,7 +116,7 @@ function Vehicle() {
           </Button>
         </Toolbar>
 
-        <UseTableNew store={storeVehicle} css={classes.tablehead}></UseTableNew>
+        <UseTableNew store={storeVehicle.storeUseTable} css={classes.tablehead}></UseTableNew>
       </Paper>
 
       {/* Produce FORM */}
