@@ -64,8 +64,6 @@ const useStyles = makeStyles((theme) => ({
 function UseTableNew(props) {
   const classes = useStyles();
   const { store } = props;
-
-  console.log(store);
   
   return (
     <React.Fragment>

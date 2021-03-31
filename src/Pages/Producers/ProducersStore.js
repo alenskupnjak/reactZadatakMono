@@ -42,8 +42,6 @@ class Producers {
       setFilterFn: observable,
       filterInputValue: observable,
       setFilterInputValue: action,
-      // filterRecordLength: observable,
-      // setFilterRecordLength: observable,
 
       confirmDialog: observable,
       setConfirmDialog: action,
@@ -90,7 +88,6 @@ class Producers {
   // set filter init value
   filterInputValue = '';
 
-  // filterRecordLength = getListModelFromService().length;
 
   confirmDialog = {
     isOpen: false,
@@ -105,9 +102,6 @@ class Producers {
     },
   };
 
-  // setFilterRecordLength(length) {
-  //   this.filterRecordLength = length;
-  // }
 
   setFilterInputValue(eTargetValue) {
     this.filterInputValue = eTargetValue;
@@ -227,7 +221,6 @@ class Producers {
   setFilterFn(e) {
     this.filterFn = {
       fn: (items) => {
-        // this.setFilterRecordLength(items.length);
         return items;
       },
     };
@@ -244,19 +237,12 @@ class Producers {
     if (e.target.value === '') {
       this.filterFn = {
         fn: (items) => {
-          // this.setFilterRecordLength(items.length);
           return items;
         },
       };
     } else {
       this.filterFn = {
         fn: (items) => {
-          // this.setFilterRecordLength(
-          //   items.filter((data) =>
-          //     data.model.toLowerCase().includes(e.target.value.toLowerCase()),
-          //   ).length,
-          // );
-
           return items.filter((data) =>
             data.model.toLowerCase().includes(e.target.value.toLowerCase()),
           );
@@ -379,7 +365,6 @@ class Producers {
       }
 
       const producerData = this.listProducerGet.find((data) => {
-        // console.log(data.producer, this.producerFormValue.producer);
         return data.producer === producer;
       });
 
@@ -392,9 +377,6 @@ class Producers {
       // ADD Model =>server
       createListModelFromService(dataModel);
       this.listModel = getListModelFromService();
-      // this.setFilterRecordLength(this.listModel.length);
-
-      console.table(this.listModelGet);
 
       storeNotification.setNotify({
         isOpen: true,
@@ -477,17 +459,15 @@ class Producers {
     });
 
     storeVehicle.listVehicleGet.forEach((dataVechile) => {
-      // console.log(id, dataVechile.modelAuto);
+
 
       if (id === dataVechile.modelAuto) {
         deleteListVehicleFromService(dataVechile.id);
         storeVehicle.listVehicle = getListVehicleFromService();
       }
     });
-    // storeVehicle.setFilterRecordLength(getListVehicleFromService().length);
     deleteListModelFromService(id);
     storeProducers.listModel = getListModelFromService();
-    // this.setFilterRecordLength(storeProducers.listModel.length);
   };
 
   onUpdate = (data) => {
