@@ -137,7 +137,7 @@ function UseTableNew(props) {
                     store.fn.setConfirmDialog({
                       isOpen: true,
                       onConfirm: () => {
-                        store.storeUseTable.fn.setConfirmDialog({
+                        store.fn.setConfirmDialog({
                           isOpen: false,
                         });
                         store.fn.onDelete(data.id);

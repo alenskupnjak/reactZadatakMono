@@ -91,7 +91,7 @@ function Vehicle() {
                     badgeContent={
                       storeVehicle.filterInputValue === ''
                         ? 0
-                        : storeVehicle.filterRecordLength
+                        : storeVehicle.storeUseTable.filterRecordLength
                     }
                   >
                     <Search />

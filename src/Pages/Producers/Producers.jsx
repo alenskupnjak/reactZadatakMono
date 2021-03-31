@@ -82,7 +82,7 @@ function Producers() {
                     badgeContent={
                       storeProducers.filterInputValue === ''
                         ? 0
-                        : storeProducers.filterRecordLength
+                        : storeProducers.storeUseTable.filterRecordLength
                     }
                   >
                     <Search />
